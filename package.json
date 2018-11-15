@@ -1,0 +1,29 @@
+{
+  "name": "@ethiopicist/calendar",
+  "version": "1.0.0",
+  "description": "A pure JS Ethiopian calendar app.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethiopicist/Calendar.git"
+  },
+  "keywords": [
+    "ethiopian",
+    "calendar"
+  ],
+  "author": "Augustine Dickinson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ethiopicist/Calendar/issues"
+  },
+  "homepage": "https://github.com/ethiopicist/Calendar#readme",
+  "dependencies": {
+    "bulma": "^0.7.2",
+    "ethiopic-calendar": "^2.0.0",
+    "jquery": "^3.3.1",
+    "octicons": "^4.4.0"
+  }
+}

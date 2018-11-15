@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title>Ethiopian/Eritrean Calendar</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery.min.js"></script>
+  <script src="ethiopic-calendar.js"></script>
+  <script src="app.min.js"></script>
+</head>
+<body>
+  <section class="section">
+    <div id="container" class="container">
+      <table class="calendar table is-bordered">
+        <thead>
+          <tr><th colspan="7">
+            <h1 class="calendar-title title is-4">
+              <span style="float: left;">
+                <a id="today" class="button is-small is-info" style="margin-right: 10px;">Today</a>
+                <a id="prev-month"><span class="octicon octicon-chevron-left"></span></a>
+                <a id="next-month"><span class="octicon octicon-chevron-right"></span></a>
+              </span>
+              <span style="float: right;">
+                <a id="open-preferences"><span class="octicon octicon-gear"></span></a>
+                <a href="http://dev.ethiopicist.com/Calendar/" target="_blank"><span class="octicon octicon-question"></span></a>
+              </span>
+            </h1>
+          </th></tr>
+          <tr class="calendar-dow"></tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <section id="preferences-overlay" class="section">
+    <div id="container" class="container">
+      <h1 class="title is-3">
+        Preferences
+        <span style="float: right; padding: 5px;">
+          <a id="close-preferences"><span class="octicon octicon-x"></span></a>
+        </span>
+      </h1>
+      <form>
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="ethletters">Use Ethiopic Letters</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="ethletters">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="ethnumbers">Use Ethiopic Numerals</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="ethnumbers">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Month Name Language</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="monthNames">
+                    <option value="gez">Gəʿəz</option>
+                    <option value="amh">Amharic</option>
+                    <option value="tig">Tigrinya</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Day Name Language</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="dowNames">
+                    <option value="gez">Gəʿəz</option>
+                    <option value="amh">Amharic</option>
+                    <option value="tig">Tigrinya</option>
+                    <option value="eng">English</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="longNames">Use Long Names</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="longNames">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="showgDates">Show Gregorian Dates</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="showgDates">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label">
+            <label class="label" for="showHolidays">Show National Holidays</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" id="showHolidays" disabled>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</body>
+</html>
