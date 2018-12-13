@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="keywords" content="">
-  <title>Ethiopian/Eritrean Calendar</title>
+  <title>Ethiopic Calendar</title>
   <link rel="stylesheet" href="style.css">
   <script src="jquery.min.js"></script>
   <script src="ethiopic-calendar.js"></script>
@@ -117,6 +117,24 @@
         </div>
 
         <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Start Week On</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="startDay">
+                    <option value="0">Sunday</option>
+                    <option value="1">Monday</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
           <div class="field-label">
             <label class="label" for="longNames">Use Long Names</label>
           </div>
@@ -145,23 +163,16 @@
             </div>
           </div>
         </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label" for="showHolidays">Show National Holidays</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox" id="showHolidays" disabled>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
       </form>
     </div>
   </section>
+
+  <footer id="mobile-controls" class="footer">
+    <a id="today-mobile" class="button is-info">Today</a>
+    <a id="prev-month-mobile" class="button"><span class="octicon octicon-chevron-left"></span></a>
+    <a id="next-month-mobile" class="button"><span class="octicon octicon-chevron-right"></span></a>
+    <a id="open-preferences-mobile" class="button" style="float: right"><span class="octicon octicon-gear"></span></a>
+  </footer>
+  <div id="mobile-controls-spacer"></div>
 </body>
 </html>

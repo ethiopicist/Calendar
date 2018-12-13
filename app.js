@@ -2,24 +2,24 @@ $(document).ready(function(){
   buildCalendar();
 
   // calendar onclick events
-  $(document).on("click", "a#today", function(){
+  $(document).on("click", "a[id^='today']", function(){
     var newDate = new Date();
     setTheDate(eDate(newDate).year, eDate(newDate).month, eDate(newDate).day);
   });
 
-  $(document).on("click", "a#prev-month", function(){
+  $(document).on("click", "a[id^='prev-month']", function(){
     var newDate = firstOfMonth();
     newDate.setDate(newDate.getDate()-1);
     setTheDate(eDate(newDate).year, eDate(newDate).month, eDate(newDate).day);
   });
 
-  $(document).on("click", "a#next-month", function(){
+  $(document).on("click", "a[id^='next-month']", function(){
     var newDate = lastOfMonth();
     newDate.setDate(newDate.getDate()+1);
     setTheDate(eDate(newDate).year, eDate(newDate).month, eDate(newDate).day);
   });
 
-  // set up prefs
+  // fill out prefs form
   var preferences = JSON.parse(localStorage.getItem('preferences'));
   for(var pref in preferences){
     if(preferences.hasOwnProperty(pref)){
@@ -32,14 +32,13 @@ $(document).ready(function(){
   }
 
   // prefs onclick and onchange events
-  $(document).on("click", "a#open-preferences", function(){
+  $(document).on("click", "a[id^='open-preferences']", function(){
     $('#preferences-overlay').show();
   });
 
   $(document).on("click", "a#close-preferences", function(){
     $('#preferences-overlay').hide();
   });
-
 
   $(document).on("change", "select", function(){
     setPref($(this).attr('id'), $(this).val());
@@ -61,7 +60,7 @@ function buildCalendar(){
   $('.calendar-title').append(titleChildren);
 
   for(j = 0; j < 7; j++){
-    $(".calendar-dow").append($('<th/>').text(printDayName(j)));
+    $(".calendar-dow").append($('<th/>').text(printDayName((j+parseInt(getPref('startDay')))%7)));
   }
 
   // calendar cells
@@ -74,8 +73,8 @@ function buildCalendar(){
     for(j = 0; j < 7; j++){
       var theCell = $('<td/>');
 
-      if(getPref('showgDates')) theCell.append($('<span class="gdate"/>').text(iDate.getDate()));
       theCell.append($('<span class="edate"/>').text(printDayInt(eDate(iDate).day)));
+      if(getPref('showgDates')) theCell.append($('<span class="gdate"/>').text(iDate.getDate()));
 
       // highlight today
       if(iDate.toLocaleDateString() == new Date().toLocaleDateString()){
@@ -97,7 +96,7 @@ function buildCalendar(){
 
       // if date belongs to prev/next gregorian month
       if(dayBefore(iDate).getMonth() !== iDate.getMonth() || (i == 1 && j == 0)){
-        if(getPref('showgDates')) theCell.append($('<span class="gmonth"/>').text(iDate.toLocaleString('en-us', {month: (getPref('longNames') ? "long" : "short")})));
+        if(getPref('showgDates')) theCell.append($('<span class="gmonth"/>').text(iDate.toLocaleString('en-us', {month: (getPref('longNames') ? "long" : "short"), year: 'numeric'})));
       }
 
       $("#calendar-row-"+i).append(theCell);
@@ -138,6 +137,7 @@ function rebuildCalendar(){
 function getPref(pref){
   // the default prefs
   var defaults = {
+    'startDay': 1,
     'ethletters': true,
     'ethnumbers': true,
     'monthNames': 'gez',
@@ -167,6 +167,7 @@ function getPref(pref){
 function setPref(pref, val){
   // validate val
   var types = {
+    'startDay': ['1', '0'],
     'ethletters': 'boolean',
     'ethnumbers': 'boolean',
     'monthNames': ['gez', 'amh', 'tig'],
@@ -174,6 +175,8 @@ function setPref(pref, val){
     'longNames': 'boolean',
     'showgDates': 'boolean'
   }
+  if(pref == 'startDay')
+
   if(!types.hasOwnProperty(pref)) return false; // not a valid pref
   else if(typeof types[pref] == 'object'){
     if(!types[pref].includes(val)) return false; // not a valid value for val
@@ -252,8 +255,9 @@ function firstOfMonth(){
 // return a Date object for the first day displayed on the calendar
 function firstOfCalendar(){
   var firstDay = firstOfMonth();
-  var offset = firstOfMonth().getDay()-1;
 
+  // this is to check what dow the first of month is, then move backwards until reaching startDay
+  var offset = firstOfMonth().getDay()-parseInt(getPref('startDay'));
   if(firstOfMonth().getDay() == 0) offset = 6;
   
   firstDay.setDate(firstDay.getDate()-offset);
@@ -326,10 +330,10 @@ function printMonthName(m){
   ];
 
   var tigMonthNames = gezMonthNames.slice();
-  tigMonthNames[5] = 'ለካቲት'; tigMonthNames[4] = 'ጥሪ';
+  tigMonthNames[5] = 'ለካቲት'; tigMonthNames[4] = 'ጥሪ'; tigMonthNames[1] = 'ጥቅምቲ';
 
   var tigMonthNamest = gezMonthNamest.slice();
-  tigMonthNamest[5] = 'Lakkātit'; tigMonthNamest[4] = 'Ṭərri';
+  tigMonthNamest[5] = 'Lakkātit'; tigMonthNamest[4] = 'Ṭərri'; tigMonthNamest[1] = 'Ṭəqəmti';
 
   var monthName= '';
   if(getPref('monthNames') == 'tig' && getPref('ethletters')) monthName = tigMonthNames[m-1];
@@ -343,53 +347,73 @@ function printMonthName(m){
 
 function printDayName(d){
   var gezDayNames = [
+    'እሑድ',
     'ሰኑይ',
     'ሠሉስ',
     'ረቡዕ',
     'ኀሙስ',
     'ዐርብ',
-    'ቀዳም',
-    'እሑድ'
+    'ቀዳም'
   ];
 
   var gezDayNamest = [
+    'ʾƎḥud',
     'Sanuy',
     'Śalus',
     'Rabuʿ',
     'Ḫamus',
     'ʿArb',
-    'Qadām',
-    'ʾƎḥud'
+    'Qadām'
   ];
 
   var amhDayNames = [
+    'እሑድ',
     'ሰኞ',
     'መክሰኞ',
     'ረቡዕ',
     'ኀሙስ',
     'ዓርብ',
-    'ቅዳሜ',
-    'እሑድ'
+    'ቅዳሜ'
   ];
 
   var amhDayNamest = [
+    'ʾƎḥud',
     'Saño',
     'Maksaño',
     'Rabuʿ',
     'Ḫamus',
     'ʿĀrb',
-    'Qədāme',
-    'ʾƎḥud'
+    'Qədāme'
   ];
 
   var engDayNames = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday',
-    'Sunday'
+    'Saturday'
+  ];
+
+  var tigDayNames = [
+    'እሑድ',
+    'ሶኑይ',
+    'ሦሉስ',
+    'ሮቡዕ',
+    'ሓሙስ',
+    'ዓርቢ',
+    'ቐዳም'
+  ];
+
+  var tigDayNamest = [
+    'ʾƎḥud',
+    'Sonuy',
+    'Śolus',
+    'Robuʿ',
+    'Ḥāmus',
+    'ʿĀrbi',
+    'Q̱adām'
   ];
   
   var dayName = '';
@@ -397,11 +421,13 @@ function printDayName(d){
   else if(getPref('dowNames') == 'eng') dayName = engDayNames[d];
   else if(getPref('dowNames') == 'amh' && getPref('ethletters')) dayName = amhDayNames[d];
   else if(getPref('dowNames') == 'amh') dayName = amhDayNamest[d];
+  else if(getPref('dowNames') == 'tig' && getPref('ethletters')) dayName = tigDayNames[d];
+  else if(getPref('dowNames') == 'tig') dayName = tigDayNamest[d];
   else if(getPref('ethletters')) dayName = gezDayNames[d];
   else dayName = gezDayNamest[d];
 
   if(getPref('longNames')) return dayName;
-  // account for short names for days beginning with alf/ayn
+  // for short names for days beginning with alf/ayn
   else if(d == 4 && getPref('dowNames') == 'amh' && !getPref('ethletters')) return 'ʿ'+dayName.substr(1, 3);
   else if(d == 6 && getPref('dowNames') == 'amh' && !getPref('ethletters')) return 'ʾ'+dayName.substr(1, 3);
   else return dayName.substr(0, 3);
@@ -415,8 +441,8 @@ function printDayInt(d){
 function printTitle(){
   var theTitle = printMonthName(theDate('em'))+' ';
 
-  if(getPref('ethnumbers')) theTitle = theTitle+ethiopicNumber(theDate('ey'));
-  else theTitle = theTitle+theDate('ey');
+  if(getPref('ethnumbers')) theTitle += ethiopicNumber(theDate('ey'));
+  else theTitle += theDate('ey');
 
   return theTitle;
 }
