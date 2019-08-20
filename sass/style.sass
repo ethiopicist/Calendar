@@ -1,0 +1,205 @@
+@charset "utf-8"
+
+@import "utilities/initial-variables"
+
+@import "utilities/_all"
+@import "base/_all"
+@import "elements/_all"
+@import "components/_all"
+@import "layout/_all"
+@import "grid/_all"
+@import "form/_all"
+@import "extensions/switch"
+
+@import "octicons/octicons.min.css"
+@import "notosans/notosans.min.css"
+
+html, body, section.section, .container, .calendar
+  height: 100%
+  width: 100%
+  font-family: 'Noto Sans'
+  
+  +mobile
+    padding: 0
+    margin: 0
+
+body
+  +tablet
+    min-height: 600px
+
+.section
+  +touch
+    padding: 1rem
+
+.calendar
+  +mobile
+    font-size: 0.8rem
+    height: auto
+
+    td, th
+      padding: 0.3em 0.5em
+      border: 0
+
+    thead tr th
+      font-weight: normal
+      background-color: transparent
+
+      span
+        display: none
+
+  thead tr
+    &.calendar-title-row, &.calendar-days-of-week
+      th
+        text-align: center
+        background-color: $light
+
+        +mobile
+          border-bottom: 1px solid #dbdbdb
+
+        &.calendar-day-of-week
+          span.day-of-week-long
+            +tablet
+              display: inline
+            +mobile
+              display: none
+
+          span.day-of-week-short
+            +tablet
+              display: none
+            +mobile
+              display: inline
+
+        h1.calendar-title
+          @extend .is-4
+          @extend .title
+          text-align: center
+
+  tbody tr[class^='calendar-row'] td
+    position: relative
+    width: calc(100% / 7)
+
+    +mobile
+      position: static
+
+    &.different-month
+      color: $grey-light
+
+      +tablet
+        background-color: $white-bis
+
+    span
+      padding: 5px
+      display: block
+      position: absolute
+
+      +mobile
+        position: static
+        text-align: center
+
+      &[class^='ethiopian']
+        font-size: 1rem
+        top: 0px
+
+        +desktop
+          font-size: 1.2rem
+
+        &.ethiopian-date
+          right: 0px
+
+        &.ethiopian-month
+          left: 0px
+
+      &[class^='gregorian']
+        font-size: 0.83rem
+        bottom: 0px
+        
+        +mobile
+          color: $grey-light
+
+        &.gregorian-date
+          left: 0px
+
+        &.gregorian-month
+          right: 0px
+          text-align: right
+
+      &[class$='month']
+        +tablet
+            max-width: 75%
+        
+        +mobile
+          display: none
+    
+    &.todays-date
+      +tablet
+        span.ethiopian-date
+          background-color: $cyan
+          color: $white
+          border-radius: 50%
+          padding: 0
+          
+          &:before, &:after
+            content: '\200B'
+            display: inline-block
+            line-height: 0px
+            padding-top: 50%
+            padding-bottom: 50%
+          
+          &:before
+            padding-left: 8px
+
+          &:after
+            padding-right: 8px
+
+      +mobile
+        background-color: lighten($info, 10%)
+        
+        span[class^='ethiopian']
+          color: $white
+        
+        span[class^='gregorian']
+          color: $white-ter
+
+a#today-button
+  margin-right: 10px
+
+h1 a
+  color: inherit
+
+span.octicon
+  font-size: inherit
+
+section[id$="-modal"]
+  background-color: $white
+  display: none
+  z-index: 100
+  position: absolute
+  top: 0px
+  left: 0px
+
+  +mobile
+    padding: 10px
+
+  h1.title
+    text-align: center
+    small
+      font-size: 0.75em
+      font-weight: normal
+
+  a.tag.is-medium
+    width: 90px
+    text-decoration: none
+    margin-left: 5px
+
+  .panel .panel-block
+    padding-left: calc(0.75em + 16px)
+
+    .octicon
+      margin-left: -16px
+      display: none
+
+    &.is-active
+      background-color: $info
+      color: $white
+      .octicon
+        display: inline

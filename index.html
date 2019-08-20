@@ -6,40 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="keywords" content="">
-  <title>Ethiopic Calendar</title>
+  <title>Ethio-Eritrean Calendar</title>
   <link rel="stylesheet" href="style.css">
   <script src="jquery.min.js"></script>
-  <script src="ethiopic-calendar.js"></script>
-  <script src="app.min.js"></script>
+  <script src="ethiopiancalendar.min.js"></script>
 </head>
 <body>
   <section class="section">
     <div id="container" class="container">
-      <table class="calendar table is-bordered">
-        <thead>
-          <tr><th colspan="7">
-            <h1 class="calendar-title title is-4">
-              <span style="float: left;">
-                <a id="today" class="button is-small is-info" style="margin-right: 10px;">Today</a>
-                <a id="prev-month"><span class="octicon octicon-chevron-left"></span></a>
-                <a id="next-month"><span class="octicon octicon-chevron-right"></span></a>
-              </span>
-              <span style="float: right;">
-                <a id="open-preferences"><span class="octicon octicon-gear"></span></a>
-                <a href="https://dev.ethiopicist.com/Calendar/" target="_blank"><span class="octicon octicon-question"></span></a>
-              </span>
-            </h1>
-          </th></tr>
-          <tr class="calendar-dow"></tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot></tfoot>
-      </table>
+      <table id="calendar" class="calendar table is-bordered"></table>
     </div>
   </section>
 
-  <section id="preferences-overlay" class="section">
-    <div id="container" class="container">
+  <section id="preferences-modal" class="section">
+    <div class="container">
       <h1 class="title is-3">
         Preferences
         <span style="float: right; padding: 5px;">
@@ -47,132 +27,241 @@
         </span>
       </h1>
       <form>
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label" for="ethletters">Use Ethiopic Letters</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox" id="ethletters">
-                </label>
-              </div>
-            </div>
-          </div>
+
+        <div class="field">
+          <label class="label">
+            <a id="open-startDay" data-for="startDay" class="tag is-medium is-info"></a>
+            First Day of Week
+          </label>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label" for="ethnumbers">Use Ethiopic Numerals</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox" id="ethnumbers">
-                </label>
-              </div>
-            </div>
-          </div>
+        <div class="field">
+          <label class="label">
+            <a id="open-monthNames" data-for="monthNames" class="tag is-medium is-info"></a>
+            Month Name Language
+          </label>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Month Name Language</label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <div class="control">
-                <div class="select is-fullwidth">
-                  <select id="monthNames">
-                    <option value="gez">Gəʿəz</option>
-                    <option value="amh">Amharic</option>
-                    <option value="tig">Tigrinya</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="field">
+          <label class="label">
+            <a id="open-dayNames" data-for="dayNames" class="tag is-medium is-info"></a>
+            Day Name Language
+          </label>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Day Name Language</label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <div class="control">
-                <div class="select is-fullwidth">
-                  <select id="dowNames">
-                    <option value="gez">Gəʿəz</option>
-                    <option value="amh">Amharic</option>
-                    <option value="tig">Tigrinya</option>
-                    <option value="eng">English</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="field">
+          <input id="useLetters" type="checkbox" class="switch is-success">
+          <label for="useLetters" class="label">Use Ethiopic Letters</label>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Start Week On</label>
-          </div>
-          <div class="field-body">
-            <div class="field is-narrow">
-              <div class="control">
-                <div class="select is-fullwidth">
-                  <select id="startDay">
-                    <option value="0">Sunday</option>
-                    <option value="1">Monday</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="field">
+          <input id="useNumbers" type="checkbox" class="switch is-success">
+          <label for="useNumbers" class="label">Use Ethiopic Numerals</label>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label" for="longNames">Use Long Names</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox" id="longNames">
-                </label>
-              </div>
-            </div>
-          </div>
+        <div class="field">
+          <input id="gregorianDates" type="checkbox" class="switch is-success">
+          <label for="gregorianDates" class="label">Show Gregorian Dates</label>
         </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label">
-            <label class="label" for="showgDates">Show Gregorian Dates</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox" id="showgDates">
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </form>
     </div>
   </section>
 
-  <footer id="mobile-controls" class="footer">
-    <a id="today-mobile" class="button is-info">Today</a>
-    <a id="prev-month-mobile" class="button"><span class="octicon octicon-chevron-left"></span></a>
-    <a id="next-month-mobile" class="button"><span class="octicon octicon-chevron-right"></span></a>
-    <a id="open-preferences-mobile" class="button" style="float: right"><span class="octicon octicon-gear"></span></a>
-  </footer>
-  <div id="mobile-controls-spacer"></div>
+  <section id="startDay-modal" class="section">
+    <div class="container">
+      <h1 class="title is-3">
+        Start Week On
+        <span style="float: left; padding: 5px;"><small>
+          <a id="back-startDay"><span class="octicon octicon-chevron-left"></span> Prefs</a>
+        </small></span>
+        <span style="float: right; padding: 5px;">
+          <a id="close-startDay"><span class="octicon octicon-x"></span></a>
+        </span>
+      </h1>
+
+      <nav class="panel" id="startDay">
+        <a class="panel-block" data-value="0"><span class="octicon octicon-check"></span> Sunday</a>
+        <a class="panel-block" data-value="1"><span class="octicon octicon-check"></span> Monday</a>
+      </nav>
+    </div>
+  </section>
+
+  <section id="monthNames-modal" class="section">
+    <div class="container">
+      <h1 class="title is-3">
+        Month Name Language
+        <span style="float: left; padding: 5px;"><small>
+          <a id="back-monthNames"><span class="octicon octicon-chevron-left"></span> Prefs</a>
+        </small></span>
+        <span style="float: right; padding: 5px;">
+          <a id="close-monthNames"><span class="octicon octicon-x"></span></a>
+        </span>
+      </h1>
+
+      <nav class="panel" id="monthNames">
+        <a class="panel-block" data-value="gez"><span class="octicon octicon-check"></span> Gəʿəz</a>
+        <a class="panel-block" data-value="amh"><span class="octicon octicon-check"></span> Amharic</a>
+        <a class="panel-block" data-value="tig"><span class="octicon octicon-check"></span> Tigrinya</a>
+      </nav>
+    </div>
+  </section>
+
+  <section id="dayNames-modal" class="section">
+    <div class="container">
+      <h1 class="title is-3">
+        Day Names Language
+        <span style="float: left; padding: 5px;"><small>
+          <a id="back-dayNames"><span class="octicon octicon-chevron-left"></span> Prefs</a>
+        </small></span>
+        <span style="float: right; padding: 5px;">
+          <a id="close-dayNames"><span class="octicon octicon-x"></span></a>
+        </span>
+      </h1>
+
+      <nav class="panel" id="dayNames">
+        <a class="panel-block" data-value="gez"><span class="octicon octicon-check"></span> Gəʿəz</a>
+        <a class="panel-block" data-value="amh"><span class="octicon octicon-check"></span> Amharic</a>
+        <a class="panel-block" data-value="tig"><span class="octicon octicon-check"></span> Tigrinya</a>
+        <a class="panel-block" data-value="eng"><span class="octicon octicon-check"></span> English</a>
+      </nav>
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function(){
+      $('#calendar').ethiopianCalendar({
+        'useSavedPrefs': true,
+        'savePrefs': true
+      });
+      addButtons();
+      prefillForm();
+
+      $(document).on('click', '#today-button', function(){        
+        $('#calendar').ethiopianCalendar('update', {
+          'savePrefs': true,
+          'useSavedPrefs': true,
+          'calendarMonth': (new Date())
+        });
+        addButtons();
+      });
+
+      $(document).on('click', '#prev-month', function(){
+        var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
+        prevMonth = new Date(prefs['calendarMonth']);
+
+        prevMonth.setDate(prevMonth.getDate() - prevMonth.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}));
+        
+        $('#calendar').ethiopianCalendar('update', {
+          'savePrefs': true,
+          'useSavedPrefs': true,
+          'calendarMonth': prevMonth
+        });
+        addButtons();
+      });
+
+      $(document).on('click', '#next-month', function(){
+        var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
+        var nextMonth = new Date(prefs['calendarMonth']);
+
+        var m = 30;
+        if(nextMonth.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}) == 13){
+          if(nextMonth.toLocaleDateString('en-US-u-ca-ethiopic', {year: 'numeric'}) % 4 == 3) m = 6;
+          else m = 5;
+        }
+        m += 1;
+  
+        nextMonth.setDate(nextMonth.getDate() + m - nextMonth.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}));
+        
+        $('#calendar').ethiopianCalendar('update', {
+          'savePrefs': true,
+          'useSavedPrefs': true,
+          'calendarMonth': nextMonth
+        });
+        addButtons();
+      });
+
+      $(document).on("click", 'a[id^="open"]', function(){
+        $('#'+$(this).attr('id').substr(5)+'-modal').show();
+      });
+
+      $(document).on("click", 'a[id^="back"]', function(){
+        $('#'+$(this).attr('id').substr(5)+'-modal').hide();
+      });
+      
+      $(document).on("click", 'a[id^="close"]', function(){
+        $('section[id$="modal"]').hide();
+      });
+
+      $(document).on("click", 'a.tag.is-medium', function(){
+        $('#'+$(this).data('for')+'-modal').show();
+      });
+
+      $(document).on("change", "input[type=checkbox]", function(){
+        var options = {
+          'savePrefs': true,
+          'useSavedPrefs': true
+        }
+        options[$(this).attr('id')] = $(this).is(':checked');
+        
+        $('#calendar').ethiopianCalendar('update', options);
+        addButtons();
+        prefillForm();
+      });
+
+      $(document).on("click", "nav.panel a.panel-block", function(){
+        var options = {
+          'savePrefs': true,
+          'useSavedPrefs': true
+        }
+        options[$(this).parent().attr('id')] = $(this).data('value');
+        
+        $('#calendar').ethiopianCalendar('update', options);
+        addButtons();
+        prefillForm();
+      });
+    });
+
+    function addButtons(){
+      $('#calendar .calendar-title').append(
+        $('<span class="is-pulled-left is-hidden-mobile" />').append(
+          $('<a id="today-button" class="button is-info is-small">Today</a>'),
+          $('<a id="prev-month"><span class="octicon octicon-chevron-left"></span></a>'),
+          $('<a id="next-month"><span class="octicon octicon-chevron-right"></span></a>')
+        ),
+        $('<span class="is-pulled-right is-hidden-mobile" />').append(
+          $('<a id="open-preferences"><span class="octicon octicon-gear"></span></a>'),
+          $('<a href="https://dev.ethiopicist.com/Calendar/" target="_blank"><span class="octicon octicon-question"></span></a>')
+        )
+      );
+    }
+  
+    function prefillForm(){
+      var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
+      var langs = {
+        'gez': 'Gəʿəz',
+        'amh': 'Amharic',
+        'tig': 'Tigrinya',
+        'eng': 'English'
+      }
+
+      if(prefs['startDay'] == 1) $('a[data-for="startDay"]').text('Monday');
+      else $('a[data-for="startDay"]').text('Sunday');
+      $('#startDay').children().removeClass('is-active');
+        $('#startDay a[data-value="'+prefs['startDay']+'"]').addClass('is-active');
+
+      $('a[data-for="monthNames"]').text(langs[prefs['monthNames']]);
+      $('#monthNames').children().removeClass('is-active');
+      $('#monthNames a[data-value="'+prefs['monthNames']+'"]').addClass('is-active');
+
+      $('a[data-for="dayNames"]').text(langs[prefs['dayNames']]);
+      $('#dayNames').children().removeClass('is-active');
+      $('#dayNames a[data-value="'+prefs['dayNames']+'"]').addClass('is-active');
+
+      if(prefs['useLetters']) $('#useLetters').attr('checked', 'checked');
+      if(prefs['useNumbers']) $('#useNumbers').attr('checked', 'checked');
+      if(prefs['gregorianDates']) $('#gregorianDates').attr('checked', 'checked');
+    }
+  </script>
 </body>
 </html>
