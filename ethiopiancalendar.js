@@ -1,16 +1,20 @@
 (function($){
 
   var methods = {
-    init: function(options){
+    init: function(options, callback){
 
       buildCalendar(this, options);
 
+      if(callback) callback();
+
     },
-    update: function(options){
+    update: function(options, callback){
 
       this.html('');
 
       buildCalendar(this, options);
+
+      if(callback) callback();
 
     }
   };
@@ -102,8 +106,12 @@
       tbodyRows[i] = $('<tr class="calendar-row-'+i+'" />');
 
       for(j = 0; j < 7; j++){
-        var theCell = $('<td class="calendar-cell-'+i+'-'+j+'" />');
+        var theCell = $('<td />');
         
+        theCell.addClass('calendar-cell-'+i+'-'+j);
+        theCell.attr('data-ethiopian-date', iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric', month: 'numeric', year: 'numeric'}));
+        theCell.attr('data-gregorian-date', iDate.toLocaleDateString('en-US', {day: 'numeric', month: 'numeric', year: 'numeric'}));
+
         theCell.append($('<span class="ethiopian-date" />').text(
           (settings['useNumbers'] ? toEthiopicNumber(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'})) : iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}))
         ));
@@ -166,7 +174,8 @@
     date.setDate(date.getDate() - date.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}) + 1);
   
     var offset = date.getDay() - startDay;
-    if(date.getDay() == 0) offset = 6; // adjustment for Sunday
+    if(date.getDay() == 0 && startDay == 1) offset = 6; // adjustment for Sunday
+    if(date.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}) == 13) offset += 14; // for Pagumen
     
     date.setDate(date.getDate() - offset);
     
@@ -213,6 +222,8 @@
   
     var tigMonthNamesTranslit = gezMonthNamesTranslit.slice();
     tigMonthNamesTranslit[5] = 'Lakkātit'; tigMonthNamesTranslit[4] = 'Ṭərri'; tigMonthNamesTranslit[1] = 'Ṭəqəmti';
+
+    var oroMonthNames = [];
 
     if(lang == 'tig'){
       if(!translit) return tigMonthNamesTranslit[m-1];
@@ -287,6 +298,8 @@
       'Q̱adām'
     ];
 
+    var oroDayNames = [];
+
     var engDayNames = [
       'Sunday',
       'Monday',
@@ -306,8 +319,7 @@
       else return tigDayNames[d];
     }
     else if(lang == 'eng'){
-      if(!translit) return engDayNamesTranslit[d];
-      else return engDayNames[d];
+      return engDayNames[d];
     }
     else{
       if(!translit) return gezDayNamesTranslit[d];

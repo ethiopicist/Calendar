@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <title>Ethio-Eritrean Calendar</title>
+  <meta name="description" content="An online Ethio-Eritrean calendar in Amharic, Tigrinya, and English.">
+  <meta name="keywords" content="ethiopian calendar, ethiopian, calendar, eritrean">
+  <title>Ethiopian-Eritrean Calendar</title>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
   <script src="jquery.min.js"></script>
   <script src="ethiopiancalendar.min.js"></script>
@@ -70,15 +71,11 @@
 
   <section id="startDay-modal" class="section">
     <div class="container">
-      <h1 class="title is-3">
-        Start Week On
-        <span style="float: left; padding: 5px;"><small>
-          <a id="back-startDay"><span class="octicon octicon-chevron-left"></span> Prefs</a>
-        </small></span>
-        <span style="float: right; padding: 5px;">
-          <a id="close-startDay"><span class="octicon octicon-x"></span></a>
-        </span>
+      <h1 class="title is-4 has-text-left">
+        <small><a id="back-startDay"><span class="octicon octicon-chevron-left"></span> Prefs</a></small>
+        <span class="is-pulled-right"><a id="close-startDay"><span class="octicon octicon-x"></span></a></span>
       </h1>
+      <h2 class="subtitle is-4">Start Week On</h2>
 
       <nav class="panel" id="startDay">
         <a class="panel-block" data-value="0"><span class="octicon octicon-check"></span> Sunday</a>
@@ -89,15 +86,11 @@
 
   <section id="monthNames-modal" class="section">
     <div class="container">
-      <h1 class="title is-3">
-        Month Name Language
-        <span style="float: left; padding: 5px;"><small>
-          <a id="back-monthNames"><span class="octicon octicon-chevron-left"></span> Prefs</a>
-        </small></span>
-        <span style="float: right; padding: 5px;">
-          <a id="close-monthNames"><span class="octicon octicon-x"></span></a>
-        </span>
+      <h1 class="title is-4 has-text-left">
+        <small><a id="back-monthNames"><span class="octicon octicon-chevron-left"></span> Prefs</a></small>
+        <span class="is-pulled-right"><a id="close-monthNames"><span class="octicon octicon-x"></span></a></span>
       </h1>
+      <h2 class="subtitle is-4">Month Name Language</h2>
 
       <nav class="panel" id="monthNames">
         <a class="panel-block" data-value="gez"><span class="octicon octicon-check"></span> Gəʿəz</a>
@@ -109,15 +102,11 @@
 
   <section id="dayNames-modal" class="section">
     <div class="container">
-      <h1 class="title is-3">
-        Day Names Language
-        <span style="float: left; padding: 5px;"><small>
-          <a id="back-dayNames"><span class="octicon octicon-chevron-left"></span> Prefs</a>
-        </small></span>
-        <span style="float: right; padding: 5px;">
-          <a id="close-dayNames"><span class="octicon octicon-x"></span></a>
-        </span>
+      <h1 class="title is-4 has-text-left">
+        <small><a id="back-dayNames"><span class="octicon octicon-chevron-left"></span> Prefs</a></small>
+        <span class="is-pulled-right"><a id="close-dayNames"><span class="octicon octicon-x"></span></a></span>
       </h1>
+      <h2 class="subtitle is-4">Day Names Language</h2>
 
       <nav class="panel" id="dayNames">
         <a class="panel-block" data-value="gez"><span class="octicon octicon-check"></span> Gəʿəz</a>
@@ -133,17 +122,14 @@
       $('#calendar').ethiopianCalendar({
         'useSavedPrefs': true,
         'savePrefs': true
-      });
-      addButtons();
-      prefillForm();
+      }, postProcess);
 
       $(document).on('click', '#today-button', function(){        
         $('#calendar').ethiopianCalendar('update', {
           'savePrefs': true,
           'useSavedPrefs': true,
           'calendarMonth': (new Date())
-        });
-        addButtons();
+        }, postProcess);
       });
 
       $(document).on('click', '#prev-month', function(){
@@ -156,8 +142,7 @@
           'savePrefs': true,
           'useSavedPrefs': true,
           'calendarMonth': prevMonth
-        });
-        addButtons();
+        }, postProcess);
       });
 
       $(document).on('click', '#next-month', function(){
@@ -177,8 +162,7 @@
           'savePrefs': true,
           'useSavedPrefs': true,
           'calendarMonth': nextMonth
-        });
-        addButtons();
+        }, postProcess);
       });
 
       $(document).on("click", 'a[id^="open"]', function(){
@@ -204,9 +188,7 @@
         }
         options[$(this).attr('id')] = $(this).is(':checked');
         
-        $('#calendar').ethiopianCalendar('update', options);
-        addButtons();
-        prefillForm();
+        $('#calendar').ethiopianCalendar('update', options, postProcess);
       });
 
       $(document).on("click", "nav.panel a.panel-block", function(){
@@ -216,11 +198,14 @@
         }
         options[$(this).parent().attr('id')] = $(this).data('value');
         
-        $('#calendar').ethiopianCalendar('update', options);
-        addButtons();
-        prefillForm();
+        $('#calendar').ethiopianCalendar('update', options, postProcess);
       });
     });
+
+    function postProcess(){
+      addButtons();
+      prefillForm();
+    }
 
     function addButtons(){
       $('#calendar .calendar-title').append(
@@ -234,6 +219,22 @@
           $('<a href="https://dev.ethiopicist.com/Calendar/" target="_blank"><span class="octicon octicon-question"></span></a>')
         )
       );
+
+      $('body').append(
+        $('<nav class="navbar is-light is-fixed-bottom is-hidden-tablet" />').append(
+          $('<div class="navbar-start" />').append(
+            $('<a id="today-button" class="navbar-item">Today</a>'),
+            $('<a id="prev-month" class="navbar-item"><span class="octicon octicon-chevron-left"></span></a>'),
+            $('<a id="next-month" class="navbar-item"><span class="octicon octicon-chevron-right"></span></a>')
+          ),
+          $('<div class="navbar-end" />').append(
+            $('<a id="open-preferences" class="navbar-item"><span class="octicon octicon-gear"></span></a>'),
+            $('<a href="https://dev.ethiopicist.com/Calendar/" target="_blank" class="navbar-item"><span class="octicon octicon-question"></span></a>')
+          )
+        )
+      );
+
+      $('#calendar tfoot').append($('<tr class="is-hidden-tablet" />').append('<th colspan="7" style="height: 3.25rem" />'));
     }
   
     function prefillForm(){

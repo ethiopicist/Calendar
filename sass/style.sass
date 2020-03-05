@@ -2,6 +2,8 @@
 
 @import "utilities/initial-variables"
 
+$navbar-breakpoint: 0
+
 @import "utilities/_all"
 @import "base/_all"
 @import "elements/_all"
@@ -87,8 +89,11 @@ body
       +tablet
         background-color: $white-bis
 
+      span.event
+        display: none
+
     span
-      padding: 5px
+      padding: 0.2em
       display: block
       position: absolute
 
@@ -99,6 +104,7 @@ body
       &[class^='ethiopian']
         font-size: 1rem
         top: 0px
+        z-index: 10
 
         +desktop
           font-size: 1.2rem
@@ -127,6 +133,18 @@ body
         +tablet
             max-width: 75%
         
+        +mobile
+          display: none
+      
+      &.event
+        @extend .has-background-warning
+        width: 100%
+        top: 0px
+        left: 0px
+        z-index: 0
+        font-size: 0.83rem
+        line-height: calc(1.5 * 1.2rem)
+
         +mobile
           display: none
     
@@ -180,7 +198,7 @@ section[id$="-modal"]
   +mobile
     padding: 10px
 
-  h1.title
+  h1.title, h2.subtitle
     text-align: center
     small
       font-size: 0.75em
@@ -203,3 +221,9 @@ section[id$="-modal"]
       color: $white
       .octicon
         display: inline
+
+.navbar.is-light
+  border-top: 1px solid #dbdbdb
+  
+  a span
+    font-size: 24px
