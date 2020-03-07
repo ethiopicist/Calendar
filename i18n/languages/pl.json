@@ -1,0 +1,75 @@
+{
+	"@metadata": {
+		"authors": [
+			"Weronika Kozłowska"
+		],
+		"locale": "pl"
+	},
+
+	"langName": "Polski",
+
+	"day0long": "niedziela",
+	"day0short": "niedz.",
+	"day1long": "poniedziałek",
+	"day1short": "pon.",
+	"day2long": "wtorek",
+	"day2short": "wt.",
+	"day3long": "środa",
+	"day3short": "śr.",
+	"day4long": "czwartek",
+	"day4short": "czw.",
+	"day5long": "piątek",
+	"day5short": "pt.",
+	"day6long": "sobota",
+	"day6short": "sob.",
+
+	"month1long": "styczeń",
+	"month1short": "01",
+	"month2long": "luty",
+	"month2short": "02",
+	"month3long": "marzec",
+	"month3short": "03",
+	"month4long": "kwiecień",
+	"month4short": "04",
+	"month5long": "maj",
+	"month5short": "05",
+	"month6long": "czerwiec",
+	"month6short": "06",
+	"month7long": "lipiec",
+	"month7short": "07",
+	"month8long": "sierpień",
+	"month8short": "08",
+	"month9long": "wrzesień",
+	"month9short": "09",
+	"month10long": "październik",
+	"month10short": "10",
+	"month11long": "listopad",
+	"month11short": "11",
+	"month12long": "grudzień",
+	"month12short": "12",
+	"shortSeparator": ".",
+
+	"today": "Dzisiaj",
+  "goto": "Przejdź do…",
+
+	"appLanguage": "Zmień język",
+  "changesSaved": "Zmiany są zapisywane automatycznie.",
+
+	"preferences": "Preferencje",
+
+	"calendarPreferences": "Preferencje kalendarza",
+	"weekBegins": "Wybierz pierwszy dzień tygodnia:",
+  "gregorianDates": "Pokaż daty według kalendarza gregoriańskiego",
+	
+	"languagePreferences": "Preferencje języka",
+  "calendarLanguage": "Język kalendarza:",
+  "geez": "gyyz",
+  "amharic": "amharski",
+  "tigrinya": "tigrinia",
+  "oromoo": "oromo",
+  "showLocale": "Pokaż dni tygodnia po polsku",
+	
+	"displayPreferences": "Wyświetl preferencje",
+  "useLetters": "Użyj pisma etiopskiego",
+  "useNumbers": "Użyj cyfr etiopskich"
+}

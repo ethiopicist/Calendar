@@ -1,0 +1,75 @@
+{
+	"@metadata": {
+		"authors": [
+			""
+		],
+		"locale": "am"
+	},
+
+	"langName": "አማርኛ",
+
+	"day0long": "እሑድ",
+	"day0short": "እሑድ",
+	"day1long": "ሰኞ",
+	"day1short": "ሰኞ",
+	"day2long": "ማግሰኞ",
+	"day2short": "ማግሰኞ",
+	"day3long": "ረቡዕ",
+	"day3short": "ረቡዕ",
+	"day4long": "ኀሙስ",
+	"day4short": "ኀሙስ",
+	"day5long": "ዓርብ",
+	"day5short": "ዓርብ",
+	"day6long": "ቅዳሜ",
+	"day6short": "ቅዳሜ",
+
+	"month1long": "ጃንዋሪ",
+	"month1short": "01",
+	"month2long": "ፌብሩዋሪ",
+	"month2short": "02",
+	"month3long": "ማርች",
+	"month3short": "03",
+	"month4long": "ኤፕሪል",
+	"month4short": "04",
+	"month5long": "ሜይ",
+	"month5short": "05",
+	"month6long": "ጁን",
+	"month6short": "06",
+	"month7long": "ጁላይ",
+	"month7short": "07",
+	"month8long": "ኦገስት",
+	"month8short": "08",
+	"month9long": "ሴፕቴምበር",
+	"month9short": "09",
+	"month10long": "ኦክቶበር",
+	"month10short": "10",
+	"month11long": "ኖቬምበር",
+	"month11short": "11",
+	"month12long": "ዲሴምበር",
+	"month12short": "12",
+	"shortSeparator": "/",
+
+	"today": "ዛሬ",
+	"goto": "Go To…",
+
+	"appLanguage": "Change Application Language:",
+	"changesSaved": "Changes are saved automatically.",
+
+	"preferences": "Preferences",
+
+	"calendarPreferences": "Calendar Preferences",
+	"weekBegins": "Week begins on:",
+	"gregorianDates": "Show Gregorian dates",
+	
+	"languagePreferences": "Language Preferences",
+	"calendarLanguage": "Calendar language:",
+	"geez": "ግዕዝ",
+	"amharic": "አማርኛ",
+	"tigrinya": "ትግርኛ",
+	"oromoo": "ኦሮምኛ",
+	"showLocale": "Show days of the week in Amharic",
+	
+	"displayPreferences": "Display Preferences",
+	"useLetters": "Use Ethiopic letters",
+	"useNumbers": "Use Ethiopic numerals"
+}

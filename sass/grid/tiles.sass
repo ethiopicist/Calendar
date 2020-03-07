@@ -24,11 +24,9 @@ $tile-spacing: 0.75rem !default
     flex-direction: column
     & > .tile.is-child:not(:last-child)
       margin-bottom: 1.5rem !important
-  // Responsiveness
-  +tablet
-    &:not(.is-child)
-      display: flex
-    @for $i from 1 through 12
-      &.is-#{$i}
-        flex: none
-        width: ($i / 12) * 100%
+  &:not(.is-child) //removed +tablet breakpoint
+    display: flex
+  @for $i from 1 through 7 //changed 12 grid to 7
+    &.is-#{$i}
+      flex: none
+      width: ($i / 7) * 100% //changed 12 grid to 7

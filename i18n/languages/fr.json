@@ -1,0 +1,83 @@
+{
+	"@metadata": {
+		"authors": [
+			"Augustine Dickinson"
+		],
+		"locale": "fr"
+	},
+
+	"langName": "Français",
+
+	"day0long": "dimanche",
+	"day0short": "dim.",
+	"day1long": "lundi",
+	"day1short": "lun.",
+	"day2long": "mardi",
+	"day2short": "mar.",
+	"day3long": "mercredi",
+	"day3short": "mer.",
+	"day4long": "jeudi",
+	"day4short": "jeu.",
+	"day5long": "vendredi",
+	"day5short": "ven.",
+	"day6long": "samedi",
+	"day6short": "sam.",
+
+	"month1long": "janvier",
+	"month1short": "janv.",
+	"month2long": "février",
+	"month2short": "févr.",
+	"month3long": "mars",
+	"month3short": "mars",
+	"month4long": "avril",
+	"month4short": "avr.",
+	"month5long": "mai",
+	"month5short": "mai",
+	"month6long": "juin",
+	"month6short": "juin",
+	"month7long": "juillet",
+	"month7short": "juill.",
+	"month8long": "août",
+	"month8short": "août",
+	"month9long": "septembre",
+	"month9short": "sept.",
+	"month10long": "octobre",
+	"month10short": "oct.",
+	"month11long": "novembre",
+	"month11short": "nov.",
+	"month12long": "décembre",
+	"month12short": "déc.",
+	"shortSeparator": " '",
+
+	"today": "Aujourd'hui",
+	"goto": "Aller à…",
+
+	"appLanguage": "Change App Language :",
+	"changesSaved": "Changes are saved automatically.",
+
+	"preferences": "Préférences",
+
+	"calendarPreferences": "Calendar Préférences",
+	"weekBegins": "La semaine commence le :",
+	"gregorianDates": "Show Gregorian dates",
+	
+	"languagePreferences": "Language Préférences",
+	"calendarLanguage": "Calendar language :",
+	"geez": "guèze",
+	"amharic": "amharique",
+	"tigrinya": "tigrinya",
+	"oromoo": "oromo",
+	"showLocale": "Show days of the week in Français",
+	
+	"displayPreferences": "Display Préférences",
+	"useLetters": "Use Ethiopic letters",
+	"useNumbers": "Use Ethiopic numerals",
+
+	"ariaPrev": "Aller au mois précédent",
+	"ariaToday": "Aller à aujourd'hui",
+	"ariaNext": "Aller au mois suivant",
+	"ariaOpenLanguages": "Change App Language",
+	"ariaOpenPreferences": "Ouvrir Préférences",
+	"ariaHelp": "Aide",
+	"ariaClose": "Fermer fenêtre"
+}

@@ -1,7 +1,7 @@
 {
   "name": "@ethiopicist/calendar",
-  "version": "1.0.0",
-  "description": "A pure JS Ethiopian calendar app.",
+  "version": "2.0.0",
+  "description": "A jQuery Ethiopian calendar app.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,8 +21,9 @@
   },
   "homepage": "https://github.com/ethiopicist/Calendar#readme",
   "dependencies": {
-    "bulma": "^0.7.2",
-    "jquery": "^3.3.1",
-    "octicons": "^4.4.0"
+    "bulma": "^0.8.0",
+    "jquery": "^3.4.0",
+    "octicons": "^4.4.0",
+    "@wikimedia/jquery.i18n": "1.0.7"
   }
 }

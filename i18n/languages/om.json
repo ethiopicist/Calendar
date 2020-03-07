@@ -1,0 +1,75 @@
+{
+	"@metadata": {
+		"authors": [
+			""
+		],
+		"locale": "om"
+	},
+
+	"langName": "Oromoo",
+
+	"day0long": "Dilbata",
+	"day0short": "Sun",
+	"day1long": "Wixata",
+	"day1short": "Mon",
+	"day2long": "Kibxata",
+	"day2short": "Tue",
+	"day3long": "Roobii",
+	"day3short": "Wed",
+	"day4long": "Kamisa",
+	"day4short": "Thu",
+	"day5long": "Jimaata",
+	"day5short": "Fri",
+	"day6long": "Sambata",
+	"day6short": "Sat",
+
+	"month1long": "Amajjii",
+	"month1short": "Jan",
+	"month2long": "Guraandhala",
+	"month2short": "Feb",
+	"month3long": "Bitooteessa",
+	"month3short": "Mar",
+	"month4long": "Caamsa",
+	"month4short": "Apr",
+	"month5long": "Eblaa",
+	"month5short": "May",
+	"month6long": "Waxbajji",
+	"month6short": "Jun",
+	"month7long": "Adooleessa",
+	"month7short": "Jul",
+	"month8long": "Hagayaa",
+	"month8short": "Aug",
+	"month9long": "Fulbaana",
+	"month9short": "Sep",
+	"month10long": "Onkolooleesa",
+	"month10short": "Oct",
+	"month11long": "Sadaasa",
+	"month11short": "Nov",
+	"month12long": "Muddee",
+	"month12short": "Dec",
+	"shortSeparator": " '",
+
+	"today": "Ar'a",
+	"goto": "Go To…",
+
+	"appLanguage": "Change App Language:",
+	"changesSaved": "Changes are saved automatically.",
+
+	"preferences": "Preferences",
+
+	"calendarPreferences": "Calendar Preferences",
+	"weekBegins": "Week begins on:",
+	"gregorianDates": "Show Gregorian dates",
+	
+	"languagePreferences": "Language Preferences",
+	"calendarLanguage": "Calendar language:",
+	"geez": "Gəʿəz",
+	"amharic": "Amaaraa",
+	"tigrinya": "Tigrinya",
+	"oromoo": "Oromoo",
+	"showLocale": "Show days of the week in Oromoo",
+	
+	"displayPreferences": "Display Preferences",
+	"useLetters": "Use Ethiopic letters",
+	"useNumbers": "Use Ethiopic numerals"
+}

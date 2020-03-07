@@ -16,214 +16,155 @@ $navbar-breakpoint: 0
 @import "octicons/octicons.min.css"
 @import "notosans/notosans.min.css"
 
-html, body, section.section, .container, .calendar
-  height: 100%
+/* Basic Config */
+
+html, body, section.section, .container
   width: 100%
   font-family: 'Noto Sans'
-  
-  +mobile
-    padding: 0
-    margin: 0
-
-body
-  +tablet
-    min-height: 600px
 
 .section
   +touch
     padding: 1rem
 
-.calendar
-  +mobile
-    font-size: 0.8rem
-    height: auto
+/* Calendar Styles */
 
-    td, th
-      padding: 0.3em 0.5em
-      border: 0
+div#calendar
+  border: 1px solid #dbdbdb
 
-    thead tr th
-      font-weight: normal
-      background-color: transparent
+  div.calendar-head
+    background-color: $light
 
-      span
-        display: none
+    div.calendar-title-row
+      div.tile
+        padding: 0.25rem
 
-  thead tr
-    &.calendar-title-row, &.calendar-days-of-week
-      th
-        text-align: center
-        background-color: $light
-
+      div#calendar-controls, div#calendar-preferences
         +mobile
-          border-bottom: 1px solid #dbdbdb
+          display: none
 
-        &.calendar-day-of-week
-          span.day-of-week-long
-            +tablet
-              display: inline
-            +mobile
-              display: none
-
-          span.day-of-week-short
-            +tablet
-              display: none
-            +mobile
-              display: inline
+      div.calendar-title-cell
+        +mobile
+          width: 100%
 
         h1.calendar-title
           @extend .is-4
           @extend .title
           text-align: center
 
-  tbody tr[class^='calendar-row'] td
-    position: relative
-    width: calc(100% / 7)
+    div.calendar-dow-row
+      border-top: 1px solid #dbdbdb
 
-    +mobile
-      position: static
+      div[class^="calendar-dow-cell"]
+        border-right: 1px solid #dbdbdb
+        padding: 0.25rem
 
-    &.different-month
-      color: $grey-light
+        &:last-child
+          border-right: 0px
 
-      +tablet
+        .dow-name-long
+          +mobile
+            display: none
+
+        .dow-name-short
+          +tablet
+            display: none
+  
+  div.calendar-body
+
+    div[class^="calendar-cell"]:not(.calendar-cell-inner)
+      border-top: 1px solid #dbdbdb
+      border-right: 1px solid #dbdbdb
+      height: 4.75rem
+      padding: 0.25rem
+
+      &:last-child
+        border-right: 0px
+
+      &.calendar-cell-is-diff-month
+        color: $grey-light
         background-color: $white-bis
-
-      span.event
-        display: none
-
-    span
-      padding: 0.2em
-      display: block
-      position: absolute
-
-      +mobile
-        position: static
-        text-align: center
-
-      &[class^='ethiopian']
-        font-size: 1rem
-        top: 0px
-        z-index: 10
-
-        +desktop
-          font-size: 1.2rem
-
-        &.ethiopian-date
-          right: 0px
-
-        &.ethiopian-month
-          left: 0px
-
-      &[class^='gregorian']
-        font-size: 0.83rem
-        bottom: 0px
-        
-        +mobile
-          color: $grey-light
-
-        &.gregorian-date
-          left: 0px
-
-        &.gregorian-month
-          right: 0px
-          text-align: right
-
-      &[class$='month']
-        +tablet
-            max-width: 75%
-        
-        +mobile
-          display: none
       
-      &.event
-        @extend .has-background-warning
-        width: 100%
-        top: 0px
-        left: 0px
-        z-index: 0
-        font-size: 0.83rem
-        line-height: calc(1.5 * 1.2rem)
+      &.calendar-cell-is-today
+        background: $info-light
+        color: $info
+      
+      div.calendar-cell-inner
+        position: relative
 
-        +mobile
-          display: none
-    
-    &.todays-date
-      +tablet
-        span.ethiopian-date
-          background-color: $cyan
-          color: $white
-          border-radius: 50%
-          padding: 0
+        span[class$='-month-long']
+          +touch
+            display: none
+
+        span[class$='-month-short']
+          +desktop
+            display: none
+
+        span[class^='label-ethiopian']
+          font-size: 1.2em
+          position: absolute
+          top: 0px
+
+          &[class$='-date']
+            right: 0px
+
+          &[class*='-month-']
+            left: 0px
+
+          +touch
+            font-size: 1em
+
+        span[class^='label-gregorian']
+          font-size: 0.8em
+          position: absolute
+          bottom: 0px
+
+          &[class$='-date']
+            left: 0px
+
+          &[class*='-month-']
+            right: 0px
+
+          +touch
+            font-size: 0.7em
           
-          &:before, &:after
-            content: '\200B'
-            display: inline-block
-            line-height: 0px
-            padding-top: 50%
-            padding-bottom: 50%
-          
-          &:before
-            padding-left: 8px
-
-          &:after
-            padding-right: 8px
-
-      +mobile
-        background-color: lighten($info, 10%)
-        
-        span[class^='ethiopian']
-          color: $white
-        
-        span[class^='gregorian']
-          color: $white-ter
-
-a#today-button
-  margin-right: 10px
-
-h1 a
-  color: inherit
+          +mobile
+            font-size: 0.6em
 
 span.octicon
   font-size: inherit
 
-section[id$="-modal"]
-  background-color: $white
-  display: none
-  z-index: 100
-  position: absolute
-  top: 0px
-  left: 0px
+/* App Styles */
 
-  +mobile
-    padding: 10px
+.panel .panel-block
+  padding-left: calc(0.75em + 16px)
+  display: block
 
-  h1.title, h2.subtitle
-    text-align: center
-    small
-      font-size: 0.75em
-      font-weight: normal
+  .octicon
+    font-size: 1.2rem
+    line-height: 1.5rem
+    display: none
 
-  a.tag.is-medium
-    width: 90px
-    text-decoration: none
-    margin-left: 5px
-
-  .panel .panel-block
-    padding-left: calc(0.75em + 16px)
-
+  &.is-active
+    background-color: $success
+    color: $white
     .octicon
-      margin-left: -16px
+      display: inline
+
+.menu 
+  .menu-list > li > a:hover
+    background-color: inherit
+    color: inherit
+    cursor: default
+
+  a
+    .octicon
       display: none
 
     &.is-active
-      background-color: $info
-      color: $white
+      background-color: $success
+
       .octicon
-        display: inline
+        display: inline-block
 
 .navbar.is-light
   border-top: 1px solid #dbdbdb
-  
-  a span
-    font-size: 24px
