@@ -6,6 +6,8 @@
 		"locale": "en"
 	},
 
+	"title": "Ethiopian-Eritrean Calendar",
+
 	"langName": "English",
 
 	"day0long": "Sunday",
@@ -50,7 +52,9 @@
 	"shortSeparator": " '",
 
 	"today": "Today",
+
 	"goto": "Go To…",
+	"go": "Go",
 
 	"appLanguage": "Change App Language:",
 	"changesSaved": "Changes are saved automatically.",

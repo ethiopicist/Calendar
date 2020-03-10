@@ -15,7 +15,9 @@
         fr: 'i18n/languages/fr.json'
       }).done(function(){
 
-        buildCalendar(element, settings);
+        buildCalendar(element);
+
+        populateCalendar(element, settings);
 
         if(callback) callback();
 
@@ -24,13 +26,11 @@
     },
     update: function(options, callback){
 
-      this.html('');
-
       var settings = managePrefs(options);
 
       $.i18n({locale: settings['locale']});
 
-      buildCalendar(this, settings);
+      populateCalendar(this, settings);
 
       if(callback) callback();
 
@@ -95,116 +95,175 @@
     return settings;
   }
 
-  // Function to build calendar
-  function buildCalendar(element, settings){
-    // THEAD ELEMENTS //
+  // Function to build the elements for the calendar
+  function buildCalendar(element){
+    element.html('');
+    
+    // Head Elements //
+    var calendarHead = $('<div class="calendar-head" />').appendTo(element);
 
-    // Month & Year
-    var titleRow = $('<div class="calendar-title-row" />').append(
+    // Title Row
+    $('<div class="calendar-title-row" />').append(
       $('<div class="calendar-title-cell" />').append(
         $('<div class="calendar-title-cell-inner" />').append(
           $('<h1 class="calendar-title" />').text(' ').prepend(
-            $('<span class="month-name" />').text(printMonthName(settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters'])),
+            $('<span class="month-name" />'),
           ).append(
-            $('<span class="year-number" />').text((settings['useNumbers'] ? toEthiopicNumber(settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {year: 'numeric'})) : settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {year: 'numeric'}).substr(0, 4)))
+            $('<span class="year-number" />')
           )
         )
       )
-    );
-
+    ).appendTo(calendarHead);
+    
     // Days of the Week
-    var dowRow = $('<div class="calendar-dow-row" />');
+    var dowRow = $('<div class="calendar-dow-row" />').appendTo(calendarHead);
 
     for(i = 0; i < 7; i++){
-      var d = (i + settings['startDay']) % 7;
       dowRow.append($('<div />').addClass('calendar-dow-cell-'+i).append(
         $('<div class="calendar-dow-cell-inner">').append(
-          $('<span class="dow-name-long" />').text(printDayName(d, (settings['localeDays'] ? 'locale' : settings['language']), settings['useLetters'], 'long')),
-          $('<span class="dow-name-short" />').text(printDayName(d, (settings['localeDays'] ? 'locale' : settings['language']), settings['useLetters'], 'short'))
+          $('<span class="dow-name-long" />'),
+          $('<span class="dow-name-short" />')
         )
       ));
     }
+    
 
-    // Append all thead rows
-    var calendarHead = $('<div class="calendar-head" />').append(titleRow, dowRow);
-
-    // TBODY ELEMENTS //
+    // Body elements //
+    var calendarBody = $('<div class="calendar-body" />').appendTo(element);
     
     // Calendar rows
-    var tbodyRows = [];
-    var iDate = firstOfCalendar(settings['calendarMonth'], settings['startDay']);
 
     for(i = 0; i < 6; i++){
-      tbodyRows[i] = $('<div class="calendar-row-'+i+'" />');
+      var calendarRow = $('<div class="calendar-row-'+i+'" />').appendTo(calendarBody);
 
       for(j = 0; j < 7; j++){
-        var theCell = $('<div />');
-        theCell.addClass('calendar-cell-'+i+'-'+j);
+        var calendarCell = $('<div class="calendar-cell-'+i+'-'+j+'" />').appendTo(calendarRow);
         
-        var theCellInner = $('<div class="calendar-cell-inner" />');
-        
-        theCell.attr('data-ethiopian-date', iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric', month: 'numeric', year: 'numeric'}));
-        theCell.attr('data-gregorian-date', iDate.toLocaleDateString('en-US', {day: 'numeric', month: 'numeric', year: 'numeric'}));
-
-        theCellInner.append($('<span class="label-ethiopian-date" />').text(
-          (settings['useNumbers'] ? toEthiopicNumber(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'})) : iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}))
-        ));
-
-        // if the current cell is in a different Ethiopian month
-        if(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}) != settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'})){
-          theCell.addClass('calendar-cell-is-diff-month');
+        $('<div class="calendar-cell-inner" />').append(
+          $('<span class="label-ethiopian-date" />'),
+          $('<span class="label-ethiopian-month-long" />'),
+          $('<span class="label-ethiopian-month-short" />'),
+          $('<span class="label-ethiopian-month-min" />'),
           
-          // if the current cell is the first shown date
-          // in a different Ethiopian month
-          if(i == 0 && j == 0 || iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}) == 1){
-            theCellInner.append(
-              $('<span class="label-ethiopian-month-long" />').text(
-                printMonthName(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters'])
-              ),
-              $('<span class="label-ethiopian-month-short" />').text(
-                printMonthName(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters']).substr(0, 2)
-              )
-            );
-          }
-        }
+          $('<span class="label-gregorian-date" />'),
+          $('<span class="label-gregorian-month-long" />'),
+          $('<span class="label-gregorian-month-short" />'),
+          $('<span class="label-gregorian-month-min" />')
+        ).appendTo(calendarCell);
 
-        // if the current cell matches today's date
-        if(iDate.toLocaleDateString() == (new Date()).toLocaleDateString()){
-          theCell.addClass('calendar-cell-is-today');
-        }
-
-        // if Gregorian dates are to be displayed
-        if(settings['gregorianDates']){
-          theCellInner.append($('<span class="label-gregorian-date" />').text(iDate.getDate()));
-
-          // if the current cell is the
-          // first shown date of a Gregorian month
-          if(i == 0 && j == 0 || iDate.getDate() == 1){
-            theCellInner.append(
-              $('<span class="label-gregorian-month-long" />').text(
-                $.i18n('month'+iDate.toLocaleDateString('en-US', {month: 'numeric'})+'long')
-                +' '+
-                iDate.toLocaleDateString('en-US', {year: 'numeric'})
-              ),
-              $('<span class="label-gregorian-month-short" />').text(
-                $.i18n('month'+iDate.toLocaleDateString('en-US', {month: 'numeric'})+'short') +
-                $.i18n('shortSeparator') +
-                iDate.toLocaleDateString('en-US', {year: '2-digit'}))
-            );
-          }
-        }
-
-        // append all cells to the row
-        tbodyRows[i].append(theCell.append(theCellInner));
-
-        // increment iDate
-        iDate.setDate(iDate.getDate()+1);
       }
     }
 
-    var calendarBody = $('<div class="calendar-body" />').append(tbodyRows);
+  }
 
-    element.append(calendarHead, calendarBody);
+  // Function to populate the calendar with dates
+  function populateCalendar(element, settings){
+    // Head Elements //
+
+    // Title Row
+
+    var titleCellInner = $(element).find('.calendar-head .calendar-title-row .calendar-title-cell .calendar-title-cell-inner .calendar-title');
+
+    titleCellInner.children('.month-name').text(
+      printMonthName(settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters'])
+    );
+
+    titleCellInner.children('.year-number').text(
+      (settings['useNumbers'] ? toEthiopicNumber(settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {year: 'numeric'})) : settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {year: 'numeric'}).substr(0, 4))
+    );
+
+    // Days of the Week
+    var dowRow = $(element).find('.calendar-head .calendar-dow-row');
+
+    for(i = 0; i < 7; i++){
+      var d = (i + settings['startDay']) % 7;
+
+      var dowCellInner = dowRow.find('.calendar-dow-cell-'+i+' .calendar-dow-cell-inner');
+      
+      dowCellInner.children('.dow-name-long').text(
+        printDayName(d, (settings['localeDays'] ? 'locale' : settings['language']), settings['useLetters'], 'long')
+      );
+
+      dowCellInner.children('.dow-name-short').text(
+        printDayName(d, (settings['localeDays'] ? 'locale' : settings['language']), settings['useLetters'], 'short')
+      );
+    }
+
+    // Body elements
+    var calendarBody = $(element).children('.calendar-body');
+
+    var iDate = firstOfCalendar(settings['calendarMonth'], settings['startDay']);
+
+    for(i = 0; i < 6; i++){
+      var calendarRow = calendarBody.children('.calendar-row-'+i);
+
+      for(j = 0; j < 7; j++){
+        var calendarCell = calendarRow.children('.calendar-cell-'+i+'-'+j);
+
+        calendarCell.removeClass('is-different-month is-today');
+        calendarCell.attr('data-ethiopian-date', iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric', month: 'numeric', year: 'numeric'}).slice(0, -5).replace(/\//g, '-'));
+        calendarCell.attr('data-gregorian-date', iDate.toLocaleDateString('en-US', {day: 'numeric', month: 'numeric', year: 'numeric'}).replace(/\//g, '-'));
+
+        var calendarCellInner = calendarCell.children('.calendar-cell-inner');
+
+        calendarCellInner.children().text('');
+
+        // if the current cell is the first displayed cell of a month
+        if(i == 0 && j == 0 || iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}) == 1){
+            
+          calendarCellInner.children('.label-ethiopian-month-long').text(
+            printMonthName(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters'], 'long')
+          );
+
+          calendarCellInner.children('.label-ethiopian-month-short').text(
+            printMonthName(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters'], 'short')
+          );
+
+          calendarCellInner.children('.label-ethiopian-month-min').text(
+            printMonthName(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}), settings['language'], settings['useLetters'], 'short')
+          );
+
+        }
+
+        // if the current cell is in a different Ethiopian month
+        if(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}) != settings['calendarMonth'].toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'})){
+          calendarCell.addClass('is-different-month');
+        } // else if the current cell is today
+        else if(iDate.toLocaleDateString() == (new Date()).toLocaleDateString()){
+          calendarCell.addClass('is-today');
+        }
+
+        calendarCellInner.children('.label-ethiopian-date').text(
+          (settings['useNumbers'] ? toEthiopicNumber(iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'})) : iDate.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}))
+        );
+
+        if(settings['gregorianDates']){
+          calendarCellInner.children('.label-gregorian-date').text(iDate.getDate());
+          
+          if(i == 0 && j == 0 || iDate.getDate() == 1){
+          
+            calendarCellInner.children('.label-gregorian-month-long').text(
+              $.i18n('month'+iDate.toLocaleDateString('en-US', {month: 'numeric'})+'long')
+              +' '+
+              iDate.toLocaleDateString('en-US', {year: 'numeric'})
+            );
+
+            calendarCellInner.children('.label-gregorian-month-short').text(
+              $.i18n('month'+iDate.toLocaleDateString('en-US', {month: 'numeric'})+'short') +
+              $.i18n('shortSeparator') +
+              iDate.toLocaleDateString('en-US', {year: '2-digit'})
+            );
+
+            calendarCellInner.children('.label-gregorian-month-min').text(
+              $.i18n('month'+iDate.toLocaleDateString('en-US', {month: 'numeric'})+'long')
+            );
+
+          }
+        }
+
+        iDate.setDate(iDate.getDate()+1); // increment iDate
+      }
+    }
   }
 
   // Function to determine first date
@@ -226,7 +285,7 @@
     return date;
   }
 
-  function printMonthName(m, lang, translit){
+  function printMonthName(m, lang, translit, length){
     var gezMonthNames = [
       'መስከረም',
       'ጥቅምት',
@@ -266,30 +325,39 @@
     tigMonthNamesTranslit[5] = 'Lakkātit'; tigMonthNamesTranslit[4] = 'Ṭərri'; tigMonthNamesTranslit[1] = 'Ṭəqəmti';
 
     var oroMonthNames = [
-      'Maskaram',
-      'Xeqemt',
-      'Hedaar',
-      'Taahsaas',
-      'Xerr',
+      'Maskarram',
+      'Xiqqimt',
+      'Hidaar',
+      'Tahsaas',
+      'Xirr',
       'Yakkaatit',
       'Maggaabit',
       'Miyaazyaa',
-      'Genbot',
+      'Ginbbot',
       'Sanee',
       'Haamlee',
-      'Nahaasee',
-      'Paagumee'
+      'Nahasse',
+      'Qaamme'
     ];
 
     if(lang == 'tig'){
-      if(!translit) return tigMonthNamesTranslit[m-1];
+      if(!translit){
+        if(length == 'short') return tigMonthNamesTranslit[m-1].substr(0, 4);
+        else return tigMonthNamesTranslit[m-1];
+      }
+      else if(length == 'short') return tigMonthNames[m-1].substr(0, 2);
       else return tigMonthNames[m-1];
     }
     else if(lang == 'oro'){
-      return oroMonthNames[m-1];
+      if(length == 'short') return oroMonthNames[m-1].substr(0, 4);
+      else return oroMonthNames[m-1];
     }
     else{
-      if(!translit) return gezMonthNamesTranslit[m-1];
+      if(!translit){
+        if(length == 'short') return gezMonthNamesTranslit[m-1].substr(0, 4);
+        else return gezMonthNamesTranslit[m-1];
+      }
+      else if(length == 'short') return gezMonthNames[m-1].substr(0, 2);
       else return gezMonthNames[m-1];
     }
   }
@@ -401,7 +469,7 @@
   function toEthiopicNumber(x){
     if(typeof x !== 'number') x = parseInt(x);
   
-          if(x == 0) return  '';
+         if(x == 0) return  '';
     else if(x == 1) return '፩';
     else if(x == 2) return '፪';
     else if(x == 3) return '፫';

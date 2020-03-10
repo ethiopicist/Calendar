@@ -6,6 +6,8 @@
 		"locale": "am"
 	},
 
+	"title": "Ethiopian-Eritrean Calendar",
+
 	"langName": "አማርኛ",
 
 	"day0long": "እሑድ",
@@ -50,7 +52,9 @@
 	"shortSeparator": "/",
 
 	"today": "ዛሬ",
+
 	"goto": "Go To…",
+	"go": "Go",
 
 	"appLanguage": "Change Application Language:",
 	"changesSaved": "Changes are saved automatically.",
@@ -71,5 +75,13 @@
 	
 	"displayPreferences": "Display Preferences",
 	"useLetters": "Use Ethiopic letters",
-	"useNumbers": "Use Ethiopic numerals"
+	"useNumbers": "Use Ethiopic numerals",
+
+	"ariaPrev": "Go to the previous month",
+	"ariaToday": "Go to today",
+	"ariaNext": "Go to the next month",
+	"ariaOpenLanguages": "Change app language",
+	"ariaOpenPreferences": "Open preferences",
+	"ariaHelp": "Help",
+	"ariaClose": "Close window"
 }

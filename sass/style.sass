@@ -22,21 +22,34 @@ html, body, section.section, .container
   width: 100%
   font-family: 'Noto Sans'
 
-.section
+body
+  +mobile
+    padding-bottom: 3.25rem
+
+section.section
   +touch
     padding: 1rem
 
 /* Calendar Styles */
 
 div#calendar
-  border: 1px solid #dbdbdb
 
   div.calendar-head
-    background-color: $light
 
     div.calendar-title-row
       div.tile
         padding: 0.25rem
+
+        &.is-parent
+          +tablet
+            border-top: 1px solid #dbdbdb
+            background-color: $light
+
+            &:first-child
+              border-left: 1px solid #dbdbdb
+            
+            &:last-child
+              border-right: 1px solid #dbdbdb
 
       div#calendar-controls, div#calendar-preferences
         +mobile
@@ -52,83 +65,149 @@ div#calendar
           text-align: center
 
     div.calendar-dow-row
-      border-top: 1px solid #dbdbdb
 
-      div[class^="calendar-dow-cell"]
-        border-right: 1px solid #dbdbdb
+      div[class^="calendar-dow-cell"]:not(.calendar-dow-cell-inner)
         padding: 0.25rem
+        border-top: 1px solid #dbdbdb
 
-        &:last-child
-          border-right: 0px
+        +tablet
+          background-color: $light
+          border-left: 1px solid #dbdbdb
+
+          &:last-child
+            border-right: 1px solid #dbdbdb
+
+        +mobile
+          padding: 0
 
         .dow-name-long
           +mobile
             display: none
 
         .dow-name-short
+          font-size: 0.8em
+
           +tablet
             display: none
   
   div.calendar-body
+    div[class^="calendar-row"]
+    
+      div[class^="calendar-cell"]:not(.calendar-cell-inner)        
+        height: 4.75rem
+        padding: 0.25rem
+        border-top: 1px solid #dbdbdb
 
-    div[class^="calendar-cell"]:not(.calendar-cell-inner)
-      border-top: 1px solid #dbdbdb
-      border-right: 1px solid #dbdbdb
-      height: 4.75rem
-      padding: 0.25rem
+        +mobile
+          height: 3.75rem
 
-      &:last-child
-        border-right: 0px
-
-      &.calendar-cell-is-diff-month
-        color: $grey-light
-        background-color: $white-bis
-      
-      &.calendar-cell-is-today
-        background: $info-light
-        color: $info
-      
-      div.calendar-cell-inner
-        position: relative
-
-        span[class$='-month-long']
-          +touch
-            display: none
-
-        span[class$='-month-short']
-          +desktop
-            display: none
-
-        span[class^='label-ethiopian']
-          font-size: 1.2em
-          position: absolute
-          top: 0px
-
-          &[class$='-date']
-            right: 0px
-
-          &[class*='-month-']
-            left: 0px
-
-          +touch
-            font-size: 1em
-
-        span[class^='label-gregorian']
-          font-size: 0.8em
-          position: absolute
-          bottom: 0px
-
-          &[class$='-date']
-            left: 0px
-
-          &[class*='-month-']
-            right: 0px
-
-          +touch
-            font-size: 0.7em
+        +tablet
+          border-left: 1px solid #dbdbdb
           
-          +mobile
-            font-size: 0.6em
+          &:last-child
+            border-right: 1px solid #dbdbdb
+        
+        &[class^="calendar-cell-5"] //the last row
+          +tablet
+            border-bottom: 1px solid #dbdbdb
+
+        &.is-different-month
+          color: $grey-light
+
+          +tablet
+            background-color: $white-bis
+        
+        &.is-today
+          color: $info
+
+          +tablet
+            background: $info-light
+        
+        div.calendar-cell-inner
+          position: relative
+
+          // hiding
+          span[class$='-month-long']
+            +touch
+              display: none
+
+          span[class$='-month-short']
+            +desktop
+              display: none
+
+          span[class$='-month-min']
+            +tablet
+              display: none
+
+          span[class^='label-ethiopian']
+            font-size: 1.2em
+
+            +touch
+              font-size: 1em
+
+            &[class*='-month']
+              +mobile
+                display: none
+            
+            // positioning
+            +tablet
+              position: absolute
+              top: 0px
+
+              &[class$='-date']
+                right: 0px
+
+              &[class*='-month']
+                left: 0px
+            
+            +mobile
+              display: block
+              width: 100%
+              text-align: center
+
+          span[class^='label-gregorian']
+            font-size: 0.8em
+
+            +touch
+              font-size: 0.7em
+            
+            +mobile
+              font-size: 0.6em
+
+            // positioning
+            +tablet
+              position: absolute
+              bottom: 0px
+
+              &[class$='-date']
+                left: 0px
+
+              &[class*='-month']
+                right: 0px
+
+            +mobile
+              display: block
+              width: 100%
+              text-align: center
+
+        &.is-different-month[data-ethiopian-date*="-1-"] div.calendar-cell-inner
+          span.label-ethiopian-date
+            +mobile
+              display: none
+          
+          span.label-ethiopian-month-min
+            +mobile
+              display: block
+
+        &[data-gregorian-date*="-1-"] div.calendar-cell-inner
+          span.label-gregorian-date, span.label-gregorian-month-long, span.label-gregorian-month-short
+            +mobile
+              display: none
+
+        &:not([data-gregorian-date*="-1-"]) div.calendar-cell-inner
+          span[class^="label-gregorian-month"]
+            +mobile
+              display: none
 
 span.octicon
   font-size: inherit
@@ -166,5 +245,20 @@ span.octicon
       .octicon
         display: inline-block
 
-.navbar.is-light
+div.buttons a.button.is-dark.is-outlined
+  &:hover
+    @media (hover: none) // prevents hover bg color change on touchscreens
+      background-color: inherit
+      color: inherit
+
+nav.navbar.is-light
   border-top: 1px solid #dbdbdb
+
+  .navbar-start, .navbar-end
+
+    a.navbar-item
+      padding: 0.5rem 0.5rem
+
+      &:hover
+        @media (hover: none) // prevents hover bg color change on touchscreens
+          background-color: inherit

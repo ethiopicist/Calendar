@@ -4,15 +4,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An online Ethio-Eritrean calendar in Amharic, Tigrinya, and English.">
-  <meta name="keywords" content="ethiopian calendar, ethiopian, calendar, eritrean">
-  <title>Ethiopian-Eritrean Calendar</title>
+  <meta name="description" content="An online Ethiopian/Eritrean calendar in English, Amharic, Tigrinya, and other languages.">
+  <meta name="keywords" content="ethiopian calendar, eritrean calendar, ethiopian, calendar, eritrean">
+  <title data-i18n="title">Ethiopian-Eritrean Calendar</title>
   <link rel="manifest" href="manifest.webmanifest">
+
   <link rel="stylesheet" href="style.css">
+
   <script src="jquery.min.js"></script>
 
   <script src="i18n/jquery.i18n.js"></script>
-  <script src="i18n/CLDRPluralRuleParser.js"></script>
   <script src="i18n/jquery.i18n.messagestore.js"></script>
   <script src="i18n/jquery.i18n.fallbacks.js"></script>
   <script src="i18n/jquery.i18n.language.js"></script>
@@ -22,7 +23,7 @@
 
   <script src="ethiopiancalendar.min.js"></script>
 </head>
-<body>
+<body style="display: none;">
   <section class="section">
     <div id="container" class="container">
       <div id="calendar" class="calendar tile is-ancestor is-vertical"></div>
@@ -119,8 +120,8 @@
             <li>
               <a data-i18n="weekBegins">Week begins on:</a>
               <ul id="startDay">
-                <li><a data-i18n="day0long" data-value="0">Sunday</a></li>
-                <li><a data-i18n="day1long" data-value="1">Monday</a></li>
+                <li><a data-value="0"><span data-i18n="day0long">Sunday</span></a></li>
+                <li><a data-value="1"><span data-i18n="day1long">Monday</span></a></li>
               </ul>
             </li>
             <li><a class="toggle-control" data-i18n="gregorianDates" id="gregorianDates">Show Gregorian dates</a></li>
@@ -131,10 +132,10 @@
             <li>
               <a data-i18n="calendarLanguage">Calendar language:</a>
               <ul id="calendarLanguage">
-                <li><a data-i18n="geez" data-value="gez">Gəʿəz</a></li>
-                <li><a data-i18n="amharic" data-value="amh">Amharic</a></li>
-                <li><a data-i18n="tigrinya" data-value="tig">Tigrinya</a></li>
-                <li><a data-i18n="oromoo" data-value="oro">Oromoo</a></li>
+                <li><a data-value="gez"><span data-i18n="geez">Gəʿəz</span></a></li>
+                <li><a data-value="amh"><span data-i18n="amharic">Amharic</span></a></li>
+                <li><a data-value="tig"><span data-i18n="tigrinya">Tigrinya</span></a></li>
+                <li><a data-value="oro"><span data-i18n="oromoo">Oromoo</span></a></li>
               </ul>
             </li>
             <li><a class="toggle-control" data-i18n="showLocale" id="localeDays">Show days of the week in English</a></li>
@@ -160,23 +161,19 @@
       $('#calendar').ethiopianCalendar({
         'useSavedPrefs': true,
         'savePrefs': true
-      }, postProcess);
+      }, initCallback);
 
       // Calendar updating
 
       $(document).on('click', 'a[id^="today-month"]', function(){
-        preProcess();
-
         $('#calendar').ethiopianCalendar('update', {
           'savePrefs': true,
           'useSavedPrefs': true,
           'calendarMonth': (new Date())
-        }, postProcess);
+        }, updateCallback);
       });
 
       $(document).on('click', 'a[id^="prev-month"]', function(){
-        preProcess();
-
         var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
         prevMonth = new Date(prefs['calendarMonth']);
 
@@ -186,12 +183,10 @@
           'savePrefs': true,
           'useSavedPrefs': true,
           'calendarMonth': prevMonth
-        }, postProcess);
+        }, updateCallback);
       });
 
       $(document).on('click', 'a[id^="next-month"]', function(){
-        preProcess();
-
         var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
         var nextMonth = new Date(prefs['calendarMonth']);
 
@@ -208,7 +203,7 @@
           'savePrefs': true,
           'useSavedPrefs': true,
           'calendarMonth': nextMonth
-        }, postProcess);
+        }, updateCallback);
       });
 
       // Language picker
@@ -232,8 +227,6 @@
       // Change
 
       $(document).on('click', 'div#language-picker a.panel-block', function(){
-        preProcess();
-
         $('div#language-picker').removeClass('is-active');
         $('html').removeClass('is-clipped');
 
@@ -243,10 +236,14 @@
           'savePrefs': true,
           'useSavedPrefs': true,
           'locale': locale
-        }, postProcess);
+        }, updateCallback);
       });
 
       // Prefs window
+
+      $('#prefs-window .menu .menu-list li ul a').append(
+        $('<span class="octicon octicon-check is-pulled-right" />')
+      );
 
       // Show/hide
 
@@ -262,31 +259,26 @@
 
       // Change
       $(document).on('click', 'div#prefs-window ul#startDay a', function(){
-        preProcess();
-
         var value = $(this).data('value');
         
         $('#calendar').ethiopianCalendar('update', {
           'savePrefs': true,
           'useSavedPrefs': true,
           'startDay': value
-        }, postProcess);
+        }, updateCallback);
       });
 
       $(document).on('click', 'div#prefs-window ul#calendarLanguage a', function(){
-        preProcess();
-
         var value = $(this).data('value');
         
         $('#calendar').ethiopianCalendar('update', {
           'savePrefs': true,
           'useSavedPrefs': true,
           'language': value
-        }, postProcess);
+        }, updateCallback);
       });
 
       $(document).on('click', 'div#prefs-window a .toggle:not([disabled])', function(){
-
         var options = {
           'savePrefs': true,
           'useSavedPrefs': true
@@ -296,33 +288,15 @@
         $(this).attr('data-value', !($(this).data('value')));
 
         $(this).animate({'color': 'inherit'}, 300, function(){
-          preProcess();
-          $('#calendar').ethiopianCalendar('update', options, postProcess);
+          $('#calendar').ethiopianCalendar('update', options, updateCallback);
         });
 
       });
 
     });
 
-    function preProcess(){
-      $('#calendar-controls').prependTo('body');
-      $('#calendar-preferences').appendTo('body');
-    }
-
-    function postProcess(){
-      var settings = JSON.parse(localStorage.getItem('calendar-prefs'));
-
-      // Localization
-      $('html').attr('lang', settings['locale']);
-      
-      $('*[data-i18n]').i18n();
-
-      $('*[data-i18n-label]').each(function(){
-        $(this).attr('aria-label', $.i18n($(this).attr('data-i18n-label')));
-        $(this).attr('title', $.i18n($(this).attr('data-i18n-label')));
-      });
-
-      // Application controls
+    function initCallback(){
+      // Add classes to elements
       $("div[class^='calendar-']").addClass('tile');
       $("div.calendar-head, div.calendar-body").addClass('is-vertical');
 
@@ -335,17 +309,42 @@
       $("div[class^='calendar-cell']").addClass('is-parent is-1');
       $("div.calendar-cell-inner").addClass('is-child').removeClass('is-parent is-1');
 
+      // Move calendar controls
       $('#calendar-controls').prependTo('.calendar-title-row');
       $('#calendar-preferences').appendTo('.calendar-title-row');
 
-      $('#prefs-window .menu .menu-list li ul a').append(
-        $('<span class="octicon octicon-check is-pulled-right" />')
-      );
+      localize();
+      updateForms();
+
+      $('body').show();
+    }
+
+    function updateCallback(){
+      localize();
+      updateForms();
+    }
+
+    function localize(){
+      var settings = JSON.parse(localStorage.getItem('calendar-prefs'));
+
+      // Localization
+      $('html').attr('lang', settings['locale']);
+      
+      $('*[data-i18n]').i18n();
+
+      $('*[data-i18n-label]').each(function(){
+        $(this).attr('aria-label', $.i18n($(this).attr('data-i18n-label')));
+        $(this).attr('title', $.i18n($(this).attr('data-i18n-label')));
+      });
+    }
+
+    function updateForms(){
+      var settings = JSON.parse(localStorage.getItem('calendar-prefs'));
 
       $('.toggle-control').append(
-        $('<span class="toggle is-pulled-right" />').attr('data-value', "false")
+        $('<span class="toggle is-pulled-right" data-value="false" />')
       );
-
+      
       // Prefill forms
       $('div#language-picker a.panel-block').removeClass('is-active');
       $('div#language-picker a.panel-block[data-value="'+settings['locale']+'"]').addClass('is-active');

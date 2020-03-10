@@ -6,6 +6,8 @@
 		"locale": "pl"
 	},
 
+	"title": "Kalendarz etiopsko-erytrejski",
+
 	"langName": "Polski",
 
 	"day0long": "niedziela",
@@ -50,7 +52,9 @@
 	"shortSeparator": ".",
 
 	"today": "Dzisiaj",
-  "goto": "Przejdź do…",
+
+	"goto": "Przejdź do…",
+	"go": "Przejdź",
 
 	"appLanguage": "Zmień język",
   "changesSaved": "Zmiany są zapisywane automatycznie.",
@@ -71,5 +75,13 @@
 	
 	"displayPreferences": "Wyświetl preferencje",
   "useLetters": "Użyj pisma etiopskiego",
-  "useNumbers": "Użyj cyfr etiopskich"
+	"useNumbers": "Użyj cyfr etiopskich",
+	
+	"ariaPrev": "Poprzedni miesiąc",
+  "ariaToday": "Data dzisiejsza",
+  "ariaNext": "Następny miesiąc",
+  "ariaOpenLanguages": "Zmień język aplikacji",
+  "ariaOpenPreferences": "Otwórz preferencje",
+  "ariaHelp": "Pomoc",
+  "ariaClose": "Zamknij okno"
 }
