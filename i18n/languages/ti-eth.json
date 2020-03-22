@@ -1,0 +1,83 @@
+{
+	"@metadata": {
+		"authors": [
+			""
+		],
+		"locale": "ti"
+	},
+
+	"langNameLong": "ትግርኛ",
+	"langNameShort": "ትግ",
+
+	"day1long": "እሑድ",
+	"day1short": "እሑድ",
+	"day2long": "ሶኑይ",
+	"day2short": "ሶኑይ",
+	"day3long": "ሦሉስ",
+	"day3short": "ሦሉስ",
+	"day4long": "ሮቡዕ",
+	"day4short": "ሮቡዕ",
+	"day5long": "ሓሙስ",
+	"day5short": "ሓሙስ",
+	"day6long": "ዓርቢ",
+	"day6short": "ዓርቢ",
+	"day7long": "ቐዳም",
+	"day7short": "ቐዳም",
+
+	"greMonth1long": "ጃንዩወሪ",
+	"greMonth1short": "01",
+	"greMonth2long": "ፌብሩወሪ",
+	"greMonth2short": "02",
+	"greMonth3long": "ማርች",
+	"greMonth3short": "03",
+	"greMonth4long": "ኤፕሪል",
+	"greMonth4short": "04",
+	"greMonth5long": "ሜይ",
+	"greMonth5short": "05",
+	"greMonth6long": "ጁን",
+	"greMonth6short": "06",
+	"greMonth7long": "ጁላይ",
+	"greMonth7short": "07",
+	"greMonth8long": "ኦገስት",
+	"greMonth8short": "08",
+	"greMonth9long": "ሴፕቴምበር",
+	"greMonth9short": "09",
+	"greMonth10long": "ኦክቶበር",
+	"greMonth10short": "10",
+	"greMonth11long": "ኖቬምበር",
+	"greMonth11short": "11",
+	"greMonth12long": "ዲሴምበር",
+	"greMonth12short": "12",
+	"shortSeparator": "/",
+
+	"today": "Today",
+	"goto": "Go To…",
+
+	"appLanguage": "Change Application Language:",
+	"changesSaved": "Changes are saved automatically.",
+
+	"preferences": "Preferences",
+
+	"calendarPreferences": "Calendar Preferences",
+	"weekBegins": "Week begins on:",
+	"gregorianDates": "Show Gregorian dates",
+	
+	"languagePreferences": "Language Preferences",
+	"calendarLanguage": "Calendar language:",
+	"geez": "ግዕዝ",
+	"amharic": "አማርኛ",
+	"tigrinya": "ትግርኛ",
+	"oromoo": "ኦሮምኛ",
+	"showLocale": "Show days of the week in English",
+	
+	"displayPreferences": "Display Preferences",
+	"useLetters": "Use Ethiopic letters",
+	"useNumbers": "Use Ethiopic numerals",
+
+	"ethMonth2long": "ጥቅምቲ",
+	"ethMonth2short": "ጥቅ",
+	"ethMonth5long": "ጥሪ",
+	"ethMonth5short": "ጥሪ",
+	"ethMonth6long": "ለካቲት",
+	"ethMonth6short": "ለካ"
+}

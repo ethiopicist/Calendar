@@ -1,0 +1,50 @@
+{
+	"@metadata": {
+		"authors": [
+			"Augustine Dickinson"
+		],
+		"locale": "gez"
+	},
+
+	"day1long": "ʾƎḥud",
+	"day1short": "ʾƎḥ.",
+	"day2long": "Sanuy",
+	"day2short": "San.",
+	"day3long": "Śalus",
+	"day3short": "Śal.",
+	"day4long": "Rabuʿ",
+	"day4short": "Rab.",
+	"day5long": "Ḫamus",
+	"day5short": "Ḫam.",
+	"day6long": "ʿArb",
+	"day6short": "ʿArb",
+	"day7long": "Qadām",
+	"day7short": "Qad.",
+
+	"ethMonth1long": "Maskaram",
+	"ethMonth1short": "Mask.",
+	"ethMonth2long": "Ṭəqəmt",
+	"ethMonth2short": "Ṭəq.",
+	"ethMonth3long": "Ḫədār",
+	"ethMonth3short": "Ḫəd.",
+	"ethMonth4long": "Tāḫśāś",
+	"ethMonth4short": "Tāḫ.",
+	"ethMonth5long": "Ṭərr",
+	"ethMonth5short": "Ṭərr",
+	"ethMonth6long": "Yakkātit",
+	"ethMonth6short": "Yakk.",
+	"ethMonth7long": "Maggābit",
+	"ethMonth7short": "Magg.",
+	"ethMonth8long": "Miyāzyā",
+	"ethMonth8short": "Miyā.",
+	"ethMonth9long": "Gənbot",
+	"ethMonth9short": "Gən.",
+	"ethMonth10long": "Sane",
+	"ethMonth10short": "Sane",
+	"ethMonth11long": "Ḥamle",
+	"ethMonth11short": "Ḥamle",
+	"ethMonth12long": "Naḥase",
+	"ethMonth12short": "Naḥ.",
+	"ethMonth13long": "Ṗāgʷəmen",
+	"ethMonth13short": "Ṗāg."
+}

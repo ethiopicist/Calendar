@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Augustine Dickinson"
+		],
+		"locale": "ti"
+	},
+
+	"day1long": "ʾƎḥud",
+	"day1short": "ʾƎḥ.",
+	"day2long": "Sonuy",
+	"day2short": "Son.",
+	"day3long": "Śolus",
+	"day3short": "Śol.",
+	"day4long": "Robuʿ",
+	"day4short": "Rob.",
+	"day5long": "Ḥāmus",
+	"day5short": "Ḥām.",
+	"day6long": "ʿĀrbi",
+	"day6short": "ʿĀr.",
+	"day7long": "Q̱adām",
+	"day7short": "Q̱ad.",
+
+	"ethMonth2long": "Ṭəqəmti",
+	"ethMonth2short": "Ṭəq.",
+	"ethMonth5long": "Ṭərri",
+	"ethMonth5short": "Ṭər.",
+	"ethMonth6long": "Lakkātit",
+	"ethMonth6short": "Lakk."
+}

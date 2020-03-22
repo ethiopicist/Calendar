@@ -6,22 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="An online Ethiopian/Eritrean calendar in English, Amharic, Tigrinya, and other languages.">
   <meta name="keywords" content="ethiopian calendar, eritrean calendar, ethiopian, calendar, eritrean">
-  <title data-i18n="title">Ethiopian-Eritrean Calendar</title>
+  <title data-i18n="title">Ḥassāba Zaman - The Ethiopian/Eritrean Calendar</title>
   <link rel="manifest" href="manifest.webmanifest">
 
   <link rel="stylesheet" href="style.css">
 
-  <script src="jquery.min.js"></script>
+  <script src="scripts/jquery.min.js"></script>
 
   <script src="i18n/jquery.i18n.js"></script>
   <script src="i18n/jquery.i18n.messagestore.js"></script>
   <script src="i18n/jquery.i18n.fallbacks.js"></script>
   <script src="i18n/jquery.i18n.language.js"></script>
   <script src="i18n/jquery.i18n.parser.js"></script>
-  <script src="i18n/jquery.i18n.emitter.js"></script>
-  <script src="i18n/jquery.i18n.emitter.bidi.js"></script>
 
-  <script src="ethiopiancalendar.min.js"></script>
+  <script src="scripts/conversion.min.js"></script>
+  <script src="scripts/calendar.min.js"></script>
 </head>
 <body style="display: none;">
   <section class="section">
@@ -32,59 +31,80 @@
 
   <div id="calendar-controls" class="tile is-parent is-2">
     <div class="tile is-child">
-      <div class="buttons has-addons" style="margin-bottom: 0px">
-        <a id="prev-month" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaPrev">
+
+      <div id="go-to-buttons" class="buttons has-addons" style="margin-bottom: 0px;">
+        <a id="go-to-prev" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaPrev">
           <span class="octicon octicon-chevron-left" style="margin-left: 6.5px; font-size: 1rem;"></span>
         </a>
-        <a id="today-month" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n="today" data-i18n-label="ariaToday">Today</a>
-        <!--<a id="go-to-month" class="button is-small is-dark is-outlined is-hidden-touch" style="margin-bottom: 0px" data-i18n="goto" data-i18n-label="goto">Go To&hellip;</a>-->
-        <a id="next-month" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaNext">
+        <a id="go-to-today" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n="today" data-i18n-label="ariaToday">Today</a>
+        <a id="go-to-field-button" class="button is-small is-dark is-outlined is-hidden-touch" style="margin-bottom: 0px" data-i18n="goto" data-i18n-label="goto">Go To&hellip;</a>
+        <a id="go-to-next" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaNext">
           <span class="octicon octicon-chevron-right" style="margin-left: 6.5px; font-size: 1rem;"></span>
         </a>
       </div>
+
+      <div id="go-to-field" class="field has-addons is-active" style="margin-bottom: 0px; display: none;">
+        <p class="control">
+          <span class="select is-small is-dark is-outlined">
+            <select id="go-to-month">
+            </select>
+          </span>
+        </p>
+        <p class="control" style="min-width: 60px;">
+          <input id="go-to-year" class="input is-small is-dark is-outlined" min="1" max="9999" type="number" placeholder="YYYY">
+        </p>
+        <p class="control">
+          <a id="go-to-submit" class="button is-small is-dark is-outlined">Go</a>
+        </p>
+        <p class="control">
+          <a id="go-to-cancel" class="button is-small is-dark is-outlined">
+            <span class="octicon octicon-x" style="margin-left: 2.75px;"></span>
+          </a>
+        </p>
+      </div>
+
     </div>
   </div>
 
   <div id="calendar-preferences" class="tile is-parent is-2">
     <div class="tile is-child">
       <div class="buttons has-addons is-right" style="margin-bottom: 0px">
-        <a id="open-languages" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaOpenLanguages">
-          <span class="octicon octicon-globe" style="font-size: 1rem;"></span>
+        <a id="foo" class="button is-small is-dark is-outlined" style="margin-right: 5px; border-radius: 2px; margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
+          <span class="octicon octicon-git-compare" style="margin-left: 1px; font-size: 1rem;"></span>
         </a>
-        <a id="open-prefs" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
-          <span class="octicon octicon-gear" style="font-size: 1rem;"></span>
+        <a id="open-locale-picker" class="button is-small is-dark is-outlined" style="border-radius: 2px 0 0 2px; margin-bottom: 0px" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
+        <a id="open-userPreferences" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
+          <span class="octicon octicon-gear" style="margin-left: 1px; font-size: 1rem;"></span>
         </a>
         <a class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaHelp">
-          <span class="octicon octicon-question" style="font-size: 1rem;"></span>
+          <span class="octicon octicon-question" style="margin-left: 1px; font-size: 1rem;"></span>
         </a>
       </div>
     </div>
   </div>
 
   <nav id="calendar-controls-mobile" class="navbar is-light is-fixed-bottom is-hidden-tablet">
-    <div class="navbar-start">
-      <a id="prev-month-mobile" class="navbar-item" data-i18n-label="ariaPrev">
+    <div id="go-to-buttons-mobile" class="navbar-start">
+      <a id="go-to-prev-mobile" class="navbar-item" data-i18n-label="ariaPrev">
         <span class="octicon octicon-chevron-left" style="margin-left: 10px; font-size: 1.5em"></span>
       </a>
-      <a id="today-month-mobile" class="navbar-item" data-i18n="today">Today</a>
-      <a id="next-month-mobile" class="navbar-item" data-i18n-label="ariaNext">
+      <a id="go-to-today-mobile" class="navbar-item" data-i18n="today">Today</a>
+      <a id="go-to-next-mobile" class="navbar-item" data-i18n-label="ariaNext">
         <span class="octicon octicon-chevron-right" style="margin-left: 10px; font-size: 1.5em"></span>
       </a>
     </div>
     <div class="navbar-end">
-      <a id="open-languages" class="navbar-item" data-i18n-label="ariaOpenLanguages">
-        <span class="octicon octicon-globe" style="margin-left: 6.5px; font-size: 1.5em"></span>
+      <a id="foo-mobile" class="navbar-item" data-i18n-label="ariaOpenPreferences">
+        <span class="octicon octicon-git-compare" style="margin-left: 6.5px; font-size: 1.5em"></span>
       </a>
-      <a id="open-prefs" class="navbar-item" data-i18n-label="ariaOpenPreferences">
+      <a id="open-locale-picker-mobile" class="navbar-item" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
+      <a id="open-userPreferences-mobile" class="navbar-item" data-i18n-label="ariaOpenPreferences">
         <span class="octicon octicon-gear" style="margin-left: 6.5px; font-size: 1.5em"></span>
-      </a>
-      <a class="navbar-item" data-i18n-label="ariaHelp">
-        <span class="octicon octicon-question" style="margin-left: 6.5px; font-size: 1.5em"></span>
       </a>
     </div>
   </nav>
 
-  <div id="language-picker" class="modal">
+  <div id="locale-picker" class="modal">
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -94,18 +114,20 @@
       <section class="modal-card-body">
         <nav class="panel">
           <a class="panel-block" data-value="en">English</a>
-          <!--<a class="panel-block" data-value="am">አማርኛ</a>
-          <a class="panel-block" data-value="ti">ትግርኛ</a>
-          <a class="panel-block" data-value="om">Oromoo</a>-->
+          <a class="panel-block" data-value="am-eth">አማርኛ</a>
+          <a class="panel-block" data-value="ti-eth">ትግርኛ</a>
+          <a class="panel-block" data-value="om">Oromoo</a>
+          <a class="panel-block" data-value="fr">Français</a>
+          <a class="panel-block" data-value="de">Deutsch</a>
           <a class="panel-block" data-value="pl">Polski</a>
-          <!--<a class="panel-block" data-value="fr">Français</a>-->
+          <!--<a class="panel-block" data-value="ru">Русский</a>-->
         </nav>
       </section>
       <footer class="modal-card-foot has-text-right"><small data-i18n="changesSaved">Changes are saved automatically.</small></footer>
     </div>
   </div>
 
-  <div id="prefs-window" class="modal">
+  <div id="userPreferences-window" class="modal">
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -119,32 +141,40 @@
           <ul class="menu-list">
             <li>
               <a data-i18n="weekBegins">Week begins on:</a>
-              <ul id="startDay">
-                <li><a data-value="0"><span data-i18n="day0long">Sunday</span></a></li>
-                <li><a data-value="1"><span data-i18n="day1long">Monday</span></a></li>
+              <ul id="firstWeekday">
+                <li><a data-value="1"><span data-i18n="day1long">Sunday</span></a></li>
+                <li><a data-value="2"><span data-i18n="day2long">Monday</span></a></li>
               </ul>
             </li>
-            <li><a class="toggle-control" data-i18n="gregorianDates" id="gregorianDates">Show Gregorian dates</a></li>
+            <li><a class="toggle-control" id="useAmataAlam"><span data-i18n="useAmataAlam">Use ʿāmata ʿālam</span></a></li>
+            <li><a class="toggle-control" id="showAlternateDates"><span data-i18n="showAlternateDates">Show alternate calendar</span></a></li>
+            <li>
+              <a data-i18n="alternateCalendar">Alternate calendar:</a>
+              <ul id="alternateCalendar">
+                <li><a data-value="gre"><span data-i18n="westernCalendar">Western (Gregorian/Julian)</span></a></li>
+                <li><a data-value="isl"><span data-i18n="islamicCalendar">Islamic</span></a></li>
+              </ul>
+            </li>
           </ul>
 
           <p class="menu-label" data-i18n="languagePreferences">Language Preferences</p>
           <ul class="menu-list">
             <li>
               <a data-i18n="calendarLanguage">Calendar language:</a>
-              <ul id="calendarLanguage">
+              <ul id="language">
                 <li><a data-value="gez"><span data-i18n="geez">Gəʿəz</span></a></li>
-                <li><a data-value="amh"><span data-i18n="amharic">Amharic</span></a></li>
-                <li><a data-value="tig"><span data-i18n="tigrinya">Tigrinya</span></a></li>
-                <li><a data-value="oro"><span data-i18n="oromoo">Oromoo</span></a></li>
+                <li><a data-value="am"><span data-i18n="amharic">Amharic</span></a></li>
+                <li><a data-value="ti"><span data-i18n="tigrinya">Tigrinya</span></a></li>
+                <li><a data-value="om"><span data-i18n="oromoo">Oromoo</span></a></li>
               </ul>
             </li>
-            <li><a class="toggle-control" data-i18n="showLocale" id="localeDays">Show days of the week in English</a></li>
+            <li><a class="toggle-control" id="localeDayNames"><span data-i18n="showLocale">Show days of the week in English</span></a></li>
           </ul>
 
           <p class="menu-label" data-i18n="displayPreferences">Display Preferences</p>
           <ul class="menu-list">
-            <li><a class="toggle-control" data-i18n="useLetters" id="useLetters">Use Ethiopic letters</a></li>
-            <li><a class="toggle-control" data-i18n="useNumbers" id="useNumbers">Use Ethiopic numbers</a></li>
+            <li><a class="toggle-control" id="useScript"><span data-i18n="useScript">Use Ethiopic letters</span></a></li>
+            <li><a class="toggle-control" id="useNumerals"><span data-i18n="useNumerals">Use Ethiopic numerals</span></a></li>
           </ul>
 
         </aside>
@@ -152,234 +182,7 @@
       <footer class="modal-card-foot"><small data-i18n="changesSaved">Changes are saved automatically.</small></footer>
     </div>
   </div>
-
-  <script>
-    $(document).ready(function(){
-
-      // Calendar initializing
-
-      $('#calendar').ethiopianCalendar({
-        'useSavedPrefs': true,
-        'savePrefs': true
-      }, initCallback);
-
-      // Calendar updating
-
-      $(document).on('click', 'a[id^="today-month"]', function(){
-        $('#calendar').ethiopianCalendar('update', {
-          'savePrefs': true,
-          'useSavedPrefs': true,
-          'calendarMonth': (new Date())
-        }, updateCallback);
-      });
-
-      $(document).on('click', 'a[id^="prev-month"]', function(){
-        var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
-        prevMonth = new Date(prefs['calendarMonth']);
-
-        prevMonth.setDate(prevMonth.getDate() - prevMonth.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'}));
-        
-        $('#calendar').ethiopianCalendar('update', {
-          'savePrefs': true,
-          'useSavedPrefs': true,
-          'calendarMonth': prevMonth
-        }, updateCallback);
-      });
-
-      $(document).on('click', 'a[id^="next-month"]', function(){
-        var prefs = JSON.parse(localStorage.getItem('calendar-prefs'));
-        var nextMonth = new Date(prefs['calendarMonth']);
-
-        var m = 30;
-        if(nextMonth.toLocaleDateString('en-US-u-ca-ethiopic', {month: 'numeric'}) == 13){
-          if(parseInt(nextMonth.toLocaleDateString('en-US-u-ca-ethiopic', {year: 'numeric'}).substr(0, 4)) % 4 == 3) m = 6;
-          else m = 5;
-        }
-        m = m + 1 - nextMonth.toLocaleDateString('en-US-u-ca-ethiopic', {day: 'numeric'});
   
-        nextMonth.setDate(nextMonth.getDate() + m);
-        
-        $('#calendar').ethiopianCalendar('update', {
-          'savePrefs': true,
-          'useSavedPrefs': true,
-          'calendarMonth': nextMonth
-        }, updateCallback);
-      });
-
-      // Language picker
-
-      $('#language-picker .panel-block').append(
-        $('<span class="octicon octicon-check is-pulled-right" />')
-      );
-
-      // Show/hide
-
-      $(document).on('click', 'a[id^="open-languages"]', function(){
-        $('div#language-picker').addClass('is-active');
-        $('html').addClass('is-clipped');
-      });
-
-      $(document).on('click', 'div#language-picker div.modal-background, div#language-picker button', function(){
-        $('div#language-picker').removeClass('is-active');
-        $('html').removeClass('is-clipped');
-      });
-
-      // Change
-
-      $(document).on('click', 'div#language-picker a.panel-block', function(){
-        $('div#language-picker').removeClass('is-active');
-        $('html').removeClass('is-clipped');
-
-        var locale = $(this).data('value');
-        
-        $('#calendar').ethiopianCalendar('update', {
-          'savePrefs': true,
-          'useSavedPrefs': true,
-          'locale': locale
-        }, updateCallback);
-      });
-
-      // Prefs window
-
-      $('#prefs-window .menu .menu-list li ul a').append(
-        $('<span class="octicon octicon-check is-pulled-right" />')
-      );
-
-      // Show/hide
-
-      $(document).on('click', 'a[id^="open-prefs"]', function(){
-        $('div#prefs-window').addClass('is-active');
-        $('html').addClass('is-clipped');
-      });
-
-      $(document).on('click', 'div#prefs-window div.modal-background, div#prefs-window button', function(){
-        $('div#prefs-window').removeClass('is-active');
-        $('html').removeClass('is-clipped');
-      });
-
-      // Change
-      $(document).on('click', 'div#prefs-window ul#startDay a', function(){
-        var value = $(this).data('value');
-        
-        $('#calendar').ethiopianCalendar('update', {
-          'savePrefs': true,
-          'useSavedPrefs': true,
-          'startDay': value
-        }, updateCallback);
-      });
-
-      $(document).on('click', 'div#prefs-window ul#calendarLanguage a', function(){
-        var value = $(this).data('value');
-        
-        $('#calendar').ethiopianCalendar('update', {
-          'savePrefs': true,
-          'useSavedPrefs': true,
-          'language': value
-        }, updateCallback);
-      });
-
-      $(document).on('click', 'div#prefs-window a .toggle:not([disabled])', function(){
-        var options = {
-          'savePrefs': true,
-          'useSavedPrefs': true
-        }
-        options[$(this).closest('a').attr('id')] = !($(this).data('value'));
-        
-        $(this).attr('data-value', !($(this).data('value')));
-
-        $(this).animate({'color': 'inherit'}, 300, function(){
-          $('#calendar').ethiopianCalendar('update', options, updateCallback);
-        });
-
-      });
-
-    });
-
-    function initCallback(){
-      // Add classes to elements
-      $("div[class^='calendar-']").addClass('tile');
-      $("div.calendar-head, div.calendar-body").addClass('is-vertical');
-
-      $("div.calendar-title-cell").addClass('is-parent is-3');
-      $("div.calendar-title-cell-inner").addClass('is-child has-text-centered');
-
-      $("div[class^='calendar-dow-cell']").addClass('is-parent is-1');
-      $("div.calendar-dow-cell-inner").addClass('is-child has-text-centered').removeClass('is-parent is-1');
-      
-      $("div[class^='calendar-cell']").addClass('is-parent is-1');
-      $("div.calendar-cell-inner").addClass('is-child').removeClass('is-parent is-1');
-
-      // Move calendar controls
-      $('#calendar-controls').prependTo('.calendar-title-row');
-      $('#calendar-preferences').appendTo('.calendar-title-row');
-
-      localize();
-      updateForms();
-
-      $('body').show();
-    }
-
-    function updateCallback(){
-      localize();
-      updateForms();
-    }
-
-    function localize(){
-      var settings = JSON.parse(localStorage.getItem('calendar-prefs'));
-
-      // Localization
-      $('html').attr('lang', settings['locale']);
-      
-      $('*[data-i18n]').i18n();
-
-      $('*[data-i18n-label]').each(function(){
-        $(this).attr('aria-label', $.i18n($(this).attr('data-i18n-label')));
-        $(this).attr('title', $.i18n($(this).attr('data-i18n-label')));
-      });
-    }
-
-    function updateForms(){
-      var settings = JSON.parse(localStorage.getItem('calendar-prefs'));
-
-      $('.toggle-control').append(
-        $('<span class="toggle is-pulled-right" data-value="false" />')
-      );
-      
-      // Prefill forms
-      $('div#language-picker a.panel-block').removeClass('is-active');
-      $('div#language-picker a.panel-block[data-value="'+settings['locale']+'"]').addClass('is-active');
-
-      $('div#prefs-window li a[data-value]').removeClass('is-active');
-      $('div#prefs-window ul#startDay a[data-value="'+settings['startDay']+'"]').addClass('is-active');
-      $('div#prefs-window ul#calendarLanguage a[data-value="'+settings['language']+'"]').addClass('is-active');
-
-      var toggles = ['gregorianDates', 'localeDays', 'useLetters', 'useNumbers'];
-      $.each(toggles, function(index, value){
-        if(settings[value]) $('#'+value+' .toggle').attr('data-value', "true");
-        else $('#'+value+' .toggle').attr('data-value', "false");
-      });
-
-      // Special form changes for locales
-
-      if(settings['language'] == 'oro'){
-        $('#useLetters .toggle').attr('data-value', "false").attr('disabled', '');
-        $('#useNumbers .toggle').attr('data-value', "false").attr('disabled', '');
-        if(settings['locale'] == 'om') $('#localeDays .toggle').attr('data-value', "true").attr('disabled', '');
-      }
-      else if(settings['locale'] == 'am'){
-        $('#useLetters .toggle').attr('data-value', "true").attr('disabled', '');
-        if(settings['language'] == 'amh') $('#localeDays .toggle').attr('data-value', "true").attr('disabled', '');
-      }
-      else if(settings['locale'] == 'ti'){
-        $('#useLetters .toggle').attr('data-value', "true").attr('disabled', '');
-        if(settings['language'] == 'tig') $('#localeDays .toggle').attr('data-value', "true").attr('disabled', '');
-      }
-      else{
-        $('#localeDays .toggle').removeAttr('disabled');
-        $('#useLetters .toggle').removeAttr('disabled');
-        $('#useNumbers .toggle').removeAttr('disabled');
-      }
-    }
-  </script>
+  <script src="scripts/app.min.js"></script>
 </body>
 </html>

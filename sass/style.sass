@@ -3,6 +3,8 @@
 @import "utilities/initial-variables"
 
 $navbar-breakpoint: 0
+$tablet: 768px
+$panel-shadow: 0
 
 @import "utilities/_all"
 @import "base/_all"
@@ -165,7 +167,7 @@ div#calendar
               width: 100%
               text-align: center
 
-          span[class^='label-gregorian']
+          span[class^='label-alternate']
             font-size: 0.8em
 
             +touch
@@ -199,13 +201,13 @@ div#calendar
             +mobile
               display: block
 
-        &[data-gregorian-date*="-1-"] div.calendar-cell-inner
-          span.label-gregorian-date, span.label-gregorian-month-long, span.label-gregorian-month-short
+        &[data-alternate-date*="-1-"] div.calendar-cell-inner
+          span.label-alternate-date, span.label-alternate-month-long, span.label-alternate-month-short
             +mobile
               display: none
 
-        &:not([data-gregorian-date*="-1-"]) div.calendar-cell-inner
-          span[class^="label-gregorian-month"]
+        &:not([data-alternate-date*="-1-"]) div.calendar-cell-inner
+          span[class^="label-alternate-month"]
             +mobile
               display: none
 
@@ -262,3 +264,5 @@ nav.navbar.is-light
       &:hover
         @media (hover: none) // prevents hover bg color change on touchscreens
           background-color: inherit
+
+
