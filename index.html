@@ -18,6 +18,9 @@
   <script src="i18n/jquery.i18n.fallbacks.js"></script>
   <script src="i18n/jquery.i18n.language.js"></script>
   <script src="i18n/jquery.i18n.parser.js"></script>
+  <script src="i18n/jquery.i18n.emitter.js"></script>
+  <script src="i18n/jquery.i18n.emitter.bidi.js"></script>
+  <script src="i18n/jquery.i18n.dateformatter.js"></script>
 
   <script src="scripts/conversion.min.js"></script>
   <script src="scripts/calendar.min.js"></script>
@@ -46,8 +49,7 @@
       <div id="go-to-field" class="field has-addons is-active" style="margin-bottom: 0px; display: none;">
         <p class="control">
           <span class="select is-small is-dark is-outlined">
-            <select id="go-to-month">
-            </select>
+            <select id="go-to-month"></select>
           </span>
         </p>
         <p class="control" style="min-width: 60px;">
@@ -69,7 +71,7 @@
   <div id="calendar-preferences" class="tile is-parent is-2">
     <div class="tile is-child">
       <div class="buttons has-addons is-right" style="margin-bottom: 0px">
-        <a id="foo" class="button is-small is-dark is-outlined" style="margin-right: 5px; border-radius: 2px; margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
+        <a id="open-converter" class="button is-small is-dark is-outlined" style="margin-right: 5px; border-radius: 2px; margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
           <span class="octicon octicon-git-compare" style="margin-left: 1px; font-size: 1rem;"></span>
         </a>
         <a id="open-locale-picker" class="button is-small is-dark is-outlined" style="border-radius: 2px 0 0 2px; margin-bottom: 0px" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
@@ -94,7 +96,7 @@
       </a>
     </div>
     <div class="navbar-end">
-      <a id="foo-mobile" class="navbar-item" data-i18n-label="ariaOpenPreferences">
+      <a id="open-converter-mobile" class="navbar-item" data-i18n-label="ariaOpenPreferences">
         <span class="octicon octicon-git-compare" style="margin-left: 6.5px; font-size: 1.5em"></span>
       </a>
       <a id="open-locale-picker-mobile" class="navbar-item" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
@@ -114,11 +116,11 @@
       <section class="modal-card-body">
         <nav class="panel">
           <a class="panel-block" data-value="en">English</a>
-          <a class="panel-block" data-value="am-eth">አማርኛ</a>
+          <!--<a class="panel-block" data-value="am-eth">አማርኛ</a>
           <a class="panel-block" data-value="ti-eth">ትግርኛ</a>
           <a class="panel-block" data-value="om">Oromoo</a>
-          <a class="panel-block" data-value="fr">Français</a>
           <a class="panel-block" data-value="de">Deutsch</a>
+          <a class="panel-block" data-value="fr">Français</a>-->
           <a class="panel-block" data-value="pl">Polski</a>
           <!--<a class="panel-block" data-value="ru">Русский</a>-->
         </nav>
@@ -152,7 +154,7 @@
               <a data-i18n="alternateCalendar">Alternate calendar:</a>
               <ul id="alternateCalendar">
                 <li><a data-value="gre"><span data-i18n="westernCalendar">Western (Gregorian/Julian)</span></a></li>
-                <li><a data-value="isl"><span data-i18n="islamicCalendar">Islamic</span></a></li>
+                <!--<li><a data-value="isl"><span data-i18n="islamicCalendar">Islamic</span></a></li>-->
               </ul>
             </li>
           </ul>
@@ -173,6 +175,7 @@
 
           <p class="menu-label" data-i18n="displayPreferences">Display Preferences</p>
           <ul class="menu-list">
+            <li><a class="toggle-control" id="useDarkTheme"><span data-i18n="useDarkTheme">Use dark theme</span></a></li>
             <li><a class="toggle-control" id="useScript"><span data-i18n="useScript">Use Ethiopic letters</span></a></li>
             <li><a class="toggle-control" id="useNumerals"><span data-i18n="useNumerals">Use Ethiopic numerals</span></a></li>
           </ul>
@@ -180,6 +183,92 @@
         </aside>
       </section>
       <footer class="modal-card-foot"><small data-i18n="changesSaved">Changes are saved automatically.</small></footer>
+    </div>
+  </div>
+
+  <div id="converter-window" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title" data-i18n="">Calendar Converter</p>
+        <button class="delete" data-i18n-label="ariaClose"></button>
+      </header>
+      <section class="modal-card-body">
+
+        <div class="tabs is-centered">
+          <ul>
+            <li id="convert-ethiopic" class="is-active"><a>Ethiopic</a></li>
+            <li id="convert-western"><a>Western</a></li>
+            <!--<li id="convert-islamic"><a>Islamic</a></li>-->
+          </ul>
+        </div>
+
+        <form id="convert-ethiopic-form">
+          <div class="field has-addons has-addons-centered">
+            <p class="control">
+              <input id="convert-ethiopic-date" class="input is-dark is-outlined" type="number" placeholder="DD" min="1" max="30">
+            </p>
+            <p class="control">
+              <span class="select is-dark is-outlined">
+                <select id="convert-ethiopic-month"></select>
+              </span>
+            </p>
+            <p class="control">
+              <input id="convert-ethiopic-year" class="input is-dark is-outlined" type="number" placeholder="YYYY" min="1" max="9999">
+            </p>
+            <p class="control">
+              <a id="convert-ethiopic-submit" class="button is-dark">Convert</a>
+            </p>
+          </div>
+        </form>
+
+        <form id="convert-western-form" style="display: none;">
+          <div class="field has-addons has-addons-centered">
+            <p class="control">
+              <input id="convert-western-date" class="input is-dark is-outlined" type="number" placeholder="DD" min="1" max="31">
+            </p>
+            <p class="control">
+              <span class="select is-dark is-outlined">
+                <select id="convert-western-month"></select>
+              </span>
+            </p>
+            <p class="control">
+              <input id="convert-western-year" class="input is-dark is-outlined" type="number" placeholder="YYYY" min="8" max="9999">
+            </p>
+            <p class="control">
+              <a id="convert-western-submit" class="button is-dark">Convert</a>
+            </p>
+          </div>
+        </form>
+
+        <form id="convert-islamic-form" style="display: none;">
+          <div class="field has-addons has-addons-centered">
+            <p class="control">
+              <input id="convert-islamic-date" class="input is-dark is-outlined" type="number" placeholder="DD" min="1" max="30">
+            </p>
+            <p class="control">
+              <span class="select is-dark is-outlined">
+                <select id="convert-islamic-month"></select>
+              </span>
+            </p>
+            <p class="control">
+              <input id="convert-islamic-year" class="input is-dark is-outlined" type="number" placeholder="YYYY" min="1" max="9999">
+            </p>
+            <p class="control">
+              <a id="convert-islamic-submit" class="button is-dark">Convert</a>
+            </p>
+          </div>
+        </form>
+
+        <div id="converted-dates" class="content has-text-centered" style="margin-top: 1.5rem;">
+          <p id="converted-ethiopic-date"></p>
+          <p id="converted-western-date"></p>
+          <p id="converted-islamic-date"></p>
+        </div>
+      </section>
+      <footer class="modal-card-foot"><small><small>
+        For Western dates, the Julian calendar is used for dates on or before October 4, 1582, while the Gregorian calendar is used for dates on or after October 15, 1582.
+      </small></small></footer>
     </div>
   </div>
   

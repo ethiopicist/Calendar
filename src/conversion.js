@@ -1,5 +1,5 @@
 /*!
- * Functions to Convert Ethiopic dates to Western dates
+ * Functions to Convert Between Ethiopic dates, Western (Julian/Gregorian) dates, and Islamic dates
  * By Augustine Dickinson
  *
  * Copyright (c) 2020 Ethiopicist.com and its contributors.
@@ -7,15 +7,100 @@
  * @licence MIT License
  */
 
- /**
-  * To convert a Western date to an Ethiopic date,
-  * where "Western" is defined as:
-  * Gregorian for dates on or after October 15, 1582 or
-  * Julian for dates on or before October 4, 1582.
-  * @param {{year: number, month: number, date: number}} date 
-  * @param {boolean} [useAmataAlam=false]
-  */
-function toEthiopic(date, useAmataAlam){
+/**
+ * To convert an Ethiopic date to a JDN.
+ * @param {{year: number, month: number, date: number}} date 
+ * @param {boolean} [isAmataAlam=false]
+ */
+function ethiopicToJdn(date, isAmataAlam){
+
+  // Verify that the argument for date is a valid type
+
+  if(typeof date !== 'object'){
+      console.log('Parameter date expects an object.');
+      return false;
+  }
+  else if(!('year' in date) || !('month' in date)){
+      console.log('Parameter date must contain a year and a month.');
+      return false;
+  }
+  else if(!('date' in date)) date.date = 1;
+
+  if(
+      (typeof date.year !== 'number' && typeof date.year !== 'string') ||
+      (typeof date.month !== 'number' && typeof date.month !== 'string') ||
+      (typeof date.date !== 'number' && typeof date.date !== 'string')
+  ){
+      console.log('Values for date must be numbers or strings.');
+      return false;
+  }
+  else{
+      date.year = parseInt(date.year);
+      date.month = parseInt(date.month);
+      date.date = parseInt(date.date);
+  }
+
+  // Verify that the argument for date is a valid date
+
+  if(date.month < 1 || date.month > 13){
+      console.log('date.month must be an integer from 1 (Mas) to 13 (Pag).');
+      return false;
+  }
+  else if(date.date < 1 || date.date > 30){
+      console.log('date.date must be an integer from 1 to 30.');
+      return false;
+  }
+  else if(date.month == 13){
+      if(
+          date.year % 4 == 3 &&
+          date.date > 6
+      ){
+          console.log('In leap years, if date.month == 13 then date.date must be <=6.');
+          return false;
+      }
+      else if(
+      date.year % 4 != 3 &&
+      date.date > 5
+      ){
+          console.log('In non-leap years, if date.month == 13 then date.date must be <=5.');
+          return false;
+      }
+  }
+
+  // Verify that the argument for isAmataAlam is a valid type
+
+  if(typeof isAmataAlam === 'undefined') var isAmataAlam = false;
+  else if(typeof isAmataAlam !== 'boolean'){
+      console.log('Parameter isAmataAlam expects a boolean value.');
+      return false;
+  }
+
+  // For Amata Alam we need to subtract 5500
+
+  if(isAmataAlam) date.year -= 5500;
+
+  // If date < 1/1/1 then error
+
+  if(date.year < 1){
+      console.log('Dates before 1/1/1 AM are invalid.');
+      return false;
+  }
+
+  const n = 30 * date.month + date.date - 31;
+  const jdn = (1723856 + 365) + 365 * (date.year - 1) + Math.floor(date.year / 4) + n - 0.5;
+
+  return jdn;
+
+}
+
+/**
+ * To convert a Western date to a JDN,
+ * where "Western" is defined as:
+ * Gregorian for dates on or after October 15, 1582 or
+ * Julian for dates on or before October 4, 1582.
+ * @param {{year: number, month: number, date: number}} date 
+ */
+function westernToJdn(date){
   // Verify that the argument for date is a valid type
   
   if(typeof date !== 'object'){
@@ -74,14 +159,6 @@ function toEthiopic(date, useAmataAlam){
           return false;
       }
   }
-  
-  // Verify that the argument for useAmataAlam is a valid type
-  
-  if(typeof useAmataAlam === 'undefined') var useAmataAlam = false;
-  else if(typeof useAmataAlam !== 'boolean'){
-      console.log('Parameter useAmataAlam expects a boolean value.');
-      return false;
-  }
 
   // First convert to JDN
   // This formula can be adjusted for both
@@ -130,109 +207,49 @@ function toEthiopic(date, useAmataAlam){
       return false;
   }
 
-  // Convert from JDN to Ethiopic
+  return jdn;
   
+}
+
+/**
+ * To convert a JDN date to an Ethiopic date,
+ * @param {number} jdn A Julian Day Number 
+ * @param {boolean} [useAmataAlam=false]
+ */
+function jdnToEthiopic(jdn, useAmataAlam){
+
+  // Verify that the argument for useAmataAlam is a valid type
+  
+  if(typeof useAmataAlam === 'undefined') var useAmataAlam = false;
+  else if(typeof useAmataAlam !== 'boolean'){
+      console.log('Parameter useAmataAlam expects a boolean value.');
+      return false;
+  }
+
   const r = (jdn - 1723855.5) % 1461;
   const n = (r % 365) + 365 * Math.floor(r / 1460);
-  
-  // For Amata Alam we only need to add 5500
-  
-  if(useAmataAlam) year += 5500;
-  
+
   date = {};    
   date.year = 4 * Math.floor((jdn - 1723856) / 1461) + Math.floor(r / 365) - Math.floor(r / 1460);
   date.month = Math.floor(n / 30) + 1;
   date.date = (n % 30) + 1;
-  date.day = (jdn + 1.5) % 7 + 1;
-  
+  date.day = dayOfWeek(jdn);
+
+  // For Amata Alam we only need to add 5500
+
+  if(useAmataAlam) date.year += 5500;
+
   return date;
 }
 
 /**
-  * To convert an Ethiopic date to a Western date,
-  * where "Western" is defined as:
-  * Gregorian for dates on or after October 15, 1582 or
-  * Julian for dates on or before October 4, 1582.
-  * @param {{year: number, month: number, date: number}} date An Ethiopic date
-  * @param {boolean} [isAmataAlam=false]
-  */
-function toWestern(date, isAmataAlam){
-  // Verify that the argument for date is a valid type
-  
-  if(typeof date !== 'object'){
-      console.log('Parameter date expects an object.');
-      return false;
-  }
-  else if(!('year' in date) || !('month' in date)){
-      console.log('Parameter date must contain a year and a month.');
-      return false;
-  }
-  else if(!('date' in date)) date.date = 1;
-  
-  if(
-      (typeof date.year !== 'number' && typeof date.year !== 'string') ||
-      (typeof date.month !== 'number' && typeof date.month !== 'string') ||
-      (typeof date.date !== 'number' && typeof date.date !== 'string')
-  ){
-      console.log('Values for date must be numbers or strings.');
-      return false;
-  }
-  else{
-      date.year = parseInt(date.year);
-      date.month = parseInt(date.month);
-      date.date = parseInt(date.date);
-  }
-  
-  // Verify that the argument for date is a valid date
-  
-  if(date.month < 1 || date.month > 13){
-      console.log('date.month must be an integer from 1 (Mas) to 13 (Pag).');
-      return false;
-  }
-  else if(date.date < 1 || date.date > 30){
-      console.log('date.date must be an integer from 1 to 30.');
-      return false;
-  }
-  else if(date.month == 13){
-      if(
-          date.year % 4 == 3 &&
-          date.date > 6
-      ){
-          console.log('In leap years, if date.month == 13 then date.date must be <=6.');
-          return false;
-      }
-      else if(
-        date.year % 4 != 3 &&
-        date.date > 5
-      ){
-          console.log('In non-leap years, if date.month == 13 then date.date must be <=5.');
-          return false;
-      }
-  }
-  
-  // Verify that the argument for isAmataAlam is a valid type
-  
-  if(typeof isAmataAlam === 'undefined') var isAmataAlam = false;
-  else if(typeof isAmataAlam !== 'boolean'){
-      console.log('Parameter isAmataAlam expects a boolean value.');
-      return false;
-  }
-  
-  // For Amata Alam we need to subtract 5500
-  
-  if(isAmataAlam) date.year -= 5500;
-  
-  // If date < 1/1/1 then error
-  
-  if(date.year < 1){
-      console.log('Dates before 1/1/1 AM are invalid.');
-      return false;
-  }
-  
-  // First convert to JDN
-  
-  const n = 30 * date.month + date.date - 31;
-  var jdn = (1723856 + 365) + 365 * (date.year - 1) + Math.floor(date.year / 4) + n - 0.5;
+ * To convert a JDN to a Western date,
+ * where "Western" is defined as:
+ * Gregorian for dates on or after October 15, 1582 or
+ * Julian for dates on or before October 4, 1582.
+ * @param {number} jdn A Julian Day Number
+ */
+function jdnToWestern(jdn){
   
   // Use Gregorian conversion for dates >= 1575/2/8 (JDN 2299160.5)
   // Use Julian conversion for dates <= 1575/2/7 (JDN 2299159.5)
@@ -259,29 +276,51 @@ function toWestern(date, isAmataAlam){
   date.date = b - d - f + (q - z);
   date.month = (e - 1 <= 12 ? e - 1: e - 13);  
   date.year = (date.month <= 2 ? c - 4715 : c - 4716);
-  date.day = (jdn + 1.5) % 7 + 1;
+  date.day = dayOfWeek(jdn);
   
   return date;
 
 }
 
 /**
- * Determines the first day of a given Ethiopian month.
- * @param {{year: number, month: number}} month An Ethiopic month and year
+ * To convert an Ethiopic date to a Western date,
+ * where "Western" is defined as:
+ * Gregorian for dates on or after October 15, 1582 or
+ * Julian for dates on or before October 4, 1582.
+ * @param {{year: number, month: number, date: number}} date An Ethiopic date
+ * @param {boolean} [isAmataAlam=false]
  */
-function firstOfMonth(month){
+function toWestern(date, isAmataAlam){
 
-  var n = 30 * month.month + 1 - 31;
-  var jdn = (1723856 + 365) + 365 * (month.year - 1) + Math.floor(month.year / 4) + n - 0.5;
-  
-  return {
-    year: month.year,
-    month: month.month, 
-    date: 1,
-    day: (jdn + 1.5) % 7 + 1
-  };
+  return jdnToWestern(ethiopicToJdn(date, isAmataAlam));
 
 }
+
+/**
+ * To convert an Ethiopic date to a Western date,
+ * where "Western" is defined as:
+ * Gregorian for dates on or after October 15, 1582 or
+ * Julian for dates on or before October 4, 1582.
+ * @param {{year: number, month: number, date: number}} date An Ethiopic date
+ * @param {boolean} [isAmataAlam=false]
+ */
+function toEthiopic(date, useAmataAlam){
+
+  return jdnToEthiopic(westernToJdn(date), useAmataAlam);
+
+}
+
+/**
+ * Determines the first day of the week of a given JDN.
+ * @param {number} jdn A Julian Day Number
+ */
+function dayOfWeek(jdn){
+  return (jdn + 1.5) % 7 + 1;
+}
+
+
+
+
 
 /**
  * Converts an Arabic numeral to an Ethiopic numeral

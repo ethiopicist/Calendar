@@ -198,23 +198,76 @@ $(document).ready(function(){
 
   });
 
+  /*
+   * Show and hide the calender converter modal
+   */
+   
+   $(document).on('click', 'a[id^="open-converter"]', function(){
+ 
+     $('div#converter-window').addClass('is-active');
+     $('html').addClass('is-clipped');
+ 
+   });
+
+  $(document).on('click', 'div#converter-window div.modal-background, div#converter-window button', function(){
+
+    $('div#converter-window').removeClass('is-active');
+    $('html').removeClass('is-clipped');
+
+  });
+
  /*
-  * Arrow keys function like go-to buttons
+  * Switch calendar conversion
+  */
+  
+  $(document).on('click', 'div#converter-window li[id^="convert-"] a', function(){
+
+    $('div#converter-window li').removeClass('is-active');
+    $(this).parent().addClass('is-active');
+
+    $('div#converter-window form').hide();
+    $('div#converter-window form#' + $(this).parent().attr('id') + '-form').show();
+
+  });
+
+ /*
+  * Conversion buttons
+  */
+  
+  $(document).on('click', 'div#converter-window a[id^="convert-"][id$="-submit"]', function(){
+
+    var calendar = $(this).attr('id').slice(0, -7).substr(8);
+
+    const date = {
+      year: parseInt($('#convert-'+calendar+'-year').val()),
+      month: parseInt($('#convert-'+calendar+'-month').val()),
+      date: parseInt($('#convert-'+calendar+'-date').val()),
+    }
+
+    convertDate(date, calendar, userPreferences('useAmataAlam'));
+
+  });
+
+ /*
+  * Keyboard shortcuts to mimic buttons
   */
 
   $(document).keydown(function(e) {
 
     switch(e.which) {
-      case 37: $('a#go-to-prev').trigger('click');// left
+      case 37: $('a#go-to-prev').trigger('click'); // left
       break;
 
-      case 38: $('a#go-to-prev').trigger('click');// up
+      case 38: $('a#go-to-prev').trigger('click'); // up
       break;
 
-      case 39: $('a#go-to-next').trigger('click');// right
+      case 39: $('a#go-to-next').trigger('click'); // right
       break;
 
-      case 40: $('a#go-to-next').trigger('click');// down
+      case 40: $('a#go-to-next').trigger('click'); // down
+      break;
+
+      case 84: $('a#go-to-today').trigger('click'); // t
       break;
 
       default: return;
@@ -251,14 +304,21 @@ function initCallback(){
   $('#calendar-preferences').appendTo('.calendar-title-row');
   $('#go-to-next-mobile-control').appendTo('.calendar-title-row');
 
-  // List of Ethiopian months for Go to...
+  // List of months for Go to... and converter fields
   for(i = 1; i <= 13; i++){
 
-    $('select#go-to-month').append(
-      $('<option value="' + i + '" data-i18n="ethMonth' + i + 'long">')
-    );
+    $('select#go-to-month').append($('<option value="' + i + '" data-i18n="ethMonth' + i + 'long">'));
+
+    $('select#convert-ethiopic-month').append($('<option value="' + i + '" data-i18n="ethMonth' + i + 'long">'));
+
+    if(i < 13) $('select#convert-western-month').append($('<option value="' + i + '" data-i18n="greMonth' + i + 'long">'));
 
   }
+
+  // Prefill default values for converter fields and converted dates
+  var defaultDate = today;
+  if(userPreferences('useAmataAlam')) defaultDate.year += 5500;
+  convertDate(defaultDate, 'ethiopic', userPreferences('useAmataAlam'));
 
   // Add necessary elements to modals
   $('#locale-picker .panel-block').append(
@@ -293,6 +353,8 @@ function updateCallback(){
  */
 function localize(){
 
+  localizeConversion()
+
   $('html').attr('lang', options('locale'));
   
   $('*[data-i18n]').i18n();
@@ -304,12 +366,16 @@ function localize(){
 
   // Change locale for the Go to... month list
   if(userPreferences('language') == 'om') $.i18n().locale = 'om';
+  else if(options('locale') == 'am-eth' || options('locale') == 'ti-eth'){
+    $.i18n().locale = options('locale');
+  }
   else $.i18n().locale = (
     userPreferences('language') +
     (userPreferences('useScript') ? '-eth' : '-lat')
   );
 
   $('select#go-to-month option').i18n();
+  $('select#convert-ethiopic-month').i18n();
 
 }
 
@@ -363,6 +429,101 @@ function fillForms(){
     if(userPreferences('language') == 'ti') $('#localeDayNames .toggle').attr('data-is-true', '').attr('disabled', '');
 
   }
+
+}
+
+/**
+ * For converting dates and displaying the result
+ * @param {{year: number, month: number, date: number}} date 
+ * @param {string} calendar
+ * @param {boolean} [isAmataAlam=false]
+ */
+function convertDate(date, calendar, isAmataAlam){
+
+  if(calendar == 'ethiopic') jdn = ethiopicToJdn(date, isAmataAlam);
+  else if(calendar == 'western') jdn = westernToJdn(date);
+
+  if(jdn === false) {
+    alert('The date entered was invalid.');
+    return false;
+  }
+
+  var ethiopicDate = jdnToEthiopic(jdn, isAmataAlam);
+  $('input#convert-ethiopic-year').val(ethiopicDate.year);
+  $('select#convert-ethiopic-month').val(ethiopicDate.month);
+  $('input#convert-ethiopic-date').val(ethiopicDate.date);
+  $('#converted-dates #converted-ethiopic-date').attr('data-year', ethiopicDate.year).attr('data-month', ethiopicDate.month).attr('data-date', ethiopicDate.date).attr('data-day', ethiopicDate.day);
+  if(isAmataAlam) $('#converted-dates #converted-ethiopic-date').attr('data-is-aa', '');
+  else $('#converted-dates #converted-ethiopic-date').removeAttr('data-is-aa');
+  
+  var westernDate = jdnToWestern(jdn);
+  $('input#convert-western-year').val(westernDate.year);
+  $('select#convert-western-month').val(westernDate.month);
+  $('input#convert-western-date').val(westernDate.date);
+  $('#converted-dates #converted-western-date').attr('data-year', westernDate.year).attr('data-month', westernDate.month).attr('data-date', westernDate.date).attr('data-day', westernDate.day);
+
+  localizeConversion();
+
+}
+
+function localizeConversion(){
+  
+  if(userPreferences('language') == 'om') $.i18n().locale = 'om';
+    else if(options('locale') == 'am-eth' || options('locale') == 'ti-eth'){
+      $.i18n().locale = options('locale');
+    }
+    else $.i18n().locale = (
+      userPreferences('language') +
+      (userPreferences('useScript') ? '-eth' : '-lat')
+    );
+
+    var ethiopicDate = $('#converted-dates #converted-ethiopic-date');
+
+    if(ethiopicDate.is('[data-is-aa]') != userPreferences('useAmataAlam')){
+
+      if(userPreferences('useAmataAlam')){
+
+        var adjustedYear = parseInt(ethiopicDate.attr('data-year')) + 5500;
+        ethiopicDate.attr('data-is-aa', '');
+        ethiopicDate.attr('data-year', adjustedYear);
+        $('input#convert-ethiopic-year').val(adjustedYear);
+
+      }
+      else{
+
+        var adjustedYear = parseInt(ethiopicDate.attr('data-year')) - 5500;
+        ethiopicDate.removeAttr('data-is-aa');
+        ethiopicDate.attr('data-year', adjustedYear);
+        $('input#convert-ethiopic-year').val(adjustedYear);
+
+      }
+
+    }
+
+    ethiopicDate.text(
+      $.i18n(
+        '{{datestring:eth|$1|$2|$3|$4}}',
+        toEthiopicNumeral(parseInt(ethiopicDate.attr('data-year')), (userPreferences('useNumerals') && $.i18n().locale != 'om')),
+        parseInt(ethiopicDate.attr('data-month')),
+        toEthiopicNumeral(parseInt(ethiopicDate.attr('data-date')), (userPreferences('useNumerals') && $.i18n().locale != 'om')),
+        parseInt(ethiopicDate.attr('data-day')),
+        
+      )
+    );
+
+    $.i18n().locale = options('locale');
+
+    var westernDate = $('#converted-dates #converted-western-date');
+    
+    westernDate.text(
+      $.i18n(
+        '{{datestring:wes|$1|$2|$3|$4}}',
+        parseInt(westernDate.attr('data-year')),
+        parseInt(westernDate.attr('data-month')),
+        parseInt(westernDate.attr('data-date')),
+        parseInt(westernDate.attr('data-day'))
+      )
+    );
 
 }
 
@@ -443,6 +604,7 @@ function userPreferences(preference, value){
     alternateCalendar: 'gre',
     language: 'gez',
     localeDayNames: true,
+    useDarkTheme: false,
     useScript: true,
     useNumerals: true
   }

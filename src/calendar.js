@@ -305,10 +305,19 @@
    * @param {number} firstWeekday The day that the week starts on
    */
   function firstOfCalendar(month, firstWeekday){
-    
-    const offset = (firstOfMonth(month).day - firstWeekday + 7) % 7;
 
-    var firstOfCalendar = firstOfMonth(month);
+    month.date = 1;
+
+    var firstOfMonth = {
+      year: month.year,
+      month: month.month,
+      date: month.date,
+      day: dayOfWeek(ethiopicToJdn(month))
+    }
+    
+    const offset = (firstOfMonth.day - firstWeekday + 7) % 7;
+
+    var firstOfCalendar = firstOfMonth;
 
     for(i = 0; i < offset; i++){
       firstOfCalendar = subOneDay(firstOfCalendar);
