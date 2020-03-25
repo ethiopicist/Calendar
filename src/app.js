@@ -311,7 +311,12 @@ function initCallback(){
 
     $('select#convert-ethiopic-month').append($('<option value="' + i + '" data-i18n="ethMonth' + i + 'long">'));
 
-    if(i < 13) $('select#convert-western-month').append($('<option value="' + i + '" data-i18n="greMonth' + i + 'long">'));
+    if(i < 13){
+
+      $('select#convert-western-month').append($('<option value="' + i + '" data-i18n="greMonth' + i + 'long">'));
+      $('select#convert-islamic-month').append($('<option value="' + i + '" data-i18n="islMonth' + i + 'long">'));
+
+    }
 
   }
 
@@ -334,6 +339,8 @@ function initCallback(){
   localize();
   fillForms();
 
+  if(userPreferences('useDarkTheme')) $('body').addClass('dark-theme');
+  else $('body').removeClass('dark-theme');
   $('body').show();
 
 }
@@ -342,6 +349,9 @@ function initCallback(){
  * Callback function after updating the calendar
  */
 function updateCallback(){
+
+  if(userPreferences('useDarkTheme')) $('body').addClass('dark-theme');
+  else $('body').removeClass('dark-theme');
 
   localize();
   fillForms();
@@ -442,6 +452,7 @@ function convertDate(date, calendar, isAmataAlam){
 
   if(calendar == 'ethiopic') jdn = ethiopicToJdn(date, isAmataAlam);
   else if(calendar == 'western') jdn = westernToJdn(date);
+  else if(calendar == 'islamic') jdn = islamicToJdn(date);
 
   if(jdn === false) {
     alert('The date entered was invalid.');
@@ -461,6 +472,21 @@ function convertDate(date, calendar, isAmataAlam){
   $('select#convert-western-month').val(westernDate.month);
   $('input#convert-western-date').val(westernDate.date);
   $('#converted-dates #converted-western-date').attr('data-year', westernDate.year).attr('data-month', westernDate.month).attr('data-date', westernDate.date).attr('data-day', westernDate.day);
+
+  var islamicDate = jdnToIslamic(jdn);
+
+  if(islamicDate){
+    $('input#convert-islamic-year').val(islamicDate.year);
+    $('select#convert-islamic-month').val(islamicDate.month);
+    $('input#convert-islamic-date').val(islamicDate.date);
+    $('#converted-dates #converted-islamic-date').attr('data-year', islamicDate.year).attr('data-month', islamicDate.month).attr('data-date', islamicDate.date).attr('data-day', islamicDate.day);
+  }
+  else{
+    $('input#convert-islamic-year').val(1);
+    $('select#convert-islamic-month').val(1);
+    $('input#convert-islamic-date').val(1);
+    $('#converted-dates #converted-islamic-date').attr('data-year', 0).attr('data-month', 0).attr('data-date', 0).attr('data-day', 0);
+  }
 
   localizeConversion();
 
@@ -524,6 +550,24 @@ function localizeConversion(){
         parseInt(westernDate.attr('data-day'))
       )
     );
+
+    var islamicDate = $('#converted-dates #converted-islamic-date');
+
+    if(parseInt(islamicDate.attr('data-year')) > 0){
+    
+      islamicDate.text(
+        $.i18n(
+          '{{datestring:isl|$1|$2|$3|$4}}',
+          parseInt(islamicDate.attr('data-year')),
+          parseInt(islamicDate.attr('data-month')),
+          parseInt(islamicDate.attr('data-date')),
+          parseInt(islamicDate.attr('data-day'))
+        )
+      );
+
+    }
+
+    else islamicDate.text('');
 
 }
 

@@ -113,10 +113,10 @@
         var calendarCell = $('<div class="calendar-cell-'+i+'-'+j+'" />').appendTo(calendarRow);
         
         $('<div class="calendar-cell-inner" />').append(
-          $('<span class="label-ethiopian-date" />'),
-          $('<span class="label-ethiopian-month-long" />'),
-          $('<span class="label-ethiopian-month-short" />'),
-          $('<span class="label-ethiopian-month-narrow" />'),
+          $('<span class="label-ethiopic-date" />'),
+          $('<span class="label-ethiopic-month-long" />'),
+          $('<span class="label-ethiopic-month-short" />'),
+          $('<span class="label-ethiopic-month-narrow" />'),
           
           $('<span class="label-alternate-date" />'),
           $('<span class="label-alternate-month-long" />'),
@@ -176,20 +176,25 @@
 
       for(j = 0; j < 7; j++){
         const calendarCell = calendarRow.children('.calendar-cell-'+i+'-'+j);
+        if(userPreferences.alternateCalendar == 'gre') var iDateAlternate = toWestern(iDate);
+        else if(userPreferences.alternateCalendar == 'isl') var iDateAlternate = toIslamic(iDate);
 
-        if(iDate.year > 0){
+        calendarCell.attr('data-ethiopic-year', iDate.year);
+        calendarCell.attr('data-ethiopic-month', iDate.month);
+        calendarCell.attr('data-ethiopic-date', iDate.date);
+        
+        calendarCell.attr('data-alternate-year', iDateAlternate.year);
+        calendarCell.attr('data-alternate-month', iDateAlternate.month);
+        calendarCell.attr('data-alternate-date', iDateAlternate.date);
 
-          calendarCell.attr('data-ethiopic-year', iDate.year);
-          calendarCell.attr('data-ethiopic-month', iDate.month);
-          calendarCell.attr('data-ethiopic-date', iDate.date);
-          calendarCell.attr('data-alternate-year', toWestern(iDate).year);
-          calendarCell.attr('data-alternate-month', toWestern(iDate).month);
-          calendarCell.attr('data-alternate-date', toWestern(iDate).date);
-
-        }
-        else{
+        if(iDate.year < 1){
 
           calendarCell.removeAttr('data-ethiopic-year data-ethiopic-month data-ethiopic-date');
+          calendarCell.removeAttr('data-alternate-year data-alternate-month data-alternate-date');
+
+        }
+        else if(iDateAlternate.year < 1){
+
           calendarCell.removeAttr('data-alternate-year data-alternate-month data-alternate-date');
 
         }
@@ -215,24 +220,24 @@
 
         if(iDate.year > 0){
 
-          calendarCellInner.children('.label-ethiopian-date').text(
+          calendarCellInner.children('.label-ethiopic-date').text(
             toEthiopicNumeral(iDate.date, userPreferences.useNumerals)
           );
 
           if(iDate.date == 1 || (i == 0 && j == 0)){
             
-            calendarCellInner.children('.label-ethiopian-month-long').text(
+            calendarCellInner.children('.label-ethiopic-month-long').text(
               $.i18n('ethMonth' + iDate.month + 'long')
             );
 
-            calendarCellInner.children('.label-ethiopian-month-short, .label-ethiopian-month-narrow').text(
+            calendarCellInner.children('.label-ethiopic-month-short, .label-ethiopic-month-narrow').text(
               $.i18n('ethMonth' + iDate.month + 'short')
             );
 
           }
 
           if(userPreferences.showAlternateDates) calendarCellInner.children('.label-alternate-date').text(
-            toWestern(iDate).date
+            iDateAlternate.date
           );
 
         }
@@ -280,15 +285,18 @@
           };
 
           $(this).find('.label-alternate-month-long').text(
-            $.i18n('greMonth' + altMonth.month + 'long') +
+            $.i18n(userPreferences.alternateCalendar + 'Month' + altMonth.month + 'long') +
             " " +
             altMonth.year
           );
 
           $(this).find('.label-alternate-month-short').text(
-            $.i18n('greMonth' + altMonth.month + 'short') +
-            $.i18n('shortSeparator') +
+            $.i18n(userPreferences.alternateCalendar + 'Month' + altMonth.month + 'short') +
             altMonth.year//.substr(2, 2)
+          );
+
+          $(this).find('.label-alternate-month-narrow').text(
+            $.i18n(userPreferences.alternateCalendar + 'Month' + altMonth.month + 'narrow')
           );
 
         }

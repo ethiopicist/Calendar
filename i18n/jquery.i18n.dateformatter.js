@@ -11,7 +11,6 @@ $.extend($.i18n.parser.emitter, {
 
 				case 'am-eth':
 				case 'ti-eth':
-				case 'gez-eth':
 					dateString = (
 						$.i18n('day'+nodes[4]+'long') + '፣ ' +
 						$.i18n('ethMonth'+nodes[2]+'long') + ' ' +
@@ -20,13 +19,32 @@ $.extend($.i18n.parser.emitter, {
 					);
 					break;
 
+				case 'gez-eth':
+					dateString = (
+						'ዕለተ ' +
+						$.i18n('day'+nodes[4]+'long') + '፣ ' +
+						nodes[3] + 'ለወርኀ ' +
+						$.i18n('ethMonth'+nodes[2]+'long') + '፣ ' +
+						nodes[1] +
+						'ዓመት'
+					);
+					break;
+
 				case 'am-lat':
 				case 'ti-lat':
-				case 'gez-lat':
 					dateString = (
 						$.i18n('day'+nodes[4]+'long') + ', ' +
 						$.i18n('ethMonth'+nodes[2]+'long') + ' ' +
 						nodes[3] + ' qan ' +
+						nodes[1]
+					);
+					break;
+
+				case 'gez-lat':
+					dateString = (
+						$.i18n('day'+nodes[4]+'long') + ', ' +
+						nodes[3] + 'la' +
+						$.i18n('ethMonth'+nodes[2]+'long') + ' ' +
 						nodes[1]
 					);
 					break;
@@ -85,6 +103,22 @@ $.extend($.i18n.parser.emitter, {
 
 			}
 		
+		}
+
+		else if(nodes[0] == 'isl'){
+
+			switch($.i18n().locale){
+
+				default:
+					dateString = (
+						$.i18n('day'+nodes[4]+'long') + ', ' +
+						$.i18n('islMonth'+nodes[2]+'long') + ' ' +
+						nodes[3] + ', ' +
+						nodes[1]
+					);
+
+			}
+
 		}
 
 		return dateString;

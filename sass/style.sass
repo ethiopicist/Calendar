@@ -22,7 +22,9 @@ $panel-shadow: 0
 
 html, body, section.section, .container
   width: 100%
-  font-family: 'Noto Sans'
+  font-family: 'Noto Sans', Arial, sans-serif
+  overscroll-behavior: none // prevents elastic scrolling in some browsers
+  touch-action: manipulation // prevents double tap to zoom on mobile
 
 body
   +mobile
@@ -45,7 +47,6 @@ div#calendar
         &.is-parent
           +tablet
             border-top: 1px solid #dbdbdb
-            background-color: $light
 
             &:first-child
               border-left: 1px solid #dbdbdb
@@ -73,7 +74,6 @@ div#calendar
         border-top: 1px solid #dbdbdb
 
         +tablet
-          background-color: $light
           border-left: 1px solid #dbdbdb
 
           &:last-child
@@ -112,18 +112,6 @@ div#calendar
         &[class^="calendar-cell-5"] //the last row
           +tablet
             border-bottom: 1px solid #dbdbdb
-
-        &.is-different-month
-          color: $grey-light
-
-          +tablet
-            background-color: $white-bis
-        
-        &.is-today
-          color: $info
-
-          +tablet
-            background: $info-light
         
         div.calendar-cell-inner
           position: relative
@@ -136,12 +124,14 @@ div#calendar
           span[class$='-month-short']
             +desktop
               display: none
+            +mobile
+              display: none
 
-          span[class$='-month-min']
+          span[class$='-month-narrow']
             +tablet
               display: none
 
-          span[class^='label-ethiopian']
+          span[class^='label-ethiopic']
             font-size: 1.2em
 
             +touch
@@ -192,21 +182,21 @@ div#calendar
               width: 100%
               text-align: center
 
-        &.is-different-month[data-ethiopian-date*="-1-"] div.calendar-cell-inner
-          span.label-ethiopian-date
+        &.is-different-month[data-ethiopic-date="1"] div.calendar-cell-inner
+          span.label-ethiopic-date
             +mobile
               display: none
           
-          span.label-ethiopian-month-min
+          span.label-ethiopic-month-narrow
             +mobile
               display: block
 
-        &[data-alternate-date*="-1-"] div.calendar-cell-inner
+        &[data-alternate-date="1"] div.calendar-cell-inner
           span.label-alternate-date, span.label-alternate-month-long, span.label-alternate-month-short
             +mobile
               display: none
 
-        &:not([data-alternate-date*="-1-"]) div.calendar-cell-inner
+        &:not([data-alternate-date="1"]) div.calendar-cell-inner
           span[class^="label-alternate-month"]
             +mobile
               display: none
@@ -266,3 +256,79 @@ nav.navbar.is-light
           background-color: inherit
 
 
+/* Theme colours */
+
+body
+  transition: color 0.5s, background-color 0.5s
+  min-height: 100vh
+
+/* Light/Default */
+
+div#calendar
+  div.calendar-head
+    background-color: $light
+
+  div.calendar-body
+    div.is-different-month
+      color: $grey-light
+
+      +tablet
+        background-color: $white-bis
+        
+    div.is-today
+      color: $info
+
+      +tablet
+        background: $info-light
+
+/* Dark */
+
+body.dark-theme
+  background-color: $black-ter
+  color: $light
+
+  div#calendar
+    div.calendar-head
+      div, h1 span
+        background-color: $grey-darker
+        color: $white-bis
+
+      a.button.is-dark, .input.is-dark, .select.is-dark
+        @extend .is-light
+
+      input.input.is-dark, .select.is-dark select
+        background-color: $grey-dark
+        color: $white-bis
+
+      .select.is-dark::after
+        border-color: $white-bis
+
+    div.calendar-body
+      div[class^="calendar-row"]
+    
+        div[class^="calendar-cell"]:not(.calendar-cell-inner)
+          &.is-different-month
+            color: $white-bis
+
+            +mobile
+              color: $grey-dark
+
+            +tablet
+              background-color: $grey-dark
+              
+          &.is-today
+            color: $info-light
+
+            +mobile
+              color: $info
+
+            +tablet
+              background: $info-dark
+
+  nav.navbar.is-light
+    @extend .is-dark
+
+    .navbar-start, .navbar-end
+      a.navbar-item:hover
+        @media (hover: none) // prevents hover bg color change on touchscreens
+          background-color: inherit

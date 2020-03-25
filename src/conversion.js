@@ -310,6 +310,35 @@ function toEthiopic(date, useAmataAlam){
 
 }
 
+function jdnToIslamic(jdn){
+
+  if(jdn < 1948439.5) return false;
+
+  const k2 = 30 * (jdn + 0.5 - 1948440) + 15;
+  const k1 = 11 * Math.floor((k2 % 10631) / 30) + 5;
+  
+  var date = {};
+  date.year = Math.floor(k2 / 10631) + 1;
+  date.month = Math.floor(k1 / 325) + 1;
+  date.date = Math.floor((k1 % 325) / 11) + 1;
+  date.day = dayOfWeek(jdn);
+  
+  return date;
+  
+}
+
+function islamicToJdn(date){
+  
+  return Math.floor((10631 * date.year - 10617) / 30) + Math.floor((325 * date.month - 320) / 11) + date.date + 1948439 -0.5;
+  
+}
+
+function toIslamic(date, isAmataAlam){
+
+  return jdnToIslamic(ethiopicToJdn(date, isAmataAlam));
+
+}
+
 /**
  * Determines the first day of the week of a given JDN.
  * @param {number} jdn A Julian Day Number
