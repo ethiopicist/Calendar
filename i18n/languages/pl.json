@@ -6,12 +6,10 @@
 		"locale": "pl"
 	},
 
-	"title": "Kalendarz etiopsko-erytrejski",
+	"title": "Ḥassāba Zaman - Kalendarz etiopsko/erytrejski",
 
 	"langNameLong": "Polski",
 	"langNameShort": "pl",
-
-	"dateString": "$1 $3 $2 $4",
 
 	"day1long": "niedziela",
 	"day1short": "niedz.",

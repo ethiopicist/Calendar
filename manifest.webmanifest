@@ -1,10 +1,10 @@
 {
-  "name": "Ethiopian-Eritrean Calendar",
-  "short_name": "Ethiopian Calendar",
+  "name": "Ḥassāba Zaman - An Ethiopian/Eritrean Calendar",
+  "short_name": "Ḥassāb",
   "start_url": ".",
+  "description": "An online Ethiopian/Eritrean calendar in English, Amharic, Tigrinya, and other languages.",
   "display": "standalone",
   "background_color": "#fff",
-  "description": "",
   "icons": [],
   "orientation": "portrait"
 }

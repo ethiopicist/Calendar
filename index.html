@@ -4,11 +4,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An online Ethiopian/Eritrean calendar in English, Amharic, Tigrinya, and other languages.">
-  <meta name="keywords" content="ethiopian calendar, eritrean calendar, ethiopian, calendar, eritrean">
-  <title data-i18n="title">Ḥassāba Zaman - The Ethiopian/Eritrean Calendar</title>
 
+  <meta name="description" content="An online Ethiopian/Eritrean calendar in English, Amharic, Tigrinya, and other languages.">
+  <meta name="keywords" content="ethiopian calendar, eritrean calendar, ethiopian, calendar, app, calendar app, eritrean, convert, calendar converter, hessab, hassab">
+  
+  <title data-i18n="title">Ḥassāba Zaman - An Ethiopian/Eritrean Calendar</title>
+  <!--<link rel="shortcut icon" href="">=-->
   <link rel="manifest" href="manifest.webmanifest">
+  
+  <meta name="apple-mobile-web-app-title" content="Ḥassāb">
+  <!--<link rel="apple-touch-icon" href="">-->
   <meta name="apple-mobile-web-app-capable" content="yes">
 
   <link rel="stylesheet" href="style.css">
@@ -21,7 +26,6 @@
   <script src="i18n/jquery.i18n.language.js"></script>
   <script src="i18n/jquery.i18n.parser.js"></script>
   <script src="i18n/jquery.i18n.emitter.js"></script>
-  <script src="i18n/jquery.i18n.emitter.bidi.js"></script>
   <script src="i18n/jquery.i18n.dateformatter.js"></script>
 
   <script src="scripts/conversion.min.js"></script>
@@ -74,7 +78,7 @@
     <div class="tile is-child">
       <div class="buttons has-addons is-right" style="margin-bottom: 0px">
         <a id="open-converter" class="button is-small is-dark is-outlined" style="margin-right: 5px; border-radius: 2px; margin-bottom: 0px" data-i18n-label="ariaOpenConverter">
-          <span class="octicon octicon-git-compare" style="margin-left: 1px; font-size: 1rem;"></span>
+          <span class="octicon octicon-code" style="margin-left: 2px; font-size: 1rem;"></span>
         </a>
         <a id="open-locale-picker" class="button is-small is-dark is-outlined" style="border-radius: 2px 0 0 2px; margin-bottom: 0px" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
         <a id="open-userPreferences" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
@@ -99,9 +103,9 @@
     </div>
     <div class="navbar-end">
       <a id="open-converter-mobile" class="navbar-item" data-i18n-label="ariaOpenConverter">
-        <span class="octicon octicon-git-compare" style="margin-left: 6.5px; font-size: 1.5em"></span>
+        <span class="octicon octicon-code" style="margin-left: 5px; font-size: 1.5em"></span>
       </a>
-      <a id="open-locale-picker-mobile" class="navbar-item" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
+      <a id="open-locale-picker-mobile" class="navbar-item" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages" style="padding: 0.5rem 0.75rem;"></a>
       <a id="open-userPreferences-mobile" class="navbar-item" data-i18n-label="ariaOpenPreferences">
         <span class="octicon octicon-gear" style="margin-left: 6.5px; font-size: 1.5em"></span>
       </a>
