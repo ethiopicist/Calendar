@@ -531,7 +531,7 @@ function localizeConversion(){
         '{{datestring:eth|$1|$2|$3|$4}}',
         toEthiopicNumeral(parseInt(ethiopicDate.attr('data-year')), (userPreferences('useNumerals') && $.i18n().locale != 'om')),
         parseInt(ethiopicDate.attr('data-month')),
-        toEthiopicNumeral(parseInt(ethiopicDate.attr('data-date')), (userPreferences('useNumerals') && $.i18n().locale != 'om')),
+        toEthiopicNumeral(parseInt(ethiopicDate.attr('data-date')), (userPreferences('useNumerals') && $.i18n().locale != 'om'), (userPreferences('language') == 'gez')),
         parseInt(ethiopicDate.attr('data-day')),
         
       )
@@ -650,7 +650,8 @@ function userPreferences(preference, value){
     localeDayNames: true,
     useDarkTheme: false,
     useScript: true,
-    useNumerals: true
+    useNumerals: true,
+    showEvangelists: false
   }
 
   var userPreferences = {};

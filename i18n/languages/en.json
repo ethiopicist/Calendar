@@ -47,6 +47,12 @@
 	"useDarkTheme": "Use dark theme",
 	"useScript": "Use Ethiopic letters",
 	"useNumerals": "Use Ethiopic numerals",
+	"showEvangelists": "Show the year's Evangelist",
+
+	"evangelist1": "Matt.",
+	"evangelist2": "Mark",
+	"evangelist3": "Luke",
+	"evangelist0": "John",
 
 	"ariaPrev": "Go to the previous month",
 	"ariaToday": "Go to today",

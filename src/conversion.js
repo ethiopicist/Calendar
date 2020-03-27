@@ -310,6 +310,11 @@ function toEthiopic(date, useAmataAlam){
 
 }
 
+/**
+ * To convert a JDN to an Islamic date,
+ * Approximated according to typical algorithms.
+ * @param {number} jdn A Julian Day Number
+ */
 function jdnToIslamic(jdn){
 
   if(jdn < 1948439.5) return false;
@@ -327,12 +332,22 @@ function jdnToIslamic(jdn){
   
 }
 
+/**
+ * To convert an Islamic date to a JDN,
+ * Approximated according to typical algorithms.
+ * @param {{year: number, month: number, date: number}} date An Islamic date
+ */
 function islamicToJdn(date){
   
   return Math.floor((10631 * date.year - 10617) / 30) + Math.floor((325 * date.month - 320) / 11) + date.date + 1948439 -0.5;
   
 }
 
+/**
+ * To convert an Ethiopic date to an approximate Islamic date,
+ * @param {{year: number, month: number, date: number}} date An Ethiopic date
+ * @param {boolean} [isAmataAlam=false]
+ */
 function toIslamic(date, isAmataAlam){
 
   return jdnToIslamic(ethiopicToJdn(date, isAmataAlam));
@@ -340,11 +355,42 @@ function toIslamic(date, isAmataAlam){
 }
 
 /**
- * Determines the first day of the week of a given JDN.
+ * Determines the day of the week of a given JDN.
  * @param {number} jdn A Julian Day Number
  */
 function dayOfWeek(jdn){
   return (jdn + 1.5) % 7 + 1;
+}
+
+/**
+ * Calculates the tentyon of a given Ethiopic year.
+ * @param {number} year An Ethiopic year
+ */
+function tentyon(year){
+    const dow = dayOfWeek(ethiopicToJdn({
+        year: year,
+        month: 1,
+        date: 1
+    }));
+
+    if((dow + 4) % 7 == 0) return 7;
+    else return (dow + 4) % 7;
+}
+
+/**
+ * Calculates the abaqte of a given Ethiopic year.
+ * @param {number} year An Ethiopic year
+ */
+function abaqte(year){
+    return false;
+}
+
+/**
+ * Calculates the matqe of a given Ethiopic year.
+ * @param {number} year An Ethiopic year
+ */
+function matqe(year){
+    return false;
 }
 
 
@@ -356,9 +402,12 @@ function dayOfWeek(jdn){
  * @param {number} x
  * @param {boolean} [useNumerals]
  */
-function toEthiopicNumeral(x, useNumerals){
+function toEthiopicNumeral(x, useNumerals, insertAnd){
 
   if(typeof useNumerals !== 'undefined' && useNumerals === false) return x;
+  
+  if(typeof insertAnd === 'undefined' || insertAnd === false) var wa = '';
+  else if(typeof insertAnd !== 'undefined' && insertAnd === true) var wa = 'ወ';
 
   if(typeof x !== 'number') x = parseInt(x);
 
@@ -373,15 +422,15 @@ function toEthiopicNumeral(x, useNumerals){
   else if(x == 8) return '፰';
   else if(x == 9) return '፱';
 
-  else if(x >= 10 && x < 20) return '፲' + toEthiopicNumeral(x - 10);
-  else if(x >= 20 && x < 30) return '፳' + toEthiopicNumeral(x - 20);
-  else if(x >= 30 && x < 40) return '፴' + toEthiopicNumeral(x - 30);
-  else if(x >= 40 && x < 50) return '፵' + toEthiopicNumeral(x - 40);
-  else if(x >= 50 && x < 60) return '፶' + toEthiopicNumeral(x - 50);
-  else if(x >= 60 && x < 70) return '፷' + toEthiopicNumeral(x - 60);
-  else if(x >= 70 && x < 80) return '፸' + toEthiopicNumeral(x - 70);
-  else if(x >= 80 && x < 90) return '፹' + toEthiopicNumeral(x - 80);
-  else if(x >= 90 && x < 100) return '፺' + toEthiopicNumeral(x - 90);
+  else if(x >= 10 && x < 20) return '፲' + wa + toEthiopicNumeral(x - 10);
+  else if(x >= 20 && x < 30) return '፳' + wa + toEthiopicNumeral(x - 20);
+  else if(x >= 30 && x < 40) return '፴' + wa + toEthiopicNumeral(x - 30);
+  else if(x >= 40 && x < 50) return '፵' + wa + toEthiopicNumeral(x - 40);
+  else if(x >= 50 && x < 60) return '፶' + wa + toEthiopicNumeral(x - 50);
+  else if(x >= 60 && x < 70) return '፷' + wa + toEthiopicNumeral(x - 60);
+  else if(x >= 70 && x < 80) return '፸' + wa + toEthiopicNumeral(x - 70);
+  else if(x >= 80 && x < 90) return '፹' + wa + toEthiopicNumeral(x - 80);
+  else if(x >= 90 && x < 100) return '፺' + wa + toEthiopicNumeral(x - 90);
 
   else if(x >= 100 && x < 200) return '፻' + toEthiopicNumeral(x - 100);
   else if(x >= 200 && x < 10000) return toEthiopicNumeral((x - (x % 100)) / 100) + '፻' + toEthiopicNumeral(x % 100);

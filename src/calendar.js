@@ -83,6 +83,8 @@
             $('<span class="month-name" />'),
           ).append(
             $('<span class="year-number" />')
+          ).append(
+            $('<span class="evangelist-name" />')
           )
         )
       )
@@ -270,6 +272,11 @@
     }
 
     if(!userPreferences.localeDayNames) $.i18n().locale = options.locale;
+
+    if(userPreferences.showEvangelists) titleCellInner.children('.evangelist-name').text(
+      " (" + $.i18n('evangelist' + options.month.year % 4) + ")"
+    );
+    else titleCellInner.children('.evangelist-name').text('');
 
     if(userPreferences.showAlternateDates){
       
