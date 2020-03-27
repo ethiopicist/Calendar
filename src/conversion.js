@@ -86,6 +86,11 @@ function ethiopicToJdn(date, isAmataAlam){
       return false;
   }
 
+/*
+    This formula is based on the one describe by Daniel Yacob here:
+    http://www.geez.org/Calendars/
+*/
+
   const n = 30 * date.month + date.date - 31;
   const jdn = (1723856 + 365) + 365 * (date.year - 1) + Math.floor(date.year / 4) + n - 0.5;
 
@@ -160,6 +165,11 @@ function westernToJdn(date){
       }
   }
 
+/*
+    These formulas are based on the ones described by Bill Jeffreys here:
+    https://quasar.as.utexas.edu/BillInfo/JulianDatesG.html
+*/
+
   // First convert to JDN
   // This formula can be adjusted for both
   // Julian and Gregorian
@@ -226,6 +236,11 @@ function jdnToEthiopic(jdn, useAmataAlam){
       return false;
   }
 
+/*
+    This formula is based on the one describe by Daniel Yacob here:
+    http://www.geez.org/Calendars/
+*/
+
   const r = (jdn - 1723855.5) % 1461;
   const n = (r % 365) + 365 * Math.floor(r / 1460);
 
@@ -253,6 +268,11 @@ function jdnToWestern(jdn){
   
   // Use Gregorian conversion for dates >= 1575/2/8 (JDN 2299160.5)
   // Use Julian conversion for dates <= 1575/2/7 (JDN 2299159.5)
+
+/*
+    These formulas are based on the ones described by Bill Jeffreys here:
+    https://quasar.as.utexas.edu/BillInfo/JulianDatesG.html
+*/
   
   const q = jdn + 0.5;
   const z = Math.floor(q);
@@ -319,6 +339,11 @@ function jdnToIslamic(jdn){
 
   if(jdn < 1948439.5) return false;
 
+/*
+    This formula is based on the one described here:
+    https://www.aa.quae.nl/en/reken/juliaansedag.html
+*/
+
   const k2 = 30 * (jdn + 0.5 - 1948440) + 15;
   const k1 = 11 * Math.floor((k2 % 10631) / 30) + 5;
   
@@ -338,6 +363,11 @@ function jdnToIslamic(jdn){
  * @param {{year: number, month: number, date: number}} date An Islamic date
  */
 function islamicToJdn(date){
+
+/*
+    This formula is based on the one described here:
+    https://www.aa.quae.nl/en/reken/juliaansedag.html
+*/
   
   return Math.floor((10631 * date.year - 10617) / 30) + Math.floor((325 * date.month - 320) / 11) + date.date + 1948439 -0.5;
   
@@ -359,7 +389,9 @@ function toIslamic(date, isAmataAlam){
  * @param {number} jdn A Julian Day Number
  */
 function dayOfWeek(jdn){
+
   return (jdn + 1.5) % 7 + 1;
+
 }
 
 /**
@@ -367,6 +399,7 @@ function dayOfWeek(jdn){
  * @param {number} year An Ethiopic year
  */
 function tentyon(year){
+
     const dow = dayOfWeek(ethiopicToJdn({
         year: year,
         month: 1,
@@ -375,6 +408,7 @@ function tentyon(year){
 
     if((dow + 4) % 7 == 0) return 7;
     else return (dow + 4) % 7;
+
 }
 
 /**
@@ -382,7 +416,8 @@ function tentyon(year){
  * @param {number} year An Ethiopic year
  */
 function abaqte(year){
-    return false;
+
+    return (30 - matqe(year) == 30 ? 0 : 30 - matqe(year));
 }
 
 /**
@@ -390,7 +425,10 @@ function abaqte(year){
  * @param {number} year An Ethiopic year
  */
 function matqe(year){
-    return false;
+
+    const c = ((year-10) % 19 ? (year-10) % 19 : 19);
+
+    return ((c - 1) * 19) % 30;
 }
 
 
