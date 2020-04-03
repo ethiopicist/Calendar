@@ -80,6 +80,8 @@
             'data-month', moveable(event, y).month
           ).attr(
             'data-year', y
+          ).attr(
+            'data-date', moveable(event, y).date
           ).appendTo(row);
 
         }

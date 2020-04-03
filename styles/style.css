@@ -7588,6 +7588,11 @@ div#calendar div.calendar-body div.is-today {
     div#calendar div.calendar-body div.is-today {
       background-color: #eef6fc; } }
 
+@media screen and (min-width: 768px), print {
+  div#calendar div.calendar-body div.is-highlighted {
+    color: #947600;
+    background-color: #fffbeb; } }
+
 table.table tr.is-selected {
   background-color: #eef6fc;
   color: #3298dc; }

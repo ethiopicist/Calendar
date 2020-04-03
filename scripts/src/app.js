@@ -280,6 +280,11 @@ $(document).ready(function(){
 
       $('#calendar').ethiopianCalendar('update', options(), updateCallback);
 
+      $('div[class^="calendar-cell"]' +
+      '[data-ethiopic-year="' + $(this).attr('data-year') + '"]' +
+      '[data-ethiopic-month="' + $(this).attr('data-month') + '"]' +
+      '[data-ethiopic-date="' + $(this).attr('data-date') + '"]').addClass('is-highlighted');
+
     }
 
   });
@@ -395,6 +400,9 @@ function updateCallback(){
 
   if(userPreferences('useDarkTheme')) $('body').addClass('dark-theme');
   else $('body').removeClass('dark-theme');
+
+  // Un-highlight calendar cells
+  $('.is-highlighted').removeClass('is-highlighted');
 
   // Update the computus table
   $('#computus-table tbody').html('');
