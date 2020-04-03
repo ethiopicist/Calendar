@@ -266,6 +266,24 @@ $(document).ready(function(){
 
   });
 
+  $(document).on('click', 'table#computus-table tbody td', function(){
+
+    if(typeof $(this).attr('data-year') !== 'undefined' && typeof $(this).attr('data-month') !== 'undefined'){
+
+      $('div#computus-window').removeClass('is-active');
+      $('html').removeClass('is-clipped');
+
+      options('month', {
+        year: parseInt($(this).attr('data-year')),
+        month: parseInt($(this).attr('data-month'))
+      });
+
+      $('#calendar').ethiopianCalendar('update', options(), updateCallback);
+
+    }
+
+  });
+
  /*
   * Keyboard shortcuts to mimic buttons
   */

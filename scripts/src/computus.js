@@ -41,7 +41,7 @@
       var row = $('<tr />');
 
       $('<td class="has-text-right" />').text(
-        toEthiopicNumeral(y, userPreferences.useNumerals)
+        toEthiopicNumeral((userPreferences.useAmataAlam ? y + 5500 : y), userPreferences.useNumerals)
       ).appendTo(row);
 
       $('<td class="has-text-centered" />').text(
@@ -68,71 +68,22 @@
         toEthiopicNumeral(matqe(y), userPreferences.useNumerals)
       ).appendTo(row);
 
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('nineveh', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('nineveh', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
+      $.each(
+        ['nineveh', 'lent', 'mountOfOlives', 'palmSunday', 'goodFriday', 'easter', 'synod', 'ascension', 'pentecost', 'apostles', 'salvation'],
+        function(key, event){
 
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('lent', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('lent', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
+          $('<td class="has-text-centered" />').text(
+            $.i18n('ethMonth' + moveable(event, y).month + 'short') +
+            " " +
+            toEthiopicNumeral(moveable(event, y).date, userPreferences.useNumerals)
+          ).attr(
+            'data-month', moveable(event, y).month
+          ).attr(
+            'data-year', y
+          ).appendTo(row);
 
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('mountOfOlives', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('mountOfOlives', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('palmSunday', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('palmSunday', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('goodFriday', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('goodFriday', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('easter', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('easter', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('synod', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('synod', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('ascension', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('ascension', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('pentecost', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('pentecost', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('apostles', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('apostles', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
-
-      $('<td class="has-text-centered" />').text(
-        $.i18n('ethMonth' + moveable('salvation', y).month + 'short') +
-        " " +
-        toEthiopicNumeral(moveable('salvation', y).date, userPreferences.useNumerals)
-      ).appendTo(row);
+        }
+      );
 
       if(y == year) row.addClass('is-selected');
 

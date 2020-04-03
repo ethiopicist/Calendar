@@ -7551,6 +7551,9 @@ span.octicon {
   .modal .menu a.is-active .octicon {
     display: inline-block; }
 
+table#computus-table tbody td[data-month][data-year] {
+  cursor: pointer; }
+
 @media (hover: none) {
   div.buttons a.button.is-dark.is-outlined:hover {
     background-color: inherit;
