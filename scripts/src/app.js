@@ -202,12 +202,12 @@ $(document).ready(function(){
    * Show and hide the calender converter modal
    */
    
-   $(document).on('click', 'a[id^="open-converter"]', function(){
- 
-     $('div#converter-window').addClass('is-active');
-     $('html').addClass('is-clipped');
- 
-   });
+  $(document).on('click', 'a[id^="open-converter"]', function(){
+
+    $('div#converter-window').addClass('is-active');
+    $('html').addClass('is-clipped');
+
+  });
 
   $(document).on('click', 'div#converter-window div.modal-background, div#converter-window button', function(){
 
@@ -249,32 +249,54 @@ $(document).ready(function(){
   });
 
  /*
+  * Show and hide the computus table modal
+  */
+
+  $(document).on('click', 'a[id^="open-computus"]', function(){
+
+    $('div#computus-window').addClass('is-active');
+    $('html').addClass('is-clipped');
+
+  });
+
+  $(document).on('click', 'div#computus-window div.modal-background, div#computus-window button', function(){
+
+    $('div#computus-window').removeClass('is-active');
+    $('html').removeClass('is-clipped');
+
+  });
+
+ /*
   * Keyboard shortcuts to mimic buttons
   */
 
   $(document).keydown(function(e) {
 
-    switch(e.which) {
-      case 37: $('a#go-to-prev').trigger('click'); // left
-      break;
+    if($('input:focus').length < 1){
 
-      case 38: $('a#go-to-prev').trigger('click'); // up
-      break;
+      switch(e.which) {
+        case 37: $('a#go-to-prev').trigger('click'); // left
+        break;
 
-      case 39: $('a#go-to-next').trigger('click'); // right
-      break;
+        case 38: $('a#go-to-prev').trigger('click'); // up
+        break;
 
-      case 40: $('a#go-to-next').trigger('click'); // down
-      break;
+        case 39: $('a#go-to-next').trigger('click'); // right
+        break;
 
-      case 84: $('a#go-to-today').trigger('click'); // t
-      break;
+        case 40: $('a#go-to-next').trigger('click'); // down
+        break;
 
-      default: return;
+        case 84: $('a#go-to-today').trigger('click'); // t
+        break;
 
+        default: return;
+
+      }
+
+      e.preventDefault();
+    
     }
-
-    e.preventDefault();
 
   });
 
@@ -336,6 +358,9 @@ function initCallback(){
     $(this).append($('<span class="toggle is-pulled-right" />'));
   });
 
+  // Initialize the computus table
+  $('#computus-table').seaOfComputation('init', options('month').year, options());
+
   localize();
   fillForms();
 
@@ -353,6 +378,10 @@ function updateCallback(){
   if(userPreferences('useDarkTheme')) $('body').addClass('dark-theme');
   else $('body').removeClass('dark-theme');
 
+  // Update the computus table
+  $('#computus-table tbody').html('');
+  $('#computus-table').seaOfComputation('init', options('month').year, options());
+
   localize();
   fillForms();
   
@@ -363,21 +392,60 @@ function updateCallback(){
  */
 function localize(){
 
-  localizeConversion()
+  $.i18n().locale = options('locale');
 
   $('html').attr('lang', options('locale'));
   
   $('*[data-i18n]').i18n();
 
   $('*[data-i18n-label]').each(function(){
+
     $(this).attr('aria-label', $.i18n($(this).attr('data-i18n-label')));
     $(this).attr('title', $.i18n($(this).attr('data-i18n-label')));
+
   });
 
-  // Change locale for the Go to... month list
+  $('#converted-western-date, #converted-islamic-date').children().each(function(){
+
+    if($(this).parent().attr('id') == 'converted-western-date') var calendar = 'gre';
+    else if($(this).parent().attr('id') == 'converted-islamic-date') var calendar = 'isl';
+
+    if($(this).attr('class') == 'converted-day'){
+
+      if(typeof $(this).attr('data-day') !== 'undefined') $(this).text(
+        $.i18n('day' + $(this).attr('data-day') + 'long')
+      );
+
+    }
+    else if($(this).attr('class') == 'converted-date'){
+
+      if(typeof $(this).attr('data-date') !== 'undefined') $(this).text(
+        $(this).attr('data-date')
+      );
+
+    }
+    else if($(this).attr('class') == 'converted-month'){
+
+      if(typeof $(this).attr('data-month') !== 'undefined') $(this).text(
+        $.i18n(calendar + 'Month' + $(this).attr('data-month') + 'long' + ($.i18n().locale == 'pl' ? '-gen' : ''))
+      );
+
+    }
+    else if($(this).attr('class') == 'converted-year'){
+
+      if(typeof $(this).attr('data-year') !== 'undefined') $(this).text(
+        $(this).attr('data-year')
+      );
+
+    }
+
+  });
+
+  // Separate localization for Ethiopic elements
+
   if(userPreferences('language') == 'om') $.i18n().locale = 'om';
   else if(options('locale') == 'am-eth' || options('locale') == 'ti-eth'){
-    $.i18n().locale = options('locale');
+    $.i18n().locale = userPreferences('language') + '-eth';
   }
   else $.i18n().locale = (
     userPreferences('language') +
@@ -386,6 +454,23 @@ function localize(){
 
   $('select#go-to-month option').i18n();
   $('select#convert-ethiopic-month').i18n();
+
+  $('#converted-ethiopic-date .converted-day').text(
+    $.i18n('day' + $('#converted-ethiopic-date .converted-day').attr('data-day') + 'long')
+  );
+
+  $('#converted-ethiopic-date .converted-date').text(
+    toEthiopicNumeral(parseInt($('#converted-ethiopic-date .converted-date').attr('data-date')), userPreferences('useNumerals'))
+  );
+
+  $('#converted-ethiopic-date .converted-month').text(
+    ($.i18n().locale == 'gez-eth' || $.i18n().locale == 'gez-lat' ? 'ለ' : '') +
+    $.i18n('ethMonth' + $('#converted-ethiopic-date .converted-month').attr('data-month') + 'long')
+  );
+
+  $('#converted-ethiopic-date .converted-year').text(
+    toEthiopicNumeral(parseInt($('#converted-ethiopic-date .converted-year').attr('data-year')), userPreferences('useNumerals'))
+  );
 
 }
 
@@ -460,114 +545,58 @@ function convertDate(date, calendar, isAmataAlam){
   }
 
   var ethiopicDate = jdnToEthiopic(jdn, isAmataAlam);
-  $('input#convert-ethiopic-year').val(ethiopicDate.year);
-  $('select#convert-ethiopic-month').val(ethiopicDate.month);
+
+  $('#converted-ethiopic-date .converted-day').attr('data-day', ethiopicDate.day);
+
+  $('#converted-ethiopic-date .converted-date').attr('data-date', ethiopicDate.date);
   $('input#convert-ethiopic-date').val(ethiopicDate.date);
-  $('#converted-dates #converted-ethiopic-date').attr('data-year', ethiopicDate.year).attr('data-month', ethiopicDate.month).attr('data-date', ethiopicDate.date).attr('data-day', ethiopicDate.day);
-  if(isAmataAlam) $('#converted-dates #converted-ethiopic-date').attr('data-is-aa', '');
-  else $('#converted-dates #converted-ethiopic-date').removeAttr('data-is-aa');
+
+  $('#converted-ethiopic-date .converted-month').attr('data-month', ethiopicDate.month);
+  $('select#convert-ethiopic-month').val(ethiopicDate.month);
+
+  $('#converted-ethiopic-date .converted-year').attr('data-year', ethiopicDate.year);
+  $('input#convert-ethiopic-year').val(ethiopicDate.year);
   
   var westernDate = jdnToWestern(jdn);
-  $('input#convert-western-year').val(westernDate.year);
-  $('select#convert-western-month').val(westernDate.month);
+
+  $('#converted-western-date .converted-day').attr('data-day', westernDate.day);
+
+  $('#converted-western-date .converted-date').attr('data-date', westernDate.date);
   $('input#convert-western-date').val(westernDate.date);
-  $('#converted-dates #converted-western-date').attr('data-year', westernDate.year).attr('data-month', westernDate.month).attr('data-date', westernDate.date).attr('data-day', westernDate.day);
+
+  $('#converted-western-date .converted-month').attr('data-month', westernDate.month);
+  $('select#convert-western-month').val(westernDate.month);
+
+  $('#converted-western-date .converted-year').attr('data-year', westernDate.year);
+  $('input#convert-western-year').val(westernDate.year);
 
   var islamicDate = jdnToIslamic(jdn);
 
   if(islamicDate){
-    $('input#convert-islamic-year').val(islamicDate.year);
-    $('select#convert-islamic-month').val(islamicDate.month);
+    
+    $('#converted-islamic-date .converted-day').attr('data-day', islamicDate.day);
+
+    $('#converted-islamic-date .converted-date').attr('data-date', islamicDate.date);
     $('input#convert-islamic-date').val(islamicDate.date);
-    $('#converted-dates #converted-islamic-date').attr('data-year', islamicDate.year).attr('data-month', islamicDate.month).attr('data-date', islamicDate.date).attr('data-day', islamicDate.day);
+
+    $('#converted-islamic-date .converted-month').attr('data-month', islamicDate.month);
+    $('select#convert-islamic-month').val(islamicDate.month);
+
+    $('#converted-islamic-date .converted-year').attr('data-year', islamicDate.year);
+    $('input#convert-islamic-year').val(islamicDate.year);
+
   }
   else{
+
     $('input#convert-islamic-year').val(1);
     $('select#convert-islamic-month').val(1);
     $('input#convert-islamic-date').val(1);
-    $('#converted-dates #converted-islamic-date').attr('data-year', 0).attr('data-month', 0).attr('data-date', 0).attr('data-day', 0);
+
+    $('#converted-islamic-date span').removeAttr('data-day data-date data-month data-year').text('');
+
   }
 
-  localizeConversion();
-
-}
-
-function localizeConversion(){
-  
-  if(userPreferences('language') == 'om') $.i18n().locale = 'om';
-    else if(options('locale') == 'am-eth' || options('locale') == 'ti-eth'){
-      $.i18n().locale = options('locale');
-    }
-    else $.i18n().locale = (
-      userPreferences('language') +
-      (userPreferences('useScript') ? '-eth' : '-lat')
-    );
-
-    var ethiopicDate = $('#converted-dates #converted-ethiopic-date');
-
-    if(ethiopicDate.is('[data-is-aa]') != userPreferences('useAmataAlam')){
-
-      if(userPreferences('useAmataAlam')){
-
-        var adjustedYear = parseInt(ethiopicDate.attr('data-year')) + 5500;
-        ethiopicDate.attr('data-is-aa', '');
-        ethiopicDate.attr('data-year', adjustedYear);
-        $('input#convert-ethiopic-year').val(adjustedYear);
-
-      }
-      else{
-
-        var adjustedYear = parseInt(ethiopicDate.attr('data-year')) - 5500;
-        ethiopicDate.removeAttr('data-is-aa');
-        ethiopicDate.attr('data-year', adjustedYear);
-        $('input#convert-ethiopic-year').val(adjustedYear);
-
-      }
-
-    }
-
-    ethiopicDate.text(
-      $.i18n(
-        '{{datestring:eth|$1|$2|$3|$4}}',
-        toEthiopicNumeral(parseInt(ethiopicDate.attr('data-year')), (userPreferences('useNumerals') && $.i18n().locale != 'om')),
-        parseInt(ethiopicDate.attr('data-month')),
-        toEthiopicNumeral(parseInt(ethiopicDate.attr('data-date')), (userPreferences('useNumerals') && $.i18n().locale != 'om'), (userPreferences('language') == 'gez')),
-        parseInt(ethiopicDate.attr('data-day')),
-        
-      )
-    );
-
-    $.i18n().locale = options('locale');
-
-    var westernDate = $('#converted-dates #converted-western-date');
-    
-    westernDate.text(
-      $.i18n(
-        '{{datestring:wes|$1|$2|$3|$4}}',
-        parseInt(westernDate.attr('data-year')),
-        parseInt(westernDate.attr('data-month')),
-        parseInt(westernDate.attr('data-date')),
-        parseInt(westernDate.attr('data-day'))
-      )
-    );
-
-    var islamicDate = $('#converted-dates #converted-islamic-date');
-
-    if(parseInt(islamicDate.attr('data-year')) > 0){
-    
-      islamicDate.text(
-        $.i18n(
-          '{{datestring:isl|$1|$2|$3|$4}}',
-          parseInt(islamicDate.attr('data-year')),
-          parseInt(islamicDate.attr('data-month')),
-          parseInt(islamicDate.attr('data-date')),
-          parseInt(islamicDate.attr('data-day'))
-        )
-      );
-
-    }
-
-    else islamicDate.text('');
+  localize();
 
 }
 
@@ -650,8 +679,7 @@ function userPreferences(preference, value){
     localeDayNames: true,
     useDarkTheme: false,
     useScript: true,
-    useNumerals: true,
-    showEvangelists: false
+    useNumerals: true
   }
 
   var userPreferences = {};

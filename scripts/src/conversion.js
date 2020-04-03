@@ -395,47 +395,6 @@ function dayOfWeek(jdn){
 }
 
 /**
- * Calculates the tentyon of a given Ethiopic year.
- * @param {number} year An Ethiopic year
- */
-function tentyon(year){
-
-    const dow = dayOfWeek(ethiopicToJdn({
-        year: year,
-        month: 1,
-        date: 1
-    }));
-
-    if((dow + 4) % 7 == 0) return 7;
-    else return (dow + 4) % 7;
-
-}
-
-/**
- * Calculates the abaqte of a given Ethiopic year.
- * @param {number} year An Ethiopic year
- */
-function abaqte(year){
-
-    return (30 - matqe(year) == 30 ? 0 : 30 - matqe(year));
-}
-
-/**
- * Calculates the matqe of a given Ethiopic year.
- * @param {number} year An Ethiopic year
- */
-function matqe(year){
-
-    const c = ((year-10) % 19 ? (year-10) % 19 : 19);
-
-    return ((c - 1) * 19) % 30;
-}
-
-
-
-
-
-/**
  * Converts an Arabic numeral to an Ethiopic numeral
  * @param {number} x
  * @param {boolean} [useNumerals]

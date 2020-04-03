@@ -60,7 +60,7 @@
       return methods.init.apply(this, arguments);
     }
     else{
-      $.error('Method ' +  method + ' does not exist in jQuery.ethiopiancalendar');
+      $.error('Method ' +  method + ' does not exist in jQuery.ethiopicCalendar');
     }    
 
   };
@@ -83,8 +83,6 @@
             $('<span class="month-name" />'),
           ).append(
             $('<span class="year-number" />')
-          ).append(
-            $('<span class="evangelist-name" />')
           )
         )
       )
@@ -272,11 +270,6 @@
     }
 
     if(!userPreferences.localeDayNames) $.i18n().locale = options.locale;
-
-    if(userPreferences.showEvangelists) titleCellInner.children('.evangelist-name').text(
-      " (" + $.i18n('evangelist' + options.month.year % 4) + ")"
-    );
-    else titleCellInner.children('.evangelist-name').text('');
 
     if(userPreferences.showAlternateDates){
       

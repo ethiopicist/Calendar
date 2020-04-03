@@ -16,7 +16,7 @@
   <!--<link rel="apple-touch-icon" href="">-->
   <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/style.css">
 
   <script src="scripts/jquery.min.js"></script>
 
@@ -29,6 +29,7 @@
   <script src="i18n/jquery.i18n.dateformatter.js"></script>
 
   <script src="scripts/conversion.min.js"></script>
+  <script src="scripts/computus.min.js"></script>
   <script src="scripts/calendar.min.js"></script>
 </head>
 <body style="display: none;">
@@ -77,15 +78,15 @@
   <div id="calendar-preferences" class="tile is-parent is-2">
     <div class="tile is-child">
       <div class="buttons has-addons is-right" style="margin-bottom: 0px">
+        <a id="open-computus" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaOpenComputus">
+          <span class="octicon octicon-calendar" style="margin-left: 2px; font-size: 1rem;"></span>
+        </a>
         <a id="open-converter" class="button is-small is-dark is-outlined" style="margin-right: 5px; border-radius: 2px; margin-bottom: 0px" data-i18n-label="ariaOpenConverter">
           <span class="octicon octicon-code" style="margin-left: 2px; font-size: 1rem;"></span>
         </a>
         <a id="open-locale-picker" class="button is-small is-dark is-outlined" style="border-radius: 2px 0 0 2px; margin-bottom: 0px" data-i18n="langNameShort" data-i18n-label="ariaOpenLanguages"></a>
         <a id="open-userPreferences" class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaOpenPreferences">
           <span class="octicon octicon-gear" style="margin-left: 1px; font-size: 1rem;"></span>
-        </a>
-        <a class="button is-small is-dark is-outlined" style="margin-bottom: 0px" data-i18n-label="ariaHelp">
-          <span class="octicon octicon-question" style="margin-left: 1px; font-size: 1rem;"></span>
         </a>
       </div>
     </div>
@@ -140,6 +141,9 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title" data-i18n="preferences">Preferences</p>
+        <a href="/docs/" class="is-pulled-right" style="margin-right: 5px; font-size: 1.4rem; color: hsl(116, 0%, 71%);">
+          <span class="octicon octicon-question"></span>
+        </a>
         <button class="delete" data-i18n-label="ariaClose"></button>
       </header>
       <section class="modal-card-body">
@@ -184,7 +188,6 @@
             <li><a class="toggle-control" id="useDarkTheme"><span data-i18n="useDarkTheme">Use dark theme</span></a></li>
             <li><a class="toggle-control" id="useScript"><span data-i18n="useScript">Use Ethiopic letters</span></a></li>
             <li><a class="toggle-control" id="useNumerals"><span data-i18n="useNumerals">Use Ethiopic numerals</span></a></li>
-            <li><a class="toggle-control" id="showEvangelists"><span data-i18n="showEvangelists">Show the Evangelist of the year</span></a></li>
           </ul>
 
         </aside>
@@ -283,13 +286,87 @@
         </form>
 
         <div id="converted-dates" class="content has-text-centered" style="margin-top: 1.5rem;">
-          <p id="converted-ethiopic-date"></p>
-          <p id="converted-western-date"></p>
-          <p id="converted-islamic-date"></p>
+          <p id="converted-ethiopic-date">
+            <span class="converted-day"></span>
+            <span class="converted-date"></span>
+            <span class="converted-month"></span>
+            <span class="converted-year"></span>
+          </p>
+          <p id="converted-western-date">
+            <span class="converted-day"></span>
+            <span class="converted-date"></span>
+            <span class="converted-month"></span>
+            <span class="converted-year"></span>
+          </p>
+          <p id="converted-islamic-date">
+            <span class="converted-day"></span>
+            <span class="converted-date"></span>
+            <span class="converted-month"></span>
+            <span class="converted-year"></span>
+          </p>
         </div>
       </section>
       <footer class="modal-card-foot"></footer>
     </div>
+  </div>
+
+  <div id="computus-window" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title" data-i18n="seaOfComputation">Sea of Computation</p>
+        <button class="delete" data-i18n-label="ariaClose"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="table-container">
+          <table id="computus-table" class="table is-striped is-narrow is-hoverable is-bordered">
+            <thead>
+              <tr>
+                <th class="has-text-right" data-i18n="year">ዓመት</th>
+                <th class="has-text-centered" data-i18n="evangelist">ወንጌላዊ</th>
+                <th class="has-text-centered" data-i18n="manbar">መንበር</th>
+                <th class="has-text-centered" data-i18n="tentyon">ጥንትዮን</th>
+                <th class="has-text-centered" data-i18n="abaqte">አበቅቴ</th>
+                <th class="has-text-centered" data-i18n="matqe">መጥቅዕ</th>
+                <th class="has-text-centered" data-i18n="ninevehFast">ጾመ፡ ነነዌ</th>
+                <th class="has-text-centered" data-i18n="lent">ዓቢይ፡ ጾም</th>
+                <th class="has-text-centered" data-i18n="mountOfOlives">ደብረ፡ ዘይት</th>
+                <th class="has-text-centered" data-i18n="palmSunday">ሆሣዕና</th>
+                <th class="has-text-centered" data-i18n="goodFriday">ስቅለት</th>
+                <th class="has-text-centered" data-i18n="easter">ትንሣኤ</th>
+                <th class="has-text-centered" data-i18n="synod">ርክበ፡ ካህናት</th>
+                <th class="has-text-centered" data-i18n="ascension">ዕርገት</th>
+                <th class="has-text-centered" data-i18n="pentecost">ጰራቅሊጦስ</th>
+                <th class="has-text-centered" data-i18n="apostlesFast">ጾመ፡ ሐዋርያት</th>
+                <th class="has-text-centered" data-i18n="salvationFast">ጾመ፡ ድኅነት</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <th class="has-text-right" data-i18n="year">ዓመት</th>
+                <th class="has-text-centered" data-i18n="evangelist">ወንጌላዊ</th>
+                <th class="has-text-centered" data-i18n="manbar">መንበር</th>
+                <th class="has-text-centered" data-i18n="tentyon">ጥንትዮን</th>
+                <th class="has-text-centered" data-i18n="abaqte">አበቅቴ</th>
+                <th class="has-text-centered" data-i18n="matqe">መጥቅዕ</th>
+                <th class="has-text-centered" data-i18n="ninevehFast">ጾመ፡ ነነዌ</th>
+                <th class="has-text-centered" data-i18n="lent">ዓቢይ፡ ጾም</th>
+                <th class="has-text-centered" data-i18n="mountOfOlives">ደብረ፡ ዘይት</th>
+                <th class="has-text-centered" data-i18n="palmSunday">ሆሣዕና</th>
+                <th class="has-text-centered" data-i18n="goodFriday">ስቅለት</th>
+                <th class="has-text-centered" data-i18n="easter">ትንሣኤ</th>
+                <th class="has-text-centered" data-i18n="synod">ርክበ፡ ካህናት</th>
+                <th class="has-text-centered" data-i18n="ascension">ዕርገት</th>
+                <th class="has-text-centered" data-i18n="pentecost">ጰራቅሊጦስ</th>
+                <th class="has-text-centered" data-i18n="apostlesFast">ጾመ፡ ሐዋርያት</th>
+                <th class="has-text-centered" data-i18n="salvationFast">ጾመ፡ ድኅነት</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+      <footer class="modal-card-foot"></footer>
   </div>
   
   <script src="scripts/app.min.js"></script>
