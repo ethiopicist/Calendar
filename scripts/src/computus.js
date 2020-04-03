@@ -49,6 +49,10 @@
       ).appendTo(row);
 
       $('<td class="has-text-centered" />').text(
+        toEthiopicNumeral(toAmataQamar(y), userPreferences.useNumerals)
+      ).appendTo(row);
+
+      $('<td class="has-text-centered" />').text(
         toEthiopicNumeral(manbar(y), userPreferences.useNumerals)
       ).appendTo(row);
 
@@ -168,6 +172,20 @@
 
     return w;
 
+  }
+
+  function toAmataQamar(year, withCycle){
+    
+    var cycle = Math.floor(((year + 5500) / 532) - 10);
+    year = (year + 5500) % 532;
+
+    if(typeof withCycle === 'boolean' && withCycle){
+      return {
+        cycle: cycle,
+        year: year
+      };
+    }
+    else return year;
   }
 
   /**
