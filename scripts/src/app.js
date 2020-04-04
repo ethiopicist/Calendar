@@ -26,7 +26,9 @@ $(document).ready(function(){
   * Update the calendar: go-to buttons
   */
 
-  $(document).on('click', 'div[id^="go-to-buttons"] a[id^="go-to-"]', function(){
+    $(document).on('click touchend', 'div[id^="go-to-buttons"] a[id^="go-to-"]', function(e){
+
+    e.preventDefault(); // to prevent double tap to zoom and other unwanted behaviours
     
     if($(this).attr('id').startsWith('go-to-prev')){
 

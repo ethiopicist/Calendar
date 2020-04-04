@@ -23,8 +23,8 @@ $panel-shadow: 0
 html, body, section.section, .container
   width: 100%
   font-family: 'Noto Sans', Helvetica, Arial, sans-serif
+  touch-action: manipulation // prevents double tap to zoom on some mobile browsers
   overscroll-behavior: none // prevents elastic scrolling in some browsers
-  touch-action: manipulation // prevents double tap to zoom on mobile
 
 body
   +mobile
@@ -340,6 +340,66 @@ body.dark-theme
 
             +tablet
               background: $info-dark
+
+          &.is-highlighted
+            +tablet
+              background: $warning-dark
+              color: $warning-light
+
+  div.modal
+    .modal-card-head, .modal-card-foot
+      background-color: $grey-dark
+
+      p
+        color: $white-bis
+
+    .modal-card-body
+      background-color: $black-ter
+      color: $light
+
+      p.menu-label
+        color: $white-bis
+
+      li a
+        color: $light
+
+        &:hover:not(.is-active)
+          background-color: $grey-dark
+
+      a.button.is-dark, .input.is-dark, .select.is-dark
+        @extend .is-light
+      
+      nav a
+        color: $light
+
+        &:hover
+          background-color: $grey-dark
+
+      .tabs li a:hover:not(.is-active)
+        background-color: inherit
+
+  table.table.is-striped
+    thead tr, tfoot tr, th
+      color: $light
+      background-color: $black-ter
+    
+    tbody tr
+      &:not(.is-selected)
+        color: $light
+        background-color: $black-ter
+
+        &:hover
+          background-color: $grey-dark
+
+      &:not(.is-selected):nth-child(even)
+        background-color: $grey-dark
+
+        &:hover
+          background-color: $grey
+
+      &.is-selected
+        background: $info-dark
+        color: $info-light
 
   nav.navbar.is-light
     @extend .is-dark
