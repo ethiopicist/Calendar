@@ -1,8 +1,8 @@
 CACHE MANIFEST
 
-# Ver. 0.1.0
+# Ver. 0.1.1
 
-styles/style.css
+index.html
 
 scripts/jquery.min.js
 
@@ -27,3 +27,17 @@ i18n/languages/ti-lat.json
 scripts/conversion.min.js
 scripts/computus.min.js
 scripts/calendar.min.js
+scripts/app.min.js
+
+styles/style.css
+
+styles/notosans/notosans.min.css
+styles/notosans/NotoSansEthiopic-Bold.woff2
+styles/notosans/NotoSansEthiopic-Regular.woff2
+styles/notosans/NotoSansLatin-Bold.woff2
+styles/notosans/NotoSansLatin.woff2
+styles/notosans/NotoSansLatinExt-Bold.woff2
+styles/notosans/NotoSansLatinExt.woff2
+
+styles/octicons/octicons.min.css
+styles/octicons/octicons.woff2
