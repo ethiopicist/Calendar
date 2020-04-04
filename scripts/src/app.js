@@ -234,9 +234,11 @@ $(document).ready(function(){
   * Conversion buttons
   */
   
-  $(document).on('click', 'div#converter-window a[id^="convert-"][id$="-submit"]', function(){
+  $(document).on('click', 'div#converter-window a[id^="convert-"][id*="-submit"]', function(){
 
-    var calendar = $(this).attr('id').slice(0, -7).substr(8);
+    if($(this).attr('id').includes('ethiopic')) var calendar = 'ethiopic';
+    else if($(this).attr('id').includes('western')) var calendar = 'western';
+    else if($(this).attr('id').includes('islamic')) var calendar = 'islamic';
 
     const date = {
       year: parseInt($('#convert-'+calendar+'-year').val()),
