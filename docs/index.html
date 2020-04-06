@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link type="text/css" rel="stylesheet" href="../../styles/style.css"/>
 </head>
 <body>
@@ -12,7 +13,8 @@
 <a href="/" class="button is-small is-info">&larr; Back to App</a>
 </div>
 <div class="navbar-item">
-Ḥassāba Zaman - An Ethiopian/Eritrean Calendar
+Ḥassāba Zaman
+<span class="is-hidden-mobile">&nbsp;- An Ethiopian/Eritrean Calendar</span>
 </div>
 </div>
 </nav>
@@ -20,21 +22,59 @@
 <div class="container">
 <div class="columns">
 <div class="column is-2">
-<aside class="menu">
-  <p class="menu-label">
-    General
-  </p>
-  <ul class="menu-list">
-    <li><a href="./">Welcome</a></li>
-  </ul>
+<aside class="menu columns is-mobile is-multiline">
+  <div class="column is-half-mobile is-full-tablet">
+    <p class="menu-label">
+      General
+    </p>
+    <ul class="menu-list">
+      <li><a href="./">Welcome</a></li>
+      <li><a href="./about.html">About</a></li>
+    </ul>
+  </div>
+  <div class="column is-half-mobile is-full-tablet">  
+    <p class="menu-label">
+      Using the App
+    </p>
+    <ul class="menu-list">
+      <li><a href="./basic-features.html">Basic Features</a></li>
+      <li><a href="./preferences.html">Preferences</a></li>
+      <li><a href="./date-converter.html">Date Converter</a></li>
+      <li><a href="./computus.html">Computus</a></li>
+    </ul>
+  </div>
+  <div class="column is-hidden-mobile is-full-tablet">
+    <p class="menu-label">
+      Developers
+    </p>
+    <ul class="menu-list">
+      <li><a href="./devs.html">Overview</a></li>
+      <li><a href="./conversion-js.html">conversion.js</a></li>
+      <li><a href="./calendar-js.html">calendar.js</a></li>
+      <li><a href="./computus-js.html">computus.js</a></li>
+    </ul>
+  </div>
 </aside>
+<script src="../scripts/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('ul li a').each(function() {
+    if($(this).attr('href') == './' + location.href.split("/").slice(-1)){ $(this).addClass('is-active'); }
+  });
+});
+</script>
+
 </div>
 <div class="column is-10">
 <div class="content">
 
 <h1 id="documentation">Documentation</h1>
 
-<p><strong>Ḥassāba Zaman</strong> is a free, open-source calendar application focused on the Ethiopian/Eritrean (or, Ethiopic) calendar. It aims to provide a wide range of features, including alternate calendars (Julian/Gregorian/Islamic), a tool for converting dates, and an automatically generated computus table (*Bāḥra Ḥassāb), and customizations, including the ability to choose from a numer of languages or to use transliterated characters. The idea behind having so many options for customization is to ensure that the application is as user-friendly as possible, though it does so without sacrificing mathematical or linguistic accuracy and precision. The application should be as accessible to foreign tourists visiting Ethiopia as it is to academics working with historical dates.</p>
+<p><strong>Ḥassāba Zaman</strong> is a free, open-source calendar application focused on the Ethiopian/Eritrean (or, Ethiopic) calendar.</p>
+
+<p>The application aims to provide a wide range of features, including alternate calendars (Julian/Gregorian/Islamic), a tool for converting dates, and an automatically generated computus table (<em>Bāḥra Ḥassāb</em>), and customizations, including the ability to choose from a numer of languages or to use transliterated characters.</p>
+
+<p>The idea behind having so many options for customization is to ensure that the application is as user-friendly as possible without sacrificing mathematical or linguistic accuracy and precision. It should be equally accessible to tourists visiting Ethiopia and to academics working with precise historical dates.</p>
 
 </div>
 </div>

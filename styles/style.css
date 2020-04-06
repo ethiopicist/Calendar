@@ -7839,7 +7839,7 @@ body.dark-theme {
     color: #fafafa; }
     @media screen and (max-width: 767px) {
       body.dark-theme div#calendar div.calendar-body div[class^="calendar-row"] div[class^="calendar-cell"]:not(.calendar-cell-inner).is-different-month {
-        color: #4a4a4a; } }
+        color: #7a7a7a; } }
     @media screen and (min-width: 768px), print {
       body.dark-theme div#calendar div.calendar-body div[class^="calendar-row"] div[class^="calendar-cell"]:not(.calendar-cell-inner).is-different-month {
         background-color: #4a4a4a; } }
@@ -7866,8 +7866,8 @@ body.dark-theme {
       color: #fafafa; }
     body.dark-theme div.modal .modal-card-body li a {
       color: whitesmoke; }
-      body.dark-theme div.modal .modal-card-body li a:hover:not(.is-active) {
-        background-color: #4a4a4a; }
+    body.dark-theme div.modal .modal-card-body li ul li a:hover:not(.is-active) {
+      background-color: #4a4a4a; }
     body.dark-theme div.modal .modal-card-body nav a {
       color: whitesmoke; }
       body.dark-theme div.modal .modal-card-body nav a:hover {

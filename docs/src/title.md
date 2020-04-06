@@ -4,7 +4,8 @@
 <a href="/" class="button is-small is-info">&larr; Back to App</a>
 </div>
 <div class="navbar-item">
-Ḥassāba Zaman - An Ethiopian/Eritrean Calendar
+Ḥassāba Zaman
+<span class="is-hidden-mobile">&nbsp;- An Ethiopian/Eritrean Calendar</span>
 </div>
 </div>
 </nav>
