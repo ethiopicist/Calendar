@@ -36,7 +36,11 @@
       (userPreferences.useScript ? '-eth' : '-lat')
     );
 
-    for(y = (year - 9); y <= (year + 9); y++){
+    for(
+        y = (year < 10 ? 1 : year - 9);
+        y <= (year < 10 ? 19 : year + 9);
+        y++
+      ){
 
       var row = $('<tr />');
 
