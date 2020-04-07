@@ -118,6 +118,7 @@
 
   /**
   * Calculates the manbar of a given Ethiopic year.
+  * This is the number in the 19-year cycle.
   * @param {number} year An Ethiopic year
   */
   function manbar(year){
@@ -131,6 +132,11 @@
 
   }
 
+  /**
+  * Converts a given Ethiopic year to Amata Qamar.
+  * This is the number in the 532-year cycle.
+  * @param {number} year An Ethiopic year
+  */
   function toAmataQamar(year, withCycle){
     
     var cycle = Math.floor(((year + 5500) / 532) - 10);
