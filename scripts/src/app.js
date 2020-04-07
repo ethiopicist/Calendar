@@ -388,6 +388,15 @@ function initCallback(){
   // Initialize the computus table
   $('#computus-table').seaOfComputation('init', options('month').year, options());
 
+  if(options('month').year < 353){
+
+    $('a[id^="open-computus"]').hide();
+    $('div#computus-window').removeClass('is-active');
+    $('html').removeClass('is-clipped');
+
+  }
+  else $('a[id^="open-computus"]').show();
+
   localize();
   fillForms();
 
@@ -411,6 +420,15 @@ function updateCallback(){
   // Update the computus table
   $('#computus-table tbody').html('');
   $('#computus-table').seaOfComputation('init', options('month').year, options());
+
+  if(options('month').year < 353){
+
+    $('a[id^="open-computus"]').hide();
+    $('div#computus-window').removeClass('is-active');
+    $('html').removeClass('is-clipped');
+
+  }
+  else $('a[id^="open-computus"]').show();
 
   localize();
   fillForms();

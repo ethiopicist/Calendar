@@ -37,8 +37,8 @@
     );
 
     for(
-        y = (year < 10 ? 1 : year - 9);
-        y <= (year < 10 ? 19 : year + 9);
+        y = (year < 362 ? 353 : year - 9);
+        y <= (year < 362 ? 371 : year + 9);
         y++
       ){
 
@@ -135,6 +135,7 @@
     
     var cycle = Math.floor(((year + 5500) / 532) - 10);
     year = (year + 5500) % 532;
+    if(year == 0) year = 532;
 
     if(typeof withCycle === 'boolean' && withCycle){
       return {
