@@ -168,31 +168,36 @@
 
     // the calendar cells
     const calendarBody = $(element).children('.calendar-body');
-    var iDate = firstOfCalendar(options.month, userPreferences.firstWeekday);
+    var jdn = firstOfCalendar(options.month, userPreferences.firstWeekday);
 
     for(i = 0; i < 6; i++){
       const calendarRow = calendarBody.children('.calendar-row-'+i);
 
       for(j = 0; j < 7; j++){
         const calendarCell = calendarRow.children('.calendar-cell-'+i+'-'+j);
-        if(userPreferences.alternateCalendar == 'gre') var iDateAlternate = toWestern(iDate);
-        else if(userPreferences.alternateCalendar == 'isl') var iDateAlternate = toIslamic(iDate);
-
-        calendarCell.attr('data-ethiopic-year', iDate.year);
-        calendarCell.attr('data-ethiopic-month', iDate.month);
-        calendarCell.attr('data-ethiopic-date', iDate.date);
         
-        calendarCell.attr('data-alternate-year', iDateAlternate.year);
-        calendarCell.attr('data-alternate-month', iDateAlternate.month);
-        calendarCell.attr('data-alternate-date', iDateAlternate.date);
+        const cellDate = jdnToEthiopic(jdn);
+        if(userPreferences.alternateCalendar == 'gre') var cellDateAlt = jdnToWestern(jdn);
+        else if(userPreferences.alternateCalendar == 'isl') var cellDateAlt = jdnToIslamic(jdn);
 
-        if(iDate.year < 1){
+        calendarCell.attr('data-jdn', jdn);
+        
+        calendarCell.attr('data-ethiopic-year', cellDate.year);
+        calendarCell.attr('data-ethiopic-month', cellDate.month);
+        calendarCell.attr('data-ethiopic-date', cellDate.date);
+        
+        calendarCell.attr('data-alternate-year', cellDateAlt.year);
+        calendarCell.attr('data-alternate-month', cellDateAlt.month);
+        calendarCell.attr('data-alternate-date', cellDateAlt.date);
 
+        if(cellDate.year < 1){
+
+          calendarCell.removeAttr('data-jdn');
           calendarCell.removeAttr('data-ethiopic-year data-ethiopic-month data-ethiopic-date');
           calendarCell.removeAttr('data-alternate-year data-alternate-month data-alternate-date');
 
         }
-        else if(iDateAlternate.year < 1){
+        else if(cellDateAlt.year < 1){
 
           calendarCell.removeAttr('data-alternate-year data-alternate-month data-alternate-date');
 
@@ -206,42 +211,38 @@
           date: (new Date()).getDate()
         });
 
-        if(iDate.month != options.month.month) calendarCell.addClass('is-different-month');
-        else if(
-          iDate.year == today.year &&
-          iDate.month == today.month &&
-          iDate.date == today.date
-        ) calendarCell.addClass('is-today');
+        if(cellDate.month != options.month.month) calendarCell.addClass('is-different-month');
+        else if(jdn == ethiopicToJdn(today)) calendarCell.addClass('is-today');
 
         const calendarCellInner = calendarCell.children('.calendar-cell-inner');
 
         calendarCellInner.children().text('');
 
-        if(iDate.year > 0){
+        if(cellDate.year > 0){
 
           calendarCellInner.children('.label-ethiopic-date').text(
-            toEthiopicNumeral(iDate.date, userPreferences.useNumerals)
+            toEthiopicNumeral(cellDate.date, userPreferences.useNumerals)
           );
 
-          if(iDate.date == 1 || (i == 0 && j == 0)){
+          if(cellDate.date == 1 || (i == 0 && j == 0)){
             
             calendarCellInner.children('.label-ethiopic-month-long').text(
-              $.i18n('ethMonth' + iDate.month + 'long')
+              $.i18n('ethMonth' + cellDate.month + 'long')
             );
 
             calendarCellInner.children('.label-ethiopic-month-short, .label-ethiopic-month-narrow').text(
-              $.i18n('ethMonth' + iDate.month + 'short')
+              $.i18n('ethMonth' + cellDate.month + 'short')
             );
 
           }
 
           if(userPreferences.showAlternateDates) calendarCellInner.children('.label-alternate-date').text(
-            iDateAlternate.date
+            cellDateAlt.date
           );
 
         }
 
-        iDate = addOneDay(iDate);
+        jdn++;
       
       }
 
@@ -315,83 +316,11 @@
 
     month.date = 1;
 
-    var firstOfMonth = {
-      year: month.year,
-      month: month.month,
-      date: month.date,
-      day: dayOfWeek(ethiopicToJdn(month))
-    }
+    var jdn = ethiopicToJdn(month);
     
-    const offset = (firstOfMonth.day - firstWeekday + 7) % 7;
+    const offset = (dayOfWeek(jdn) - firstWeekday + 7) % 7;
 
-    var firstOfCalendar = firstOfMonth;
-
-    for(i = 0; i < offset; i++){
-      firstOfCalendar = subOneDay(firstOfCalendar);
-    }
-
-    return firstOfCalendar;
-
-  }
-
-  /**
-   * Returns the day before a given Ethiopic date
-   * @param {{year: number, month: number, date: number}} date An Ethiopic date
-   */
-  function subOneDay(date){
-
-    if(date.month == 1 && date.date == 1){
-      
-      date.year -= 1;
-      date.month = 13;
-
-      if(date.year % 4 == 3) date.date = 6;
-      else date.date = 5;
-
-    }
-    else if(date.date == 1){
-
-      date.month -= 1;
-      date.date = 30;
-
-    }
-    else date.date -= 1;
-
-    if(date.day == 1) date.day = 7;
-    else date.day -= 1;
-
-    return date;
-
-  }
-
-  /**
-   * Returns the day after a given Ethiopic date
-   * @param {{year: number, month: number, date: number}} date An Ethiopic date
-   */
-  function addOneDay(date){
-  
-    if(
-      (date.month == 13 && date.date == 6) ||
-      (date.month == 13 && date.date == 5 && date.year % 4 != 3)
-      ){
-
-      date.year += 1;
-      date.month = 1;
-      date.date = 1;
-
-    }
-    else if(date.date == 30){
-
-      date.month += 1;
-      date.date = 1;
-
-    }
-    else date.date += 1;
-
-    if(date.day == 7) date.day = 1;
-    else date.day += 1;
-
-    return date;
+    return jdn - offset;
 
   }
 

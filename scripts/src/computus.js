@@ -1,3 +1,12 @@
+/*!
+ * Functions to generate an Ethiopic computus table
+ * By Augustine Dickinson
+ *
+ * Copyright (c) 2020 Ethiopicist.com and its contributors.
+ *
+ * @licence MIT License
+ */
+
 (function($){
 
   var methods = {

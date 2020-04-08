@@ -1,2 +1,2 @@
 # Calendar
-A web app with an Ethiopian/Eritrean calendar.
+A web app with an Ethiopian/Eritrean calendar, including functions for converting dates between calendars and for calculating dates related to the Computus. More info is available in the (docs)[https://cal.ethiopicist.com/docs/].
