@@ -7,17 +7,18 @@
 	},
 
 	"day1long": "ʾƎḥud",
-	"day1short": "ʾƎḥ.",
 	"day2long": "Saño",
-	"day2short": "Saño",
 	"day3long": "Māksaño",
-	"day3short": "Māks.",
 	"day4long": "Rabuʿ",
-	"day4short": "Rab.",
 	"day5long": "Ḫamus",
-	"day5short": "Ḫam.",
 	"day6long": "ʿArb",
-	"day6short": "ʿArb",
 	"day7long": "Qǝdāme",
+
+	"day1short": "ʾƎḥ.",
+	"day2short": "Saño",
+	"day3short": "Māks.",
+	"day4short": "Rab.",
+	"day5short": "Ḫam.",
+	"day6short": "ʿArb",
 	"day7short": "Qǝd."
 }

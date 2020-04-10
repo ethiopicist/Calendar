@@ -7,24 +7,26 @@
 	},
 
 	"day1long": "ʾƎḥud",
-	"day1short": "ʾƎḥ.",
 	"day2long": "Sonuy",
-	"day2short": "Son.",
 	"day3long": "Śolus",
-	"day3short": "Śol.",
 	"day4long": "Robuʿ",
-	"day4short": "Rob.",
 	"day5long": "Ḥāmus",
-	"day5short": "Ḥām.",
 	"day6long": "ʿĀrbi",
-	"day6short": "ʿĀr.",
 	"day7long": "Q̱adām",
+
+	"day1short": "ʾƎḥ.",
+	"day2short": "Son.",
+	"day3short": "Śol.",
+	"day4short": "Rob.",
+	"day5short": "Ḥām.",
+	"day6short": "ʿĀrb.",
 	"day7short": "Q̱ad.",
 
 	"ethMonth2long": "Ṭǝqǝmti",
-	"ethMonth2short": "Ṭǝq.",
 	"ethMonth5long": "Ṭǝrri",
-	"ethMonth5short": "Ṭǝr.",
 	"ethMonth6long": "Lakkātit",
+
+	"ethMonth2short": "Ṭǝq.",
+	"ethMonth5short": "Ṭǝr.",
 	"ethMonth6short": "Lakk."
 }

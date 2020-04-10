@@ -34,7 +34,7 @@
 	"alternateCalendar": "Alternate calendar:",
 	"westernCalendar-expanded": "Western (Julian/Gregorian)",
 	"islamicCalendar-expanded": "Islamic (Tabular)",
-	
+
 	"languagePreferences": "Language Preferences",
 	"calendarLanguage": "Calendar language:",
 	"geez": "Gəʿəz",
@@ -42,7 +42,7 @@
 	"tigrinya": "Tigrinya",
 	"oromoo": "Oromoo",
 	"showLocale": "Show days of the week in English",
-	
+
 	"displayPreferences": "Display Preferences",
 	"useDarkTheme": "Use dark theme",
 	"useScript": "Use Ethiopic letters",
@@ -89,7 +89,7 @@
 	"day5long": "Thursday",
 	"day6long": "Friday",
 	"day7long": "Saturday",
-	
+
 	"day1short": "Sun",
 	"day2short": "Mon",
 	"day3short": "Tue",
@@ -175,5 +175,4 @@
 	"islMonth10narrow": "Šaww.",
 	"islMonth11narrow": "al-Q.",
 	"islMonth12narrow": "al-Ḥ."
-	
 }
