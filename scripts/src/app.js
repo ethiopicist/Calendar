@@ -766,3 +766,8 @@ function userPreferences(preference, value){
   }
 
 }
+
+// Register the app's service worker
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+};
