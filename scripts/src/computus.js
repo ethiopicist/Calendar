@@ -57,9 +57,14 @@
         toEthiopicNumeral((userPreferences.useAmataAlam ? y + 5500 : y), userPreferences.useNumerals)
       ).appendTo(row);
 
-      $('<td class="has-text-centered" />').text(
-        $.i18n('evangelist' + (y % 4))
-      ).appendTo(row);
+      if($.i18n().locale == 'gez-lat' || $.i18n().locale == 'am-lat' || $.i18n().locale == 'ti-lat'){
+        $('<td class="has-text-centered" />').attr('data-i18n', 'evangelist' + (y % 4)).appendTo(row);
+      }
+      else{
+        $('<td class="has-text-centered" />').text(
+          $.i18n('evangelist' + (y % 4))
+        ).appendTo(row);
+      }
 
       $('<td class="has-text-centered" />').text(
         toEthiopicNumeral(toAmataQamar(y), userPreferences.useNumerals)

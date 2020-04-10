@@ -5,23 +5,55 @@
 		],
 		"locale": "fr"
 	},
+	
+	"title": "Ḥassāba Zaman - Un calendrier éthiopien/érythréen",
 
 	"langNameLong": "Français",
 	"langNameShort": "fr",
 
+	"today": "Aujourd'hui",
+	"goto": "Aller à…",
+
+	"calendarConverter": "",
+	"ethiopicCalendar": "éthiopique",
+	"westernCalendar": "occidental",
+	"islamicCalendar": "musulman",
+	"convert": "",
+
+	"preferences": "Préférences",
+
+	"weekBegins": "La semaine commence le :",
+	"showAlternateDates": "Afficher le calendrier secondaire",
+	"alternateCalendar": "Calendrier secondaire :",
+	"westernCalendar-expanded": "occidental (julien/grégorien)",
+	"islamicCalendar-expanded": "musulman (tabulaire)",
+
+	"geez": "guèze",
+	"amharic": "amharique",
+	"tigrinya": "tigrinya",
+	"oromoo": "oromo",
+	"showLocale": "Afficher les jours en français",
+
+	"ariaPrev": "Aller au mois précédent [←]",
+	"ariaToday": "Aller à aujourd'hui [t]",
+	"ariaNext": "Aller au mois suivant [→]",
+	"ariaOpenPreferences": "Ouvrir Préférences",
+	"ariaClose": "Fermer fenêtre",
+
 	"day1long": "dimanche",
-	"day1short": "dim.",
 	"day2long": "lundi",
-	"day2short": "lun.",
 	"day3long": "mardi",
-	"day3short": "mar.",
 	"day4long": "mercredi",
-	"day4short": "mer.",
 	"day5long": "jeudi",
-	"day5short": "jeu.",
 	"day6long": "vendredi",
-	"day6short": "ven.",
 	"day7long": "samedi",
+
+	"day1short": "dim.",
+	"day2short": "lun.",
+	"day3short": "mar.",
+	"day4short": "mer.",
+	"day5short": "jeu.",
+	"day6short": "ven.",
 	"day7short": "sam.",
 
 	"greMonth1long": "janvier",
@@ -63,35 +95,16 @@
 	"greMonth11narrow": "nov.",
 	"greMonth12narrow": "déc.",
 
-	"today": "Aujourd'hui",
-	"goto": "Aller à…",
-
-	"appLanguage": "Change App Language :",
-	"changesSaved": "Changes are saved automatically.",
-
-	"preferences": "Préférences",
-
-	"calendarPreferences": "Calendar Préférences",
-	"weekBegins": "La semaine commence le :",
-	"gregorianDates": "Show Gregorian dates",
-	
-	"languagePreferences": "Language Préférences",
-	"calendarLanguage": "Calendar language :",
-	"geez": "guèze",
-	"amharic": "amharique",
-	"tigrinya": "tigrinya",
-	"oromoo": "oromo",
-	"showLocale": "Show days of the week in Français",
-	
-	"displayPreferences": "Display Préférences",
-	"useLetters": "Use Ethiopic letters",
-	"useNumbers": "Use Ethiopic numerals",
-
-	"ariaPrev": "Aller au mois précédent",
-	"ariaToday": "Aller à aujourd'hui",
-	"ariaNext": "Aller au mois suivant",
-	"ariaOpenLanguages": "Change App Language",
-	"ariaOpenPreferences": "Ouvrir Préférences",
-	"ariaHelp": "Aide",
-	"ariaClose": "Fermer fenêtre"
+	"islMonth1long": "mouharram",
+	"islMonth2long": "safar",
+	"islMonth3long": "rabii I",
+	"islMonth4long": "rabii II",
+	"islMonth5long": "joumada I",
+	"islMonth6long": "joumada II",
+	"islMonth7long": "rajab",
+	"islMonth8long": "chaabane",
+	"islMonth9long": "ramadan",
+	"islMonth10long": "chawwal",
+	"islMonth11long": "dhou al-qi'da",
+	"islMonth12long": "dhou al-hijja"
 }
