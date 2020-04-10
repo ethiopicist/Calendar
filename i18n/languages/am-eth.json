@@ -6,7 +6,7 @@
 		"locale": "am"
 	},
 
-	"title": "ሐሳበ ዘመን",
+	"title": "ሐሳበ ዘመን - ",
 
 	"langNameLong": "አማርኛ",
 	"langNameShort": "አማ",
@@ -64,5 +64,18 @@
 	"greMonth9narrow": "ሴፕ",
 	"greMonth10narrow": "ኦክ",
 	"greMonth11narrow": "ኖቬ",
-	"greMonth12narrow": "ዲሴ"
+	"greMonth12narrow": "ዲሴ",
+
+	"islMonth1short": "01/",
+	"islMonth2short": "02/",
+	"islMonth3short": "03/",
+	"islMonth4short": "04/",
+	"islMonth5short": "05/",
+	"islMonth6short": "06/",
+	"islMonth7short": "07/",
+	"islMonth8short": "08/",
+	"islMonth9short": "09/",
+	"islMonth10short": "10/",
+	"islMonth11short": "11/",
+	"islMonth12short": "12/"
 }

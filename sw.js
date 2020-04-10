@@ -1,4 +1,4 @@
-var cacheName = 'calendar-v013';
+var cacheName = 'calendar-v014';
 var appFiles = [
   '/',
   '/index.html',
@@ -27,7 +27,7 @@ var appFiles = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(cacheName).then((cache) => {
-      console.log('[Service Worker] Caching all: app content');
+      console.log('[Service Worker] Caching base app resources');
       return cache.addAll(appFiles);
     })
   );
@@ -53,7 +53,7 @@ self.addEventListener('activate', (e) => {
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
         if(key !== cacheName) {
-          console.log('[Service Worker] Clearing old cache(s)')
+          console.log('[Service Worker] Old cache deleted')
           return caches.delete(key);
         }
       }));

@@ -14,11 +14,9 @@
 	"today": "Aujourd'hui",
 	"goto": "Aller à…",
 
-	"calendarConverter": "",
 	"ethiopicCalendar": "éthiopique",
 	"westernCalendar": "occidental",
 	"islamicCalendar": "musulman",
-	"convert": "",
 
 	"preferences": "Préférences",
 
@@ -106,5 +104,31 @@
 	"islMonth9long": "ramadan",
 	"islMonth10long": "chawwal",
 	"islMonth11long": "dhou al-qi'da",
-	"islMonth12long": "dhou al-hijja"
+	"islMonth12long": "dhou al-hijja",
+
+	"islMonth1short": "mouh. ",
+	"islMonth2short": "saf. ",
+	"islMonth3short": "rab. aw. ",
+	"islMonth4short": "rab. th. ",
+	"islMonth5short": "joum. oul. ",
+	"islMonth6short": "joum. th. ",
+	"islMonth7short": "raj. ",
+	"islMonth8short": "chaa. ",
+	"islMonth9short": "ram. ",
+	"islMonth10short": "chaw. ",
+	"islMonth11short": "dhou q. ",
+	"islMonth12short": "dhou h. ",
+
+	"islMonth1narrow": "mouh.",
+	"islMonth2narrow": "saf.",
+	"islMonth3narrow": "rab. I",
+	"islMonth4narrow": "rab. II",
+	"islMonth5narrow": "joum. I",
+	"islMonth6narrow": "joum. II",
+	"islMonth7narrow": "raj.",
+	"islMonth8narrow": "chaa.",
+	"islMonth9narrow": "ram.",
+	"islMonth10narrow": "chaw.",
+	"islMonth11narrow": "al-q.",
+	"islMonth12narrow": "al-h."
 }
