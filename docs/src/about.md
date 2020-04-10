@@ -17,6 +17,8 @@ CSS: ../../styles/style.css
 
 **Ḥassāba Zaman** was developed by [Augustine Dickinson](https://augustinedickinson.com).
 
+Thanks to those who helped by providing localizations: Weronika Kozłowska (Polish).
+
 </div>
 </div>
 </div>
