@@ -1,5 +1,5 @@
 ---
-HTML header: <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+HTML header: <title>Ḥassāba Zaman - Docs</title><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="shortcut icon" type="image/png" href="/icon/favicon.png">
 CSS: ../../styles/style.css
 ---
 
@@ -15,11 +15,9 @@ CSS: ../../styles/style.css
 
 # Documentation
 
-**Ḥassāba Zaman** is a free, open-source calendar application focused on the Ethiopian/Eritrean (or, Ethiopic) calendar.
+**Ḥassāba Zaman** is a free, open-source calendar application focused on the Ethiopian/Eritrean (or, Ethiopic) calendar. It works even without an internet connection and can be installed as an app on your phone or tablet (simply "Add to Home Screen").
 
-The application aims to provide a wide range of features, including alternate calendars (Julian/Gregorian/Islamic), a tool for converting dates, and an automatically generated computus table (*Bāḥra Ḥassāb*), and customizations, including the ability to choose from a numer of languages or to use transliterated characters.
-
-The idea behind having so many options for customization is to ensure that the application is as user-friendly as possible without sacrificing mathematical or linguistic accuracy and precision. It should be equally accessible to tourists visiting Ethiopia and to academics working with precise historical dates.
+The goals of the app are (1) to be accessible to a wide range of users, (2) to be accurate both in terms of date calculations and in terms of language, and (3) to support a number of commonly desired features (e.g. conversion of dates between calendars). The app should be so intuitive that a tourist visiting Ethiopia could use it, while also accurate enough for a historian to use. 
 
 </div>
 </div>

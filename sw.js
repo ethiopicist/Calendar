@@ -1,18 +1,23 @@
-var cacheName = 'calendar-v01';
+var cacheName = 'calendar-v02';
 var appFiles = [
   '/',
   '/index.html',
+
   '/icon/favicon.png',
   '/icon/touch-icon.png',
   '/icon/app-icon.svg',
   '/icon/app-icon.png',
+
   '/styles/style.css',
+
   '/scripts/jquery.min.js',
+
   '/i18n/jquery.i18n.js',
   '/i18n/jquery.i18n.messagestore.js',
   '/i18n/jquery.i18n.fallbacks.js',
   '/i18n/jquery.i18n.parser.js',
   '/i18n/jquery.i18n.emitter.js',
+  
   '/scripts/conversion.min.js',
   '/scripts/computus.min.js',
   '/scripts/calendar.min.js',

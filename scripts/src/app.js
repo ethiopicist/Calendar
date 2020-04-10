@@ -7,6 +7,11 @@
  * @licence MIT License
  */
 
+// Register the app's service worker for offline caching
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+};
+
 var today = {};
 today.year = (new Date()).getFullYear();
 today.month = (new Date()).getMonth()+1;
@@ -766,8 +771,3 @@ function userPreferences(preference, value){
   }
 
 }
-
-// Register the app's service worker
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-};
