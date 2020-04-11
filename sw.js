@@ -1,4 +1,7 @@
-var appCache = 'calendar-v016';
+const appVersion = 0.7;
+
+var appCache = 'calendar-v'+appVersion;
+
 var appFiles = [
   '/',
   '/index.html',
@@ -57,8 +60,8 @@ self.addEventListener('activate', (e) => {
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
-          if(appCache !== cacheName) {
-            console.log('[Service Worker] Deleting cache: '+cacheName);
+          if(parseInt(cacheName.substr(9, 3)) < appVersion) {
+            console.log('[Service Worker] Deleting old cache: '+cacheName);
             return caches.delete(cacheName);
           }
         })
