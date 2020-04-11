@@ -52,11 +52,13 @@ self.addEventListener('fetch', (e) => {
 });
 
 self.addEventListener('activate', (e) => {
+  console.log('[Service Worker] Activated');
   e.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
           if(appCache !== cacheName) {
+            console.log('[Service Worker] Deleting cache: '+cacheName);
             return caches.delete(cacheName);
           }
         })
