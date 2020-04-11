@@ -59,7 +59,9 @@
 <script>
 $(document).ready(function(){
   $('ul li a').each(function() {
-    if($(this).attr('href') == './' + location.href.split("/").slice(-1)){ $(this).addClass('is-active'); }
+    if($(this).attr('href') == './' + location.href.split("/").slice(-1)){
+      $(this).addClass('is-active');
+    }
   });
 });
 </script>

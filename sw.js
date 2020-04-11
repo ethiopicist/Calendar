@@ -1,4 +1,4 @@
-var cacheName = 'calendar-v014';
+var cacheName = 'calendar-v015';
 var appFiles = [
   '/',
   '/index.html',
@@ -53,7 +53,7 @@ self.addEventListener('activate', (e) => {
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
         if(key !== cacheName) {
-          console.log('[Service Worker] Old cache deleted')
+          console.log('[Service Worker] Old cache deleted: '+key);
           return caches.delete(key);
         }
       }));
