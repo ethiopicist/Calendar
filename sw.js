@@ -1,6 +1,6 @@
-const appVersion = 0.7;
+const cacheVersion = 4;
 
-var appCache = 'calendar-v'+appVersion;
+var appCache = 'calendar-v'+cacheVersion;
 
 var appFiles = [
   '/',
@@ -9,25 +9,7 @@ var appFiles = [
   '/icon/favicon.png',
   '/icon/touch-icon.png',
   '/icon/app-icon.svg',
-  '/icon/app-icon.png',
-
-  '/styles/style.css',
-
-  '/scripts/jquery.min.js',
-
-  '/i18n/jquery.i18n.js',
-  '/i18n/jquery.i18n.messagestore.js',
-  '/i18n/jquery.i18n.fallbacks.js',
-  '/i18n/jquery.i18n.parser.js',
-  '/i18n/jquery.i18n.emitter.js',
-
-  '/i18n/languages/en.json',
-  '/i18n/languages/gez-eth.json',
-  
-  '/scripts/conversion.min.js',
-  '/scripts/computus.min.js',
-  '/scripts/calendar.min.js',
-  '/scripts/app.min.js'
+  '/icon/app-icon.png'
 ];
 
 self.addEventListener('install', (e) => {
@@ -42,7 +24,6 @@ self.addEventListener('install', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((r) => {
-      console.log('[Service Worker] Fetching resource: '+e.request.url);
       return r || fetch(e.request).then((response) => {
         return caches.open(appCache).then((cache) => {
           console.log('[Service Worker] Caching new resource: '+e.request.url);
@@ -59,11 +40,11 @@ self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if(parseInt(cacheName.substr(9, 3)) < appVersion) {
-            console.log('[Service Worker] Deleting old cache: '+cacheName);
-            return caches.delete(cacheName);
-          }
+        cacheNames.filter(function(cacheName) {
+          return parseInt(cacheName.substr(10)) < cacheVersion
+        }).map(function(cacheName) {
+          console.log('Deleting cache: '+cacheName);
+          return caches.delete(cacheName);
         })
       );
     })

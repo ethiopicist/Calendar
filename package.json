@@ -1,6 +1,6 @@
 {
   "name": "@ethiopicist/calendar",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A jQuery Ethiopian calendar app.",
   "main": "app.js",
   "scripts": {
@@ -14,7 +14,11 @@
     "ethiopian",
     "calendar"
   ],
-  "author": "Augustine Dickinson",
+  "author": {
+    "name": "Augustine Dickinson",
+    "email": "augustine.dickinson@icloud.com",
+    "url": "https://augustinedickinson.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ethiopicist/Calendar/issues"
