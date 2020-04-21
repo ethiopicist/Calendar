@@ -1,4 +1,4 @@
-const cacheVersion = 5;
+const cacheVersion = 6;
 
 var appCache = 'calendar-v'+cacheVersion;
 
