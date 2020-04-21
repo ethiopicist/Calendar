@@ -509,6 +509,7 @@ function localize(){
   $('select#convert-ethiopic-month').i18n();
 
   $('#converted-ethiopic-date .converted-day').text(
+    ($.i18n().locale == 'gez-eth' ? 'ዕለተ፡ ' : '') +
     $.i18n('day' + $('#converted-ethiopic-date .converted-day').attr('data-day') + 'long')
   );
 
@@ -517,7 +518,7 @@ function localize(){
   );
 
   $('#converted-ethiopic-date .converted-month').text(
-    ($.i18n().locale == 'gez-eth' || $.i18n().locale == 'gez-lat' ? 'ለ' : '') +
+    ($.i18n().locale == 'gez-eth' ? 'ለ' : '') +
     $.i18n('ethMonth' + $('#converted-ethiopic-date .converted-month').attr('data-month') + 'long')
   );
 

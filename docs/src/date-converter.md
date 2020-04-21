@@ -15,7 +15,7 @@ CSS: ../../styles/style.css
 
 # Date Converter
 
-
+The date converter is a tool that allows for the conversion of any date from the Ethiopian/Eritrean, Western (Gregorian/Julian), or Islamic calendars into the remaining calendars.
 
 </div>
 </div>

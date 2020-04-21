@@ -17,7 +17,10 @@ CSS: ../../styles/style.css
 
 **Ḥassāba Zaman** was developed by [Augustine Dickinson](https://augustinedickinson.com).
 
-Thanks to those who helped by providing localizations: Weronika Kozłowska (Polish).
+The app is open source ([MIT License](https://github.com/ethiopicist/Calendar/blob/master/LICENSE)) and hosted on [GitHub](https://github.com/ethiopicist/Calendar).
+
+Thanks to those who helped by providing localizations:
+* Weronika Kozłowska (Polish)
 
 </div>
 </div>

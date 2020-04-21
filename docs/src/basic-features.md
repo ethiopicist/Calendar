@@ -15,7 +15,17 @@ CSS: ../../styles/style.css
 
 # Basic Features
 
+Across the top of the calendar (or bottom on mobile) are the following buttons, with some variation based on platform:
 
+|-|-|
+|<span class="octicon octicon-chevron-left"></span>|Go to the previous month|
+|Today|Go to today|
+|Go to...|Go to a specific month and year|
+|<span class="octicon octicon-chevron-right"></span>|Go to the next month|
+|<span class="octicon octicon-calendar"></span>|Open the [Computus table (ባሕረ፡ ሐሳብ)](./computus.html)|
+|<span class="octicon octicon-code"></span>|Open the [date converter](./date-converter.html)|
+|en|Change localization|
+|<span class="octicon octicon-gear"></span>|Open [preferences](./preferences.html)|
 
 </div>
 </div>
