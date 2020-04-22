@@ -29,7 +29,8 @@
         'om': '/i18n/languages/om.json',
         
         'pl': '/i18n/languages/pl.json',
-        'fr': '/i18n/languages/fr.json'
+        'fr': '/i18n/languages/fr.json',
+        'it': '/i18n/languages/it.json'
       }).done(function(){
 
         buildCalendar(element);

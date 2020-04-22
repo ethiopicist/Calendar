@@ -21,6 +21,7 @@ The app is open source ([MIT License](https://github.com/ethiopicist/Calendar/bl
 
 Thanks to those who helped by providing localizations:
 * Weronika Kozłowska (Polish)
+* Martina Ambu (French, Italian)
 
 </div>
 </div>
