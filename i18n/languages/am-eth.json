@@ -1,15 +1,86 @@
 {
 	"@metadata": {
 		"authors": [
-			""
+			"Hewan Semon"
 		],
 		"locale": "am"
 	},
 
-	"title": "ሐሳበ ዘመን - ",
+	"title": "ሐሳበ ዘመን - የኢትዮጵያና ኤርትራ ዘመን አቆጣጠር",
 
 	"langNameLong": "አማርኛ",
 	"langNameShort": "አማ",
+
+	"today": "ዛሬ",
+
+	"goto": "ወደ…ሂድ",
+	"go": "ወደ",
+
+	"calendarConverter": "ቀን መቀየሪያ",
+	"ethiopicCalendar": "ግእዝ",
+	"westernCalendar": "የምዕራባዊ",
+	"islamicCalendar": "የኢስልምና",
+	"convert": "ቀይር",
+
+	"appLanguage": "የአፕሊኬሽን ቋንቋ ቀይር፥",
+	"changesSaved": "ለውጦች ተፈጽመዋል።",
+
+	"preferences": "አማራጮች",
+
+	"calendarPreferences": "የቀን መቁጠሪያ አማራጮች",
+	"weekBegins": "ሳምንታት የሚጀምሩት በ፥",
+	"useAmataAlam": "ዓመተ ዓለምን ተጠቀም (ዓ.ዓ)",
+	"showAlternateDates": "ሌላ ቀን መቁጠሪያ አሳይ",
+	"alternateCalendar": "ሌላ ቀን መቁጠሪያ፥",
+	"westernCalendar-expanded": "የምዕራባውያን (የጁሊያን/የጎርጎርያን)",
+	"islamicCalendar-expanded": "የኢስልምና (ሰንጠረዥ)",
+
+	"languagePreferences": "የቋንቋ አማራጮች",
+	"calendarLanguage": "የቀን መቁጠሪያ ቋንቋ፥",
+	"geez": "ግእዝ",
+	"amharic": "አማርኛ",
+	"tigrinya": "ትግርኛ",
+	"oromoo": "ኦሮምኛ",
+	"showLocale": "የሳምንቱን ቀናት በአማርኛ አሳይ",
+
+	"displayPreferences": "አማራጮችን አሳይ",
+	"useDarkTheme": "በጨለማ ተመልከት",
+	"useScript": "የግእዝ ፊደላትን ተጠቀም",
+	"useNumerals": "የግእዝ ቁጥሮችን ተጠቀም",
+
+	"ariaPrev": "ከዚህ በፊት ወዳለው ወር ሂድ [←]",
+	"ariaToday": "ወደ ዛሬ ዕለት ሂድ [t]",
+	"ariaNext": "ወደሚቀጥለው ወር ሂድ [→]",
+	"ariaOpenComputus": "ባሕረ ሐሳብ",
+	"ariaOpenConverter": "ቀን መለወጫ",
+	"ariaOpenLanguages": "የአፕሊኬሽኑን ቋንቋ ለውጥ",
+	"ariaOpenPreferences": "አማራጮችን ክፈት",
+	"ariaDocs": "ሰነድ",
+	"ariaClose": "መስኮቱን ዝጋ",
+
+	"seaOfComputation": "ባሕረ ሐሳብ",
+	"year": "ዓመት",
+	"evangelist": "ወንጌላዊ",
+	"evangelist1": "ማቴዎስ",
+	"evangelist2": "ማርቆስ",
+	"evangelist3": "ሉቃስ",
+	"evangelist0": "ዮሐንስ",
+	"amataQamar": "ዓመተ ቀመር",
+	"manbar": "መንበር",
+	"tentyon": "ጥንትዮን",
+	"abaqte": "አበቅቴ",
+	"matqe": "መጥቅዕ",
+	"ninevehFast": "ጾመ ነነዌ",
+	"lent": "ዓቢይ ጾም",
+	"mountOfOlives": "ደብረ ዘይት",
+	"palmSunday": "ሆሳዕና",
+	"goodFriday": "ስቅለት",
+	"easter": "ፋሲካ",
+	"synod": "ርክበ ካህናት",
+	"ascension": "ዕርገት",
+	"pentecost": "ጰራቅሊጦስ",
+	"apostlesFast": "ጾመ ሐዋርያት",
+	"salvationFast": "ጾመ ድኅነት",
 
 	"day1long": "እሑድ",
 	"day2long": "ሰኞ",
@@ -66,6 +137,19 @@
 	"greMonth11narrow": "ኖቬ",
 	"greMonth12narrow": "ዲሴ",
 
+	"islMonth1long": "ሙሓረም",
+	"islMonth2long": "ሰፈር",
+	"islMonth3long": "ራቢዕ አልኣወል",
+	"islMonth4long": "ራቢዕ አልሳኒ",
+	"islMonth5long": "ጁማዳ አልኣወል",
+	"islMonth6long": "ጁማዳ አልኣኽር",
+	"islMonth7long": "ረጀብ",
+	"islMonth8long": "ሻዕባን",
+	"islMonth9long": "ረመዳን",
+	"islMonth10long": "ሸዋል",
+	"islMonth11long": "ዙል ቃዒዳ",
+	"islMonth12long": "ዙል ሂጃ",
+
 	"islMonth1short": "01/",
 	"islMonth2short": "02/",
 	"islMonth3short": "03/",
@@ -77,5 +161,18 @@
 	"islMonth9short": "09/",
 	"islMonth10short": "10/",
 	"islMonth11short": "11/",
-	"islMonth12short": "12/"
+	"islMonth12short": "12/",
+
+	"islMonth1narrow": "01",
+	"islMonth2narrow": "02",
+	"islMonth3narrow": "03",
+	"islMonth4narrow": "04",
+	"islMonth5narrow": "05",
+	"islMonth6narrow": "06",
+	"islMonth7narrow": "07",
+	"islMonth8narrow": "08",
+	"islMonth9narrow": "09",
+	"islMonth10narrow": "10",
+	"islMonth11narrow": "11",
+	"islMonth12narrow": "12"
 }
