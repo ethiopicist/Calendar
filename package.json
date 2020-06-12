@@ -1,6 +1,6 @@
 {
   "name": "@ethiopicist/calendar",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A jQuery Ethiopian calendar app.",
   "main": "app.js",
   "scripts": {
